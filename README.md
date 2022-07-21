@@ -1,1 +1,1 @@
-# gussianProbProgram
+# GaussianProbProgram
