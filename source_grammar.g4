@@ -9,5 +9,4 @@ expr  : left=expr op=('*'|'/') right=expr #opExpr
         ;
   
 INT   : ('0'..'9')+ ;
-  
 WS    : [ \t\r\n]+ -> skip ;
