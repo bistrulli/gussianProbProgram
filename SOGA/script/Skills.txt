@@ -1,0 +1,40 @@
+/* assigns distributions */
+perfA1 = 15*norm+skillA;
+perfB = 15*norm+skillB;
+
+perfA2 = 15*norm+skillA;
+perfC = 15*norm+skillC;
+    
+/* constraints to observations */
+if perfA1 - perfB > 0
+{
+	if perfA2 - perfC > 0
+	{
+      	cond = 1;
+	}
+	else
+	{
+		cond = 0;
+	}
+	end if;
+}
+else
+{
+	cond = 0;
+}
+end if;
+merge;
+
+/* constraints to conditional */
+if skillA > 95
+{
+	val = 1;
+}
+else
+{
+	val = 0;
+}
+end if;
+merge;
+
+joint = val*cond;

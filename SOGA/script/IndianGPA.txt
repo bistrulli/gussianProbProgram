@@ -1,0 +1,37 @@
+eps = norm;
+    
+if eps < 0
+{
+	usa = 1;
+}
+else
+{
+	usa = 0;
+}
+end if;
+merge;
+    
+if usa == 1
+{
+	gpa = usagpa;
+}
+else
+{
+      gpa = indgpa;
+}
+end if;
+merge;
+        
+if gpa == 4
+{
+	obs = 1;
+}
+else
+{
+      obs = 0;
+}
+end if;
+merge;
+    
+joint = usa*obs;
+

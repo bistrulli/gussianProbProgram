@@ -1,0 +1,22 @@
+luminance = reflectance*illumination;
+    
+if luminance <= 4.5
+{
+	if luminance >= 3.5
+	{
+      	cond = 1;
+	}
+	else
+	{
+		cond = 0;
+	}
+	end if;
+}
+else
+{
+	cond = 0;
+}
+end if;
+merge;
+
+joint = reflectance*cond;
