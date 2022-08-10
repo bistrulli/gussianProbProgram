@@ -27,6 +27,26 @@ public interface SOGAListener extends ParseTreeListener {
 	 */
 	void exitInstr(SOGAParser.InstrContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SOGAParser#assignment}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignment(SOGAParser.AssignmentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SOGAParser#assignment}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignment(SOGAParser.AssignmentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SOGAParser#conditional}.
+	 * @param ctx the parse tree
+	 */
+	void enterConditional(SOGAParser.ConditionalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SOGAParser#conditional}.
+	 * @param ctx the parse tree
+	 */
+	void exitConditional(SOGAParser.ConditionalContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SOGAParser#ifclause}.
 	 * @param ctx the parse tree
 	 */
@@ -56,6 +76,16 @@ public interface SOGAListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBlock(SOGAParser.BlockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SOGAParser#merge}.
+	 * @param ctx the parse tree
+	 */
+	void enterMerge(SOGAParser.MergeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SOGAParser#merge}.
+	 * @param ctx the parse tree
+	 */
+	void exitMerge(SOGAParser.MergeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SOGAParser#lexpr}.
 	 * @param ctx the parse tree

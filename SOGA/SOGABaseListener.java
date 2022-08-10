@@ -39,6 +39,30 @@ public class SOGABaseListener implements SOGAListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAssignment(SOGAParser.AssignmentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignment(SOGAParser.AssignmentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConditional(SOGAParser.ConditionalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditional(SOGAParser.ConditionalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIfclause(SOGAParser.IfclauseContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -70,6 +94,18 @@ public class SOGABaseListener implements SOGAListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBlock(SOGAParser.BlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMerge(SOGAParser.MergeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMerge(SOGAParser.MergeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -19,6 +19,16 @@ class SOGAVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SOGAParser#assignment.
+    def visitAssignment(self, ctx:SOGAParser.AssignmentContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#conditional.
+    def visitConditional(self, ctx:SOGAParser.ConditionalContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SOGAParser#ifclause.
     def visitIfclause(self, ctx:SOGAParser.IfclauseContext):
         return self.visitChildren(ctx)
@@ -31,6 +41,11 @@ class SOGAVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by SOGAParser#block.
     def visitBlock(self, ctx:SOGAParser.BlockContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#merge.
+    def visitMerge(self, ctx:SOGAParser.MergeContext):
         return self.visitChildren(ctx)
 
 

@@ -26,6 +26,24 @@ class SOGAListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SOGAParser#assignment.
+    def enterAssignment(self, ctx:SOGAParser.AssignmentContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#assignment.
+    def exitAssignment(self, ctx:SOGAParser.AssignmentContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#conditional.
+    def enterConditional(self, ctx:SOGAParser.ConditionalContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#conditional.
+    def exitConditional(self, ctx:SOGAParser.ConditionalContext):
+        pass
+
+
     # Enter a parse tree produced by SOGAParser#ifclause.
     def enterIfclause(self, ctx:SOGAParser.IfclauseContext):
         pass
@@ -50,6 +68,15 @@ class SOGAListener(ParseTreeListener):
 
     # Exit a parse tree produced by SOGAParser#block.
     def exitBlock(self, ctx:SOGAParser.BlockContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#merge.
+    def enterMerge(self, ctx:SOGAParser.MergeContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#merge.
+    def exitMerge(self, ctx:SOGAParser.MergeContext):
         pass
 
 

@@ -27,6 +27,7 @@ merge;
 /* enforces constraint about different sources */
 if s2s1 == 1
 {
+	skip;
       if s1s1 == 1
 	{
       	constr = 0;
@@ -74,6 +75,7 @@ merge;
 /* depending on distances constraints to observations */
 if d11 > 0.25
 {
+	skip;
 	if d11 < 0.75
 	{
       	ev1 = 1;
@@ -93,6 +95,7 @@ merge;
 
 if d12 > 1.25
 {
+	skip;
       if d12 < 1.75
 	{
       	ev2 = 1;
@@ -112,6 +115,7 @@ merge;
 
 if d21 > 1.25
 {
+	skip;
 	if d21 < 1.75
 	{
       	ev3 = 1;
@@ -131,6 +135,7 @@ merge;
 
 if d22 > 0.25
 {
+	skip;
 	if d22 < 0.75
 	{
 		ev4 = 1;

@@ -2,15 +2,18 @@ grammar SOGA;
 
 progr : (instr ';')*;
 
-instr : ID '=' (lexpr|expr) |
-	  ifclause elseclause 'end if'|
-	  'skip' | 'merge'; 
+instr : assignment | conditional | merge;
 
+assignment: ID '=' (lexpr|expr) | 'skip';
+
+conditional: ifclause elseclause 'end if';
 ifclause : 'if' bexpr '{' block '}';
 elseclause : 'else' '{' block '}';
 block : (instr ';')+;
 
-lexpr : 'norm' | ID | NUM | NUM '*' ID | lexpr ('+'|'-') lexpr | NUM '*' lexpr;
+merge : 'merge';
+
+lexpr : 'norm' | ID | NUM | NUM '*' lexpr | lexpr ('+'|'-') lexpr;
 bexpr : lexpr ('<'|'<='|'=='|'>='|'>') NUM;
 expr : lexpr | expr '*' expr | expr '^2';
 

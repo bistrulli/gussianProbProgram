@@ -8,6 +8,7 @@ perfC = 15*norm+skillC;
 /* constraints to observations */
 if perfA1 - perfB > 0
 {
+	skip;
 	if perfA2 - perfC > 0
 	{
       	cond = 1;

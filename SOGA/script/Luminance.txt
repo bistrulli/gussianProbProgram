@@ -2,6 +2,7 @@ luminance = reflectance*illumination;
     
 if luminance <= 4.5
 {
+	skip;
 	if luminance >= 3.5
 	{
       	cond = 1;
