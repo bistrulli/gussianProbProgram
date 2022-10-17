@@ -80,6 +80,15 @@ class SOGAListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SOGAParser#observe.
+    def enterObserve(self, ctx:SOGAParser.ObserveContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#observe.
+    def exitObserve(self, ctx:SOGAParser.ObserveContext):
+        pass
+
+
     # Enter a parse tree produced by SOGAParser#lexpr.
     def enterLexpr(self, ctx:SOGAParser.LexprContext):
         pass
@@ -104,6 +113,33 @@ class SOGAListener(ParseTreeListener):
 
     # Exit a parse tree produced by SOGAParser#expr.
     def exitExpr(self, ctx:SOGAParser.ExprContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#vars.
+    def enterVars(self, ctx:SOGAParser.VarsContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#vars.
+    def exitVars(self, ctx:SOGAParser.VarsContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#symvars.
+    def enterSymvars(self, ctx:SOGAParser.SymvarsContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#symvars.
+    def exitSymvars(self, ctx:SOGAParser.SymvarsContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#list.
+    def enterList(self, ctx:SOGAParser.ListContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#list.
+    def exitList(self, ctx:SOGAParser.ListContext):
         pass
 
 

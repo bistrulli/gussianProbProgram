@@ -1,0 +1,11 @@
+/* assigns distributions */
+perfA = gm([1],[50],[3.872983346207417]);
+perfB = gm([1],[50],[3.872983346207417]);
+perfC = gm([1],[50],[3.872983346207417]);
+    
+/* constraints to observations */
+observe(perfA-perfB > 0);
+observe(perfA-perfC > 0);
+
+skip;
+

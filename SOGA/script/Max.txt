@@ -1,0 +1,11 @@
+x = gm([1.],[0.],[1.]);
+y = gm([1.],[0.],[1.]);
+
+if x - y > 0 {
+    max = x;
+} else {
+    max = y;
+} end if;
+merge;
+
+skip;

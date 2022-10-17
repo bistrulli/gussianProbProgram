@@ -1,158 +1,51 @@
-eps = norm;
-
 /* assign sources */
-if eps < 0
-{
-	s1s1 = 1;
-}
-else
-{
-	s1s1 = 0;
-}
-end if;
-merge;
-
-eps = norm;
-if eps < 1.28155
-{
-	s2s1 = 1;
-}
-else
-{
-	s2s1 = 0;
-}
-end if;
-merge;
+s1s1 = gm([0.5,0.5], [1,0], [0,0]);
+s2s1 = gm([0.9,0.1], [1,0], [0,0]);
 
 /* enforces constraint about different sources */
-if s2s1 == 1
-{
-	skip;
-      if s1s1 == 1
-	{
-      	constr = 0;
-	}
-      else
-	{
-      	constr = 1;
-	}
-      end if;
-}
-else
-{
-	constr = 1;
-}
-end if;
-merge;
+observe(s1s1 + s2s1 < 2);
+skip;
   
 /* assigns distributions of distances */
 if s1s1 == 1
 {
-	d11 = norm;
-      d12 = norm + 1;
+	d11 = gm([1],[0],[1]);
+    d12 = gm([1],[1],[1]);
 }
 else
 {
-	d11 = norm + 1;
-      d12 = norm;
+	d11 = gm([1],[1],[1]);
+    d12 = gm([1],[0],[1]);
 }
 end if;
 merge;
+skip;
 
 if s2s1 == 1
 {
-	d21 = norm;
-      d22 = norm + 1;
+	d21 = gm([1],[0],[1]);
+    d22 = gm([1],[1],[1]);
 }
 else
 {
-	d21 = norm + 1;
-	d22 = norm;
+	d21 = gm([1],[1],[1]);
+	d22 = gm([1],[0],[1]);
 }
 end if;
 merge;
+skip;
 
 /* depending on distances constraints to observations */
-if d11 > 0.25
-{
-	skip;
-	if d11 < 0.75
-	{
-      	ev1 = 1;
-	}
-	else
-	{
-      	ev1 = 0;
-	}
-	end if;
-}
-else
-{
-	ev1 = 0;
-}
-end if;
-merge;
+observe(d11 > 0.25);
+observe(d11 < 0.75);
 
-if d12 > 1.25
-{
-	skip;
-      if d12 < 1.75
-	{
-      	ev2 = 1;
-	}
-	else
-	{
-		ev2 = 0;
-	}
-	end if;
-}
-else
-{
-	ev2 = 0;
-}
-end if;
-merge;
+observe(d12 > 1.25);
+observe(d12 < 1.75);
 
-if d21 > 1.25
-{
-	skip;
-	if d21 < 1.75
-	{
-      	ev3 = 1;
-	}
-	else
-	{
-		ev3 = 0;
-	}
-	end if;
-}
-else
-{
-	ev3 = 0;
-}
-end if;
-merge;
+observe(d21 > 1.25);
+observe(d21 < 1.75);
 
-if d22 > 0.25
-{
-	skip;
-	if d22 < 0.75
-	{
-		ev4 = 1;
-	}
-	else
-	{
-		ev4 = 0;
-	}
-	end if;
-}
-else
-{
-	ev4 = 0;
-}
-end if;
-merge;
+observe(d22 > 0.25);
+observe(d22 < 0.75);
 
-cond = constr*ev1*ev2*ev3*ev4;
-joint = s1s1*cond;
- 
+skip;

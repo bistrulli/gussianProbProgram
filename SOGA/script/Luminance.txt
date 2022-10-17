@@ -1,23 +1,8 @@
-luminance = reflectance*illumination;
-    
-if luminance <= 4.5
-{
-	skip;
-	if luminance >= 3.5
-	{
-      	cond = 1;
-	}
-	else
-	{
-		cond = 0;
-	}
-	end if;
-}
-else
-{
-	cond = 0;
-}
-end if;
-merge;
+reflectance = gm([1.],[1.],[0.3162]);
+illumination = gm([1.],[3.],[0.3162]);
 
-joint = reflectance*cond;
+luminance = reflectance*illumination;
+
+observe(luminance > 3);
+
+skip;

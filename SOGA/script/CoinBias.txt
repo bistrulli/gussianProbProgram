@@ -1,0 +1,50 @@
+bias = gm([0.72, 0.28], [0.21, 0.47], [0.1, 0.11]);
+
+if gm([0.5, 0.5] , [0.25, 0.75] , [0.25, 0.25]) - bias < 0 {
+    toss1 = 1;
+} else {
+    toss1 = 0;
+} end if;
+merge;
+
+observe(toss1 == 1);
+
+if gm([0.5, 0.5] , [0.25, 0.75] , [0.25, 0.25]) - bias < 0 {
+    toss2 = 1;
+} else {
+    toss2 = 0;
+} end if;
+merge;
+
+observe(toss2 == 1);
+
+if gm([0.5, 0.5] , [0.25, 0.75] , [0.25, 0.25]) - bias < 0 {
+    toss3 = 1;
+} else {
+    toss3 = 0;
+} end if;
+merge;
+
+observe(toss3 == 0);
+
+if gm([0.5, 0.5] , [0.25, 0.75] , [0.25, 0.25]) - bias < 0 {
+    toss4 = 1;
+} else {
+    toss4 = 0;
+} end if;
+merge;
+
+observe(toss4 == 1);
+
+if gm([0.5, 0.5] , [0.25, 0.75] , [0.25, 0.25]) - bias < 0 {
+    toss5 = 1;
+} else {
+    toss5 = 0;
+} end if;
+merge;
+
+observe(toss5 == 0);
+
+skip;
+
+

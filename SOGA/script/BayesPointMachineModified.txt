@@ -1,0 +1,11 @@
+w = gm([1.], [0.], [1.]);
+
+mean1 = 5*w;
+res1 = gm([1.0], [0.], [0.31]) + mean1;
+observe(res1 > 0);
+
+mean2 = 3*w;
+res2 = gm([1.0], [0.], [0.31]) + mean2;
+observe(res2 < 0);
+
+skip;

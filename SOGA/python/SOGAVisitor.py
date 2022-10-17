@@ -49,6 +49,11 @@ class SOGAVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SOGAParser#observe.
+    def visitObserve(self, ctx:SOGAParser.ObserveContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SOGAParser#lexpr.
     def visitLexpr(self, ctx:SOGAParser.LexprContext):
         return self.visitChildren(ctx)
@@ -61,6 +66,21 @@ class SOGAVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by SOGAParser#expr.
     def visitExpr(self, ctx:SOGAParser.ExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#vars.
+    def visitVars(self, ctx:SOGAParser.VarsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#symvars.
+    def visitSymvars(self, ctx:SOGAParser.SymvarsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#list.
+    def visitList(self, ctx:SOGAParser.ListContext):
         return self.visitChildren(ctx)
 
 

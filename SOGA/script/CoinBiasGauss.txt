@@ -1,0 +1,51 @@
+theta = gm([1.], [0.], [1.]);
+                 
+if gm([1.], [0.], [1.]) - theta < 0 {
+    obs = 1;
+} else { 
+    obs = 0; 
+} end if;
+merge;
+
+observe(obs==1);
+
+
+if gm([1.], [0.], [1.]) - theta < 0 {
+    obs = 1;
+} else { 
+    obs = 0; 
+} end if;
+merge;
+
+observe(obs == 1);
+
+
+if gm([1.], [0.], [1.]) - theta < 0 {
+    obs = 1;
+} else { 
+    obs = 0; 
+} end if;
+merge;
+
+observe(obs == 0);
+
+if gm([1.], [0.], [1.]) - theta < 0 {
+    obs = 1;
+} else { 
+    obs = 0; 
+} end if;
+merge;
+
+observe(obs == 1);
+
+if gm([1.], [0.], [1.]) - theta < 0 {
+    obs = 1;
+} else { 
+    obs = 0; 
+} end if;
+merge;
+
+observe(obs == 0);
+
+
+skip;

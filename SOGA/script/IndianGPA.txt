@@ -1,15 +1,9 @@
-eps = norm;
-    
-if eps < 0
-{
-	usa = 1;
-}
-else
-{
-	usa = 0;
-}
-end if;
-merge;
+/* TODO: usagpa and indgpa must be assigned so that they approximate the true distributions (mixtures of delta and uniform) */
+
+usa = gm([0.5,0.5],[1,0],[0,0]);
+
+usagpa = gm([0.01, 0.4945, 0.4945] , [4.0, 1.0, 3.0] , [0., 0.25, 0.25]);
+indgpa = gm([0.01, 0.495, 0.495] , [10.0, 2.5, 7.5] , [0., 0.25, 0.25]);
     
 if usa == 1
 {
@@ -17,21 +11,11 @@ if usa == 1
 }
 else
 {
-      gpa = indgpa;
+     gpa = indgpa;
 }
 end if;
 merge;
         
-if gpa == 4
-{
-	obs = 1;
-}
-else
-{
-      obs = 0;
-}
-end if;
-merge;
-    
-joint = usa*obs;
+observe(gpa==4);
 
+skip;

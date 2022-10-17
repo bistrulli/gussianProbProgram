@@ -12,10 +12,12 @@ class mylistener(SOGAListener):
         self.n_state = 0
         self.n_test = 0
         self.n_merge = 0
+        self.n_observe = 0
         # root of the CFG
         self.root = EntryNode('entry')
         # dictionary keeping track of the nodes in CFG 
         self.node_list = {}
+        self.ID_list = []
         
         # hidden variables used in the construction of the CFG
         self._current_node = self.root
@@ -25,10 +27,10 @@ class mylistener(SOGAListener):
     def enterAssignment(self, ctx):
         node = StateNode('state{}'.format(self.n_state))
         self.n_state += 1
-        node.expr = ctx.getText()
-        if self._flag is not None:
+        if self._flag is not None: # if state if after a test node
             node.cond = self._flag
             self._flag = None
+        node.expr = ctx.getText()
         node.parent.append(self._current_node)
         self._current_node.children.append(node)
         self._current_node = node
@@ -37,6 +39,15 @@ class mylistener(SOGAListener):
     def enterConditional(self, ctx):
         node = TestNode('test{}'.format(self.n_test))
         self.n_test += 1
+        node.parent.append(self._current_node)
+        self._current_node.children.append(node)
+        self._current_node = node
+        self.node_list[node.name] = node
+        
+    def enterObserve(self, ctx):
+        node = ObserveNode('observe{}'.format(self.n_observe))
+        node.LBC = ctx.bexpr().getText()
+        self.n_observe += 1
         node.parent.append(self._current_node)
         self._current_node.children.append(node)
         self._current_node = node
@@ -73,9 +84,16 @@ class mylistener(SOGAListener):
         self._current_node = node
         self.node_list[node.name] = node
         
+    def enterSymvars(self, ctx):
+        var = ctx.getText()
+        if 'gm(' not in var and var not in self.ID_list:
+                self.ID_list.append(var)
+                
+              
     def get_leaves(self, node, leaves):
         if len(node.children) == 0:
-            leaves.append(node)
+            if node not in leaves:
+                leaves.append(node)
             return leaves
         else:
             for child in node.children:

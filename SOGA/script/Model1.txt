@@ -1,0 +1,12 @@
+evidence = gm([0.5,0.5], [1.,0.], [0.,0.]);
+
+if evidence == 1 {
+    coin = gm([0.5,0.5], [1.,0.], [0.,0.]);
+    observe(coin == 1);
+    skip;
+} else {
+    skip;
+} end if;
+merge;
+
+skip;

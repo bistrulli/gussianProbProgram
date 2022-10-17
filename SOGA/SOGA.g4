@@ -2,9 +2,9 @@ grammar SOGA;
 
 progr : (instr ';')*;
 
-instr : assignment | conditional | merge;
+instr : assignment | conditional | merge | observe;
 
-assignment: ID '=' (lexpr|expr) | 'skip';
+assignment: symvars '=' (lexpr|expr) | 'skip';
 
 conditional: ifclause elseclause 'end if';
 ifclause : 'if' bexpr '{' block '}';
@@ -13,12 +13,18 @@ block : (instr ';')+;
 
 merge : 'merge';
 
-lexpr : 'norm' | ID | NUM | NUM '*' lexpr | lexpr ('+'|'-') lexpr;
-bexpr : lexpr ('<'|'<='|'=='|'>='|'>') NUM;
-expr : lexpr | expr '*' expr | expr '^2';
+observe: 'observe(' bexpr ')';
+
+lexpr : vars | NUM | NUM '*' lexpr | lexpr ('+'|'-') lexpr;
+bexpr : lexpr ('<'|'<='|'=='|'!='|'>='|'>') NUM;
+expr : lexpr | (NUM '*')? vars '*' vars | (NUM '*')? vars '^2' ;
+
+vars: symvars | 'gm(' list ',' list ',' list ')';
+symvars : ID;
+list: '[' NUM (',' NUM)*? ']';
 
 ID : ALPHA (ALPHA|DIGIT)*;
-NUM : DIGIT+ ('.' DIGIT*)?;
+NUM : '-'? DIGIT+ ('.' DIGIT*)?;
 
 COMM : '/*' .*? '*/' -> skip;
 WS : (' '|'\t'|'\r'|'\n') -> skip;
