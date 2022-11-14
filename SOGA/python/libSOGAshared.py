@@ -1,3 +1,17 @@
+# Contains some general purpose classes, functions and variables used by the SOGA Python Libraries. 
+# In particular it contains:
+# - import statement for auxiliary Python libraries;
+# - definition of an handle used for debugging;
+# - definition of tolerance parameters used by various functions;
+# - classes definition for representing distributions and Gaussian Mixtures;
+# - function definitions for numerical stability of the covariance matrices;
+# - function definitions invoked by multiple functions in different libraries.
+
+# TO DO:
+# -  add controls on the attributes of GaussianMix (lenghts of pi, mu, sigma, dimensions of mu and sigma)
+
+# AUXILIARY LIBRARIES 
+
 from copy import deepcopy
 from sympy import *
 import re
@@ -6,6 +20,8 @@ from scipy.stats import norm
 from scipy.stats import truncnorm
 from scipy.stats import multivariate_normal as mvnorm
 from itertools import product
+
+### DEBUGGING METHOD
 
 import functools
 
@@ -28,9 +44,10 @@ delta_tol = 1e-10 # if the 1-norm of a covariance matrix is <= delta_tol the cor
 prob_tol = 1e-10 # probability below prob_tol are treated as zero
 eig_tol = 1e-4
 
-### CLASSES FOR DISTRIBUTIONS 
+### CLASSES FOR DISTRIBUTIONS AND GAUSSIAN MIXTURES
 
 class GaussianMix():
+    """ A Gaussian Mixtures is represented by a list of mixing coefficients (stored in pi), a list of means (stored in mu) and a list of covariance matrices (stored in sigma)."""
     
     def __init__(self, pi, mu, sigma):
         self.pi = list(pi)         # pi is a list of scalars whose sum is 1
@@ -87,7 +104,7 @@ class GaussianMix():
 
 
 class Dist():
-    """ A distribution is given by a ordered list of variable names and a Gaussian Mixture describing the joint distribution over the variable vector"""
+    """ A distribution is given by a ordered list of variable names, stored in var_list, and a Gaussian Mixture, stored in gm, describing the joint distribution over the variable vector"""
     def __init__(self, var_list, gm):
         self.var_list = var_list
         self.gm = gm
@@ -98,48 +115,11 @@ class Dist():
     def __repr__(self):
         return str(self)
         
-        
-### SHARED FUNCTIONS 
-
-def extract_aux(dist, trunc):
-    """Parse string trunc to check for any gm(pi, mu, sigma) variable and adds it to dist"""
-    groups = [m.group() for m in re.finditer('gm\(.*?\)', trunc)]
-    aux_dist = deepcopy(dist)
-    aux_trunc = trunc
-    for n_aux, group in enumerate(groups):
-        new_pi = []
-        new_mu = []
-        new_sigma = []
-        aux_name = 'aux{}'.format(n_aux)
-        aux_trunc = aux_trunc.replace(group, aux_name)
-        pi_list, mu_list, sigma_list = [eval(m.group()) for m in re.finditer('\[.*?\]', group)]
-        aux_dist.var_list.append(aux_name)
-        for k in range(aux_dist.gm.n_comp()):
-            for j in range(len(pi_list)):
-                new_pi.append(aux_dist.gm.pi[k]*pi_list[j])
-                new_mu.append(np.hstack((aux_dist.gm.mu[k], mu_list[j])))
-                old_sigma = aux_dist.gm.sigma[k]
-                d = len(old_sigma)
-                aux_sigma = np.zeros((d+1,d+1))
-                aux_sigma[:d,:d] = old_sigma
-                aux_sigma[-1,-1] = sigma_list[j]**2
-                new_sigma.append(aux_sigma)
-        aux_dist.gm = GaussianMix(new_pi, new_mu, new_sigma)
-    return aux_dist, aux_trunc
-
-def substitute_deltas(dist, trunc):
-    """ Substitute variables in trunc which are Dirac Delta """
-    mu = dist.gm.mu[0]
-    sigma = dist.gm.sigma[0]
-    for i in range(len(sigma)):
-        if sigma[i,i] < delta_tol:
-            trunc = trunc.subs({dist.var_list[i]:mu[i]})
-    trunc = simplify_logic(trunc) 
-    return trunc
+### FUNCTIONS FOR NUMERICAL STABILITY OF COVARIANCE MATRICES
 
 def make_psd(sigma):
     """
-    Triggered when sigma is not positive semidefinite. Sets to 1e-10 negative eigenvalues of sigma. If the eigenvalues or the total error in the substitution are above a certain thershold prints an error message.
+    Triggered when sigma is not positive semidefinite. Sets to 1e-10 negative eigenvalues of sigma. If the eigenvalues or the total error in the substitution are above a certain threshold prints an error message.
     """
     new_sigma = make_sym(sigma)
     eig, M = np.linalg.eigh(new_sigma)
@@ -162,13 +142,56 @@ def make_psd(sigma):
     return new_sigma
 
 def make_sym(sigma):
+    """ 
+    Reassigns sigma to make it symmetric. For sigma[i,j]!=sigma[j,i] substitutes both with the average value. If the substitution leads to an error above a certain threshold prints an error message.
+    """
     for i in range(len(sigma)):
         for j in range(i+1,len(sigma)):
             if sigma[i,j] != sigma[j,i]:
                 v = (sigma[i,j] + sigma[j,i])/2
-                #if abs(v-sigma[i,j]) > eig_tol: 
-                    #print('substituting {} with {}'.format(sigma[i,j], v))
-                #if abs(v-sigma[i,j]) > eig_tol: 
-                    #print('substituting {} with {}'.format(sigma[j,i], v))
+                if abs(v-sigma[i,j]) > eig_tol: 
+                    print('substituting {} with {}'.format(sigma[i,j], v))
+                if abs(v-sigma[i,j]) > eig_tol: 
+                    print('substituting {} with {}'.format(sigma[j,i], v))
                 sigma[i,j] = sigma[j,i] = v
     return sigma
+
+        
+### SHARED FUNCTIONS 
+
+def extract_aux(dist, trunc):
+    """ Parses a string trunc to check for any gm(pi, mu, sigma) variable and adds it to dist in the form of an auxialiary variable with suitable parameters """
+    groups = [m.group() for m in re.finditer('gm\(.*?\)', trunc)]
+    aux_dist = deepcopy(dist)
+    aux_trunc = trunc
+    # for each gm(pi, mu, sigma) a new variable is added
+    for n_aux, group in enumerate(groups):
+        new_pi = []
+        new_mu = []
+        new_sigma = []
+        aux_name = 'aux{}'.format(n_aux)
+        aux_trunc = aux_trunc.replace(group, aux_name)
+        pi_list, mu_list, sigma_list = [eval(m.group()) for m in re.finditer('\[.*?\]', group)]
+        aux_dist.var_list.append(aux_name)
+        # for each component of the original distribution dist and for each component of a variable gm(pi, mu, sigma) a new Gaussian component is generated with mixing coefficient dist.pi[i]*pi[i].
+        for k in range(aux_dist.gm.n_comp()):
+            for j in range(len(pi_list)):
+                new_pi.append(aux_dist.gm.pi[k]*pi_list[j])
+                new_mu.append(np.hstack((aux_dist.gm.mu[k], mu_list[j])))
+                old_sigma = aux_dist.gm.sigma[k]
+                d = len(old_sigma)
+                aux_sigma = np.zeros((d+1,d+1))
+                aux_sigma[:d,:d] = old_sigma
+                aux_sigma[-1,-1] = sigma_list[j]**2
+                new_sigma.append(aux_sigma)
+        aux_dist.gm = GaussianMix(new_pi, new_mu, new_sigma)
+    return aux_dist, aux_trunc
+
+def substitute_deltas(dist, trunc):
+    """ Substitutes variables in trunc which are Dirac Delta """
+    mu = dist.gm.mu[0]
+    sigma = dist.gm.sigma[0]
+    for i in range(len(sigma)):
+        if sigma[i,i] < delta_tol:
+            trunc = trunc.subs({dist.var_list[i]:mu[i]})
+    return trunc

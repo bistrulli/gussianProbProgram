@@ -1,7 +1,17 @@
+# Contains the functions for computing the resulting distribution when an assignment instruction is encountered (in state nodes).
+
+# SOGA (defined in SOGA.py)
+# |- update_rule
+#    |- sym_expr
+#    |- update_gaussian
+
+
+
 from libSOGAshared import *
 
+
 def update_rule(dist, expr):
-    """ Applies expr to dist """
+    """ Applies expr to dist by calling update_gaussian on each component """
     if expr == 'skip':
         return dist
     else:
@@ -44,6 +54,7 @@ def update_gaussian(target, rule, comp):
     new_mu = deepcopy(mu)
     new_sigma = deepcopy(sigma)
     
+    # If the rule is x_i = x_j^2 
     if rule.is_Pow:
         for arg in rule.args:
             if arg.is_Number:
@@ -59,7 +70,7 @@ def update_gaussian(target, rule, comp):
                     new_sigma[i,k] = new_sigma[k,i] = 2*mu[j]*E(j,k)-2*mu[j]**2*mu[k]
         return new_mu, new_sigma
         
-        
+    # If the rule is x_i = c*x_j(*x_k)?
     if rule.is_Mul:
         const = 1
         prod_var = []
@@ -86,17 +97,16 @@ def update_gaussian(target, rule, comp):
                     new_sigma[i,s] = new_sigma[s,i] = const*(mu[j]*E(k,s)+mu[k]*E(j,s)-2*mu[j]*mu[k]*mu[s])
         return new_mu, new_sigma           
                 
-    
+    # If the rule is x_i = c_1*x_1 + ... + c_nx_n + c
     if rule.is_Add:    
-        A = np.eye(len(mu))
-        A[i,:] = np.zeros(len(mu))
-        b = np.zeros(len(mu))
+        alpha = np.zeros(len(mu))
+        c = 0
         for arg in rule.args:
             if arg.is_Number:
-                b[i] = b[i] + float(arg)
+                c = c + float(arg)
             if arg.is_Symbol:
                 j = var_name.index(str(arg))
-                A[i,j] = 1
+                alpha[j] = 1
             if arg.is_Mul:
                 j = None
                 for subarg in arg.args:
@@ -105,17 +115,23 @@ def update_gaussian(target, rule, comp):
                     if subarg.is_Symbol:
                         j = var_name.index(str(subarg))
                 if j is not None:
-                    A[i,j] = const
-        new_mu = A.dot(mu) + b
-        new_sigma = A.dot(sigma).dot(A.transpose())
+                    alpha[j] = const
+        new_mu[i] = sum([alpha[s]*mu[s] for s in range(len(mu))]) + c
+        new_sigma[i,i] = sum([alpha[s]**2*sigma[s,s] for s in range(len(mu))])
+        new_sigma[i,i] = new_sigma[i,i] + sum([2*alpha[s]*alpha[t]*sigma[s,t] for s in range(len(mu)) for t in range(s+1, len(mu)) ])
+        for j in range(len(mu)):
+            if j!=i:
+                new_sigma[i,j] = new_sigma[j,i] = sum([alpha[s]*sigma[s,j] for s in range(len(mu))])
         return new_mu, new_sigma
     
+    # If the rule is x_i = c
     if rule.is_Number:
         new_mu[i] = float(rule)
         for k in range(len(mu)):
             new_sigma[i,k] = new_sigma[k,i] = 0
         return new_mu, new_sigma
     
+    # If the rule is x_i = x_j
     if rule.is_Symbol:
         j = var_name.index(str(rule))
         new_mu[i] = mu[j]

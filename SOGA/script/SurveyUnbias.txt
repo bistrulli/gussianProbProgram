@@ -1,19 +1,6 @@
 bias1 = gm([0.3333, 0.3333, 0.3333] , [0.17, 0.5, 0.83] , [0.11, 0.11, 0.11]);
 bias2 = gm([0.5, 0.5] , [0.25, 0.75] , [0.25, 0.25]);
 
-mean1 = 3141*bias1;
-mean2 = 272*bias2;
-
-variance1 = mean1*bias1;
-variance1 = mean1 - variance1;
-variance2 = mean2*bias2;
-variance2 = mean2 - variance2;
-
-votes1 = variance1*gm([1.],[0.],[1.]);
-votes1 = votes1 + mean1;
-votes2 = variance2*gm([1.],[0.],[1.]);
-votes2 = votes2 + mean2;
-
 if gm([0.5, 0.5] , [0.25, 0.75] , [0.25, 0.25]) - bias1 < 0 {
     ans = 1;
 } else {

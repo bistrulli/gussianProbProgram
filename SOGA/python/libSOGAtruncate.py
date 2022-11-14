@@ -1,6 +1,30 @@
+# Contains the functions for computing the resulting distribution when a truncation occurs in conditional or observe instructions according to the following dependencies.
+
+# SOGA (defined in SOGA.py)
+# |- negate
+# |- truncate
+#     |- sym_trunc
+#     |- truncate_gaussian
+#        |- sym_trunc
+#        |- continuous condition 
+#        |   |- insert_values    
+#        |- extract_alpha        
+#        |- find_basis            
+#        |- select_indices 
+#        |- reduce_indices 
+#        |- compute_moments        
+#        |  |- compute_lower_mom   
+#        |  |  |- partitionfunc   
+#        |  |- _prob             
+#        |  |- _compute_mom1     
+#        |  |- _compute_mom2     
+#        |- extend_indices
+
+
 from libSOGAshared import *
 
 def negate(trunc):
+    """ Produces a string which is the logic negation of trunc """
     if '<' in trunc:
         if '<=' in trunc:
             trunc = trunc.replace('<=', '>')
@@ -19,7 +43,7 @@ def negate(trunc):
 
 
 def truncate(dist, trunc):
-    """ Given a distribution dist computes its truncation to trunc"""
+    """ Given a distribution dist computes its truncation to trunc. Returns a pair norm_factor, new_dist where norm_factor is the probability mass of the original distribution dist on trunc and new_dist is a Dist object representing the (approximated) truncated distribution. """
     if trunc == 'true':
         return 1., dist
     elif trunc == 'false':
@@ -51,99 +75,82 @@ def sym_trunc(trunc):
     if '==' in trunc:
         lhs, rhs = trunc.split('==')
         trunc = Eq(sympify(lhs), sympify(rhs))
-        trunc = simplify_logic(trunc)
     elif '!=' in trunc:
         lhs, rhs = trunc.split('!=')
         trunc = Ne(sympify(lhs), sympify(rhs))
-        trunc = simplify_logic(trunc)
     else:
-        trunc = simplify_logic(sympify(trunc))
+        trunc = sympify(trunc)
     return trunc
- 
-    
+
+
 def truncate_gaussian(dist, trunc):
     """ Given a distribution dist whose gm is has a single component computes its truncation to trunc """
     mu = dist.gm.mu[0]
     sigma = dist.gm.sigma[0]
-# substitutes deterministic values, if the truncation becomes true or false returns
+    # substitutes deterministic values of dist in trunc
     trunc = substitute_deltas(dist, trunc)
+    # if after substitution the truncation is True or False returns
     if str(trunc) == 'False':
         return 0, mu, sigma
     if str(trunc) == 'True':
         return 1, mu, sigma
-    if type(trunc) is Equality:
-        return 0, mu, sigma
+    # if after substitution there are still free (continuous) variables and true is defined by an unequality returns as in True 
     if type(trunc) is Unequality:
         return 1, mu, sigma
-# extracts the vector (a_1, a_2, ..., a_k) of the truncation and the extremes of the hyper-rectangle
+    # if after substitution there are still free (continuous) variables and true is defined by an equality calls continuous_condition
+    if type(trunc) is Equality:
+        _, mu, sigma = continuous_condition(dist, trunc)
+        return 1, mu, sigma
+    # in all other case proceeds to truncate
+    # STEP 1: extracts the vector (a_1, a_2, ..., a_k) of the truncation and the extremes of the hyper-rectangle
     alpha, c = extract_alpha(trunc, dist.var_list)
-# changes coordinates so that the line alpha*x = 0 is one of the axis
+    # STEP 2: changes coordinates so that the line alpha*x = 0 is one of the axis
     A = find_basis(alpha)
     transl_mu = A.dot(mu)
     transl_sigma = A.dot(sigma).dot(A.transpose())
-    #transl_sigma = matrix_check(transl_sigma) 
-# finds the indices of the components that needs to be transformed
+    # STEP 3: finds the indices of the components that needs to be transformed
     transl_alpha = np.zeros(len(transl_mu))
     transl_alpha[0] = 1
     indices = select_indices(transl_alpha, transl_sigma)
-# creates reduced vectors taking into account only the coordinates that need to be transformed
+    # STEP 4: creates reduced vectors taking into account only the coordinates that need to be transformed
     red_transl_alpha = reduce_indices(transl_alpha, indices)
     red_transl_mu = reduce_indices(transl_mu, indices)
     red_transl_sigma = reduce_indices(transl_sigma, indices) 
-    #print('Calling control after reduction')
-    #red_transl_sigma = matrix_check(red_transl_sigma)
-# creates the hyper-rectangle to integrate on
+    # STEP 5: creates the hyper-rectangle to integrate on
     a = np.ones(len(red_transl_alpha))*(-1.e10)
     b = np.ones(len(red_transl_alpha))*(1.e10)
     if type(trunc) is StrictGreaterThan or type(trunc) is GreaterThan:
-        a[0] = c/np.linalg.norm(alpha)
+        a[0] = c
     if type(trunc) is StrictLessThan or type(trunc) is LessThan:
-        b[0] = c/np.linalg.norm(alpha)    
-# compute moments in the transformed coordinates
+        b[0] = c    
+    # STEP 6: compute moments in the transformed coordinates
     new_P, new_red_transl_mu, new_red_transl_sigma = compute_moments(red_transl_mu, red_transl_sigma, a, b)
-    #print('Calling control after truncation')
-    #new_red_transl_sigma = matrix_check(new_red_transl_sigma)
-# recreates extended vectors
+    # STEP 7: recreates extended vectors
     new_transl_mu = extend_indices(new_red_transl_mu, transl_mu, indices)
     new_transl_sigma = extend_indices(new_red_transl_sigma, transl_sigma, indices)
-    #print('Calling control after extension')
-    #new_transl_sigma = matrix_check(new_transl_sigma)
-# goes back to older coordinates
+    # STEP 8: goes back to older coordinates
     A_inv = np.linalg.inv(A)
     new_mu = A_inv.dot(new_transl_mu)
     new_sigma = A_inv.dot(new_transl_sigma).dot(A_inv.transpose())
-    #print('Calling control after translating back')
-    #new_transl_sigma = matrix_check(new_transl_sigma)
     return new_P, new_mu, new_sigma
 
 
 def extract_alpha(trunc, var_name):
+    """ From trunc extracts a vector alpha and a number c such that alpha*var_name </<=/>=/> c is the symbolic expression of trunc """
     # saves the two parts of the inequality in poly_lhs and poly_rhs
-    poly_lhs = trunc.args[0]
-    poly_rhs = trunc.args[1]
-    # computes the constant, changing sign if needed, as if it is on the RHS
-    if poly_rhs.is_constant():
-        c = float(poly_rhs)
-    elif poly_lhs.is_constant():
-        c = -float(poly_lhs)
-    else:
-        c = 0  
+    lhs = trunc.args[0]
+    c = float(trunc.args[1])
     # computes the coefficients of the variables, changing signs if needed, as if they are on the LHS and saves them (ordered as in var_name) to the vector alpha
-    coeff_dict = {var:0 for var in var_name}
-    for sym in poly_lhs.free_symbols:
-        coeff_dict[str(sym)] = float(Poly(poly_lhs).coeff_monomial(str(sym)))
-    for sym in poly_rhs.free_symbols:
-        coeff_dict[str(sym)] = -float(Poly(poly_rhs).coeff_monomial(str(sym)))
     alpha = np.zeros(len(var_name))
-    for i, var in enumerate(var_name):
-        alpha[i] = coeff_dict[var]
-    return alpha, c
+    for sym in lhs.free_symbols:
+        alpha[var_name.index(str(sym))] = float(Poly(lhs).coeff_monomial(str(sym)))
+    norm = np.linalg.norm(alpha)
+    return alpha/norm, c/norm
 
 def find_basis(alpha):
     """
     Given alpha (vector of the truncation) returns a matrix A giving the change of variable necessary to make alpha one of the axis
     """
-    alpha = alpha/np.linalg.norm(alpha)
     u, s, v = np.linalg.svd([alpha])
     alpha1 = v[:,1:]
     A = np.vstack((alpha.reshape(1,alpha.shape[0]), alpha1.transpose()))
@@ -169,6 +176,8 @@ def select_indices(alpha, sigma):
         init_set = new_set
         new_set = enlarge_set(init_set)   
     return np.sort(new_set)  
+
+
 
 def reduce_indices(vec, indices):
     """
@@ -218,6 +227,7 @@ def partitionfunc(n,k,l=0):
             yield (i,)+result
 
 
+            
 def _prob(mu, sigma, a, b):
     """
     Computes the mass probability of the normal distribution with mean mu and covariance matrix sigma in the 
@@ -239,6 +249,7 @@ def _prob(mu, sigma, a, b):
             sigma = make_psd(sigma)
             p = mvnorm.cdf(x,mean=mu,cov=sigma,allow_singular=True)
         if np.isnan(p):
+            # due to a bug in scipy (https://github.com/scipy/scipy/issues/7669), when applied to two dimensional vectors mvnorm.cdf can return nan. The problem is solvable by adding a third variable, indipendent from the others (does not affect the computed probability).
             new_x = list(x) + [0]
             new_mu = list(mu) + [0]
             new_sigma = list(sigma)
@@ -247,7 +258,6 @@ def _prob(mu, sigma, a, b):
             new_sigma.append([0]*(len(sigma)+1))
             p = mvnorm.cdf(new_x, mean=new_mu, cov=new_sigma, allow_singular=True)
         P = P + ((-1)**(n-sum(i_list)))*p
-    #P = norm.cdf(b[0], loc=mu[0], scale=sigma[0,0]) - norm.cdf(a[0], loc=mu[0], scale=sigma[0,0])
     return P
     
 
@@ -266,8 +276,7 @@ def compute_lower_mom(mu, sigma, a, b, trunc_idx, trunc):
     elif trunc == 'up':
         muj = np.delete(mu, trunc_idx) + ((b[trunc_idx]-mu[trunc_idx])/sigma[trunc_idx, trunc_idx])*np.delete(sigma, trunc_idx, axis=0)[:,trunc_idx]
     # computes the new covariance matrix
-    sigmaj = np.delete(sigma, trunc_idx, axis=0)
-    sigmaj = np.delete(sigmaj, trunc_idx, axis=1)
+    sigmaj = np.delete(np.delete(sigma, trunc_idx, axis=0), trunc_idx, axis=1)
     sigmaj = sigmaj - (1/sigma[trunc_idx, trunc_idx])*np.delete(sigma, trunc_idx, axis=0)[:,trunc_idx].reshape(len(sigma)-1,1) @         np.delete(sigma, trunc_idx, axis=1)[trunc_idx,:].reshape(1,len(sigma)-1)  
     # saves the moments in a dictionary
     dict_mom_lower = {}
@@ -382,3 +391,50 @@ def compute_moments(mu, sigma, a, b):
             f[j] = 1
             new_sigma[i,j] = new_sigma[j,i] = dict_mom[tuple(e+f)]/new_P - (dict_mom[tuple(e)]/new_P)*(dict_mom[tuple(f)]/new_P)
     return new_P, new_mu, new_sigma
+
+### conditioning to zero probability events
+
+def continuous_condition(dist, trunc):
+    """ Given dist and trunc in the form of an equality constraints on a non-degenerate gaussian computes the conditional distribution, applying the formulas Bishop, Pattern Recognition and Machine Learning """
+    mu = dist.gm.mu[0]
+    sigma = dist.gm.sigma[0]
+    
+    # Stores index of the observed variables, corresponding indicator vector and observed valus
+    obs_idx = dist.var_list.index(str(trunc.args[0]))
+    alpha = np.zeros(len(mu))
+    alpha[obs_idx] = 1
+    obs_val = float(trunc.args[1])
+    # STEP 1: selects indices to condition (if only 1 returns as in False)
+    indices = select_indices(alpha, sigma)
+    if len(indices) == 1:
+        return 0, mu, sigma
+    # STEP 2: creates reduced vectors
+    red_mu = reduce_indices(mu, indices)
+    red_sigma = reduce_indices(sigma, indices) 
+    red_alpha = reduce_indices(alpha, indices)
+    red_obs_idx = int(list(np.where(red_alpha!=0))[0][0])
+    # STEP 3: computes cond_sigma (select is a mask containing the index of the conditioned variables)
+    select = (np.arange(len(red_mu))!=red_obs_idx)
+    cond_sigma = red_sigma[select,:][:,select]
+    cond_sigma = cond_sigma - (1/red_sigma[red_obs_idx,red_obs_idx])*(red_sigma[select,red_obs_idx].reshape(len(select)-1,1)).dot(red_sigma[red_obs_idx,select].reshape(1,len(select)-1))
+    # STEP 4: computes cond_mu
+    cond_mu = red_mu[select] + (1/red_sigma[red_obs_idx,red_obs_idx])*(obs_val-red_mu[red_obs_idx])*red_sigma[select,red_obs_idx]
+    # STEP 5: adds value for the observed variable (now a delta)
+    cond_mu, cond_sigma = insert_value(obs_val, red_obs_idx, cond_mu, cond_sigma)
+    # STEP 6: returns to the original set of variables
+    ext_cond_sigma = extend_indices(cond_sigma, sigma, indices)
+    ext_cond_mu = extend_indices(cond_mu, mu, indices) 
+    return 1, ext_cond_mu, ext_cond_sigma
+
+def insert_value(val, idx, mu, sigma):
+    """ Extends mu and sigma by adding val in corresponding to the idx position (for sigma the other row- and column-entries are 0) """
+    d = len(mu)
+    new_mu = np.array(list(mu[:idx]) + [val] + list(mu[idx:]))
+    new_sigma = np.block([[sigma[:idx,:idx], np.zeros((idx,1)), sigma[:idx,idx:]], 
+          [np.zeros((1,d+1))],
+          [sigma[idx:,:idx], np.zeros((d-idx,1)), sigma[idx:,idx:]]])
+    return new_mu, new_sigma
+
+    
+    
+    

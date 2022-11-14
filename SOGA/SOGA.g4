@@ -17,7 +17,7 @@ observe: 'observe(' bexpr ')';
 
 lexpr : vars | NUM | NUM '*' lexpr | lexpr ('+'|'-') lexpr;
 bexpr : lexpr ('<'|'<='|'=='|'!='|'>='|'>') NUM;
-expr : lexpr | (NUM '*')? vars '*' vars | (NUM '*')? vars '^2' ;
+expr : lexpr | (NUM '*')? vars '*' vars | vars '^2' ;
 
 vars: symvars | 'gm(' list ',' list ',' list ')';
 symvars : ID;
