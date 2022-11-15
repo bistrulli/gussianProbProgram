@@ -10,51 +10,53 @@ else:
 
 def serializedATN():
     return [
-        4,1,30,140,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,30,145,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,1,0,1,0,1,0,5,0,34,8,0,10,0,12,0,37,9,0,1,1,1,1,1,1,1,
         1,3,1,43,8,1,1,2,1,2,1,2,1,2,3,2,49,8,2,1,2,3,2,52,8,2,1,3,1,3,1,
         3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,4,
         6,72,8,6,11,6,12,6,73,1,7,1,7,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,9,1,
         9,1,9,3,9,88,8,9,1,9,1,9,1,9,5,9,93,8,9,10,9,12,9,96,9,9,1,10,1,
-        10,1,10,1,10,1,11,1,11,1,11,3,11,105,8,11,1,11,1,11,1,11,1,11,1,
-        11,1,11,1,11,3,11,114,8,11,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,
-        12,1,12,3,12,125,8,12,1,13,1,13,1,14,1,14,1,14,1,14,5,14,133,8,14,
-        10,14,12,14,136,9,14,1,14,1,14,1,14,1,134,1,18,15,0,2,4,6,8,10,12,
-        14,16,18,20,22,24,26,28,0,2,1,0,13,14,1,0,15,20,139,0,35,1,0,0,0,
-        2,42,1,0,0,0,4,51,1,0,0,0,6,53,1,0,0,0,8,57,1,0,0,0,10,63,1,0,0,
-        0,12,71,1,0,0,0,14,75,1,0,0,0,16,77,1,0,0,0,18,87,1,0,0,0,20,97,
-        1,0,0,0,22,113,1,0,0,0,24,124,1,0,0,0,26,126,1,0,0,0,28,128,1,0,
-        0,0,30,31,3,2,1,0,31,32,5,1,0,0,32,34,1,0,0,0,33,30,1,0,0,0,34,37,
-        1,0,0,0,35,33,1,0,0,0,35,36,1,0,0,0,36,1,1,0,0,0,37,35,1,0,0,0,38,
-        43,3,4,2,0,39,43,3,6,3,0,40,43,3,14,7,0,41,43,3,16,8,0,42,38,1,0,
-        0,0,42,39,1,0,0,0,42,40,1,0,0,0,42,41,1,0,0,0,43,3,1,0,0,0,44,45,
-        3,26,13,0,45,48,5,2,0,0,46,49,3,18,9,0,47,49,3,22,11,0,48,46,1,0,
-        0,0,48,47,1,0,0,0,49,52,1,0,0,0,50,52,5,3,0,0,51,44,1,0,0,0,51,50,
-        1,0,0,0,52,5,1,0,0,0,53,54,3,8,4,0,54,55,3,10,5,0,55,56,5,4,0,0,
-        56,7,1,0,0,0,57,58,5,5,0,0,58,59,3,20,10,0,59,60,5,6,0,0,60,61,3,
-        12,6,0,61,62,5,7,0,0,62,9,1,0,0,0,63,64,5,8,0,0,64,65,5,6,0,0,65,
-        66,3,12,6,0,66,67,5,7,0,0,67,11,1,0,0,0,68,69,3,2,1,0,69,70,5,1,
-        0,0,70,72,1,0,0,0,71,68,1,0,0,0,72,73,1,0,0,0,73,71,1,0,0,0,73,74,
-        1,0,0,0,74,13,1,0,0,0,75,76,5,9,0,0,76,15,1,0,0,0,77,78,5,10,0,0,
-        78,79,3,20,10,0,79,80,5,11,0,0,80,17,1,0,0,0,81,82,6,9,-1,0,82,88,
-        3,24,12,0,83,88,5,27,0,0,84,85,5,27,0,0,85,86,5,12,0,0,86,88,3,18,
-        9,2,87,81,1,0,0,0,87,83,1,0,0,0,87,84,1,0,0,0,88,94,1,0,0,0,89,90,
-        10,1,0,0,90,91,7,0,0,0,91,93,3,18,9,2,92,89,1,0,0,0,93,96,1,0,0,
-        0,94,92,1,0,0,0,94,95,1,0,0,0,95,19,1,0,0,0,96,94,1,0,0,0,97,98,
-        3,18,9,0,98,99,7,1,0,0,99,100,5,27,0,0,100,21,1,0,0,0,101,114,3,
-        18,9,0,102,103,5,27,0,0,103,105,5,12,0,0,104,102,1,0,0,0,104,105,
-        1,0,0,0,105,106,1,0,0,0,106,107,3,24,12,0,107,108,5,12,0,0,108,109,
-        3,24,12,0,109,114,1,0,0,0,110,111,3,24,12,0,111,112,5,21,0,0,112,
-        114,1,0,0,0,113,101,1,0,0,0,113,104,1,0,0,0,113,110,1,0,0,0,114,
-        23,1,0,0,0,115,125,3,26,13,0,116,117,5,22,0,0,117,118,3,28,14,0,
-        118,119,5,23,0,0,119,120,3,28,14,0,120,121,5,23,0,0,121,122,3,28,
-        14,0,122,123,5,11,0,0,123,125,1,0,0,0,124,115,1,0,0,0,124,116,1,
-        0,0,0,125,25,1,0,0,0,126,127,5,26,0,0,127,27,1,0,0,0,128,129,5,24,
-        0,0,129,134,5,27,0,0,130,131,5,23,0,0,131,133,5,27,0,0,132,130,1,
-        0,0,0,133,136,1,0,0,0,134,135,1,0,0,0,134,132,1,0,0,0,135,137,1,
-        0,0,0,136,134,1,0,0,0,137,138,5,25,0,0,138,29,1,0,0,0,11,35,42,48,
-        51,73,87,94,104,113,124,134
+        10,1,10,1,10,1,10,1,10,1,10,3,10,105,8,10,1,11,1,11,1,11,3,11,110,
+        8,11,1,11,1,11,1,11,1,11,1,11,1,11,1,11,3,11,119,8,11,1,12,1,12,
+        1,12,1,12,1,12,1,12,1,12,1,12,1,12,3,12,130,8,12,1,13,1,13,1,14,
+        1,14,1,14,1,14,5,14,138,8,14,10,14,12,14,141,9,14,1,14,1,14,1,14,
+        1,139,1,18,15,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,0,3,1,0,13,
+        14,1,0,15,18,1,0,19,20,145,0,35,1,0,0,0,2,42,1,0,0,0,4,51,1,0,0,
+        0,6,53,1,0,0,0,8,57,1,0,0,0,10,63,1,0,0,0,12,71,1,0,0,0,14,75,1,
+        0,0,0,16,77,1,0,0,0,18,87,1,0,0,0,20,104,1,0,0,0,22,118,1,0,0,0,
+        24,129,1,0,0,0,26,131,1,0,0,0,28,133,1,0,0,0,30,31,3,2,1,0,31,32,
+        5,1,0,0,32,34,1,0,0,0,33,30,1,0,0,0,34,37,1,0,0,0,35,33,1,0,0,0,
+        35,36,1,0,0,0,36,1,1,0,0,0,37,35,1,0,0,0,38,43,3,4,2,0,39,43,3,6,
+        3,0,40,43,3,14,7,0,41,43,3,16,8,0,42,38,1,0,0,0,42,39,1,0,0,0,42,
+        40,1,0,0,0,42,41,1,0,0,0,43,3,1,0,0,0,44,45,3,26,13,0,45,48,5,2,
+        0,0,46,49,3,18,9,0,47,49,3,22,11,0,48,46,1,0,0,0,48,47,1,0,0,0,49,
+        52,1,0,0,0,50,52,5,3,0,0,51,44,1,0,0,0,51,50,1,0,0,0,52,5,1,0,0,
+        0,53,54,3,8,4,0,54,55,3,10,5,0,55,56,5,4,0,0,56,7,1,0,0,0,57,58,
+        5,5,0,0,58,59,3,20,10,0,59,60,5,6,0,0,60,61,3,12,6,0,61,62,5,7,0,
+        0,62,9,1,0,0,0,63,64,5,8,0,0,64,65,5,6,0,0,65,66,3,12,6,0,66,67,
+        5,7,0,0,67,11,1,0,0,0,68,69,3,2,1,0,69,70,5,1,0,0,70,72,1,0,0,0,
+        71,68,1,0,0,0,72,73,1,0,0,0,73,71,1,0,0,0,73,74,1,0,0,0,74,13,1,
+        0,0,0,75,76,5,9,0,0,76,15,1,0,0,0,77,78,5,10,0,0,78,79,3,20,10,0,
+        79,80,5,11,0,0,80,17,1,0,0,0,81,82,6,9,-1,0,82,88,3,24,12,0,83,88,
+        5,27,0,0,84,85,5,27,0,0,85,86,5,12,0,0,86,88,3,18,9,2,87,81,1,0,
+        0,0,87,83,1,0,0,0,87,84,1,0,0,0,88,94,1,0,0,0,89,90,10,1,0,0,90,
+        91,7,0,0,0,91,93,3,18,9,2,92,89,1,0,0,0,93,96,1,0,0,0,94,92,1,0,
+        0,0,94,95,1,0,0,0,95,19,1,0,0,0,96,94,1,0,0,0,97,98,3,18,9,0,98,
+        99,7,1,0,0,99,100,5,27,0,0,100,105,1,0,0,0,101,102,5,26,0,0,102,
+        103,7,2,0,0,103,105,5,27,0,0,104,97,1,0,0,0,104,101,1,0,0,0,105,
+        21,1,0,0,0,106,119,3,18,9,0,107,108,5,27,0,0,108,110,5,12,0,0,109,
+        107,1,0,0,0,109,110,1,0,0,0,110,111,1,0,0,0,111,112,3,24,12,0,112,
+        113,5,12,0,0,113,114,3,24,12,0,114,119,1,0,0,0,115,116,3,24,12,0,
+        116,117,5,21,0,0,117,119,1,0,0,0,118,106,1,0,0,0,118,109,1,0,0,0,
+        118,115,1,0,0,0,119,23,1,0,0,0,120,130,5,26,0,0,121,122,5,22,0,0,
+        122,123,3,28,14,0,123,124,5,23,0,0,124,125,3,28,14,0,125,126,5,23,
+        0,0,126,127,3,28,14,0,127,128,5,11,0,0,128,130,1,0,0,0,129,120,1,
+        0,0,0,129,121,1,0,0,0,130,25,1,0,0,0,131,132,5,26,0,0,132,27,1,0,
+        0,0,133,134,5,24,0,0,134,139,5,27,0,0,135,136,5,23,0,0,136,138,5,
+        27,0,0,137,135,1,0,0,0,138,141,1,0,0,0,139,140,1,0,0,0,139,137,1,
+        0,0,0,140,142,1,0,0,0,141,139,1,0,0,0,142,143,5,25,0,0,143,29,1,
+        0,0,0,12,35,42,48,51,73,87,94,104,109,118,129,139
     ]
 
 class SOGAParser ( Parser ):
@@ -69,8 +71,8 @@ class SOGAParser ( Parser ):
 
     literalNames = [ "<INVALID>", "';'", "'='", "'skip'", "'end if'", "'if'", 
                      "'{'", "'}'", "'else'", "'merge'", "'observe('", "')'", 
-                     "'*'", "'+'", "'-'", "'<'", "'<='", "'=='", "'!='", 
-                     "'>='", "'>'", "'^2'", "'gm('", "','", "'['", "']'" ]
+                     "'*'", "'+'", "'-'", "'<'", "'<='", "'>='", "'>'", 
+                     "'=='", "'!='", "'^2'", "'gm('", "','", "'['", "']'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
@@ -827,6 +829,9 @@ class SOGAParser ( Parser ):
         def NUM(self):
             return self.getToken(SOGAParser.NUM, 0)
 
+        def ID(self):
+            return self.getToken(SOGAParser.ID, 0)
+
         def getRuleIndex(self):
             return SOGAParser.RULE_bexpr
 
@@ -853,18 +858,40 @@ class SOGAParser ( Parser ):
         self.enterRule(localctx, 20, self.RULE_bexpr)
         self._la = 0 # Token type
         try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 97
-            self.lexpr(0)
-            self.state = 98
-            _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SOGAParser.T__14) | (1 << SOGAParser.T__15) | (1 << SOGAParser.T__16) | (1 << SOGAParser.T__17) | (1 << SOGAParser.T__18) | (1 << SOGAParser.T__19))) != 0)):
-                self._errHandler.recoverInline(self)
-            else:
-                self._errHandler.reportMatch(self)
-                self.consume()
-            self.state = 99
-            self.match(SOGAParser.NUM)
+            self.state = 104
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 97
+                self.lexpr(0)
+                self.state = 98
+                _la = self._input.LA(1)
+                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SOGAParser.T__14) | (1 << SOGAParser.T__15) | (1 << SOGAParser.T__16) | (1 << SOGAParser.T__17))) != 0)):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
+                self.state = 99
+                self.match(SOGAParser.NUM)
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 101
+                self.match(SOGAParser.ID)
+                self.state = 102
+                _la = self._input.LA(1)
+                if not(_la==SOGAParser.T__18 or _la==SOGAParser.T__19):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
+                self.state = 103
+                self.match(SOGAParser.NUM)
+                pass
+
+
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -921,40 +948,40 @@ class SOGAParser ( Parser ):
         self.enterRule(localctx, 22, self.RULE_expr)
         self._la = 0 # Token type
         try:
-            self.state = 113
+            self.state = 118
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 101
+                self.state = 106
                 self.lexpr(0)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 104
+                self.state = 109
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==SOGAParser.NUM:
-                    self.state = 102
+                    self.state = 107
                     self.match(SOGAParser.NUM)
-                    self.state = 103
+                    self.state = 108
                     self.match(SOGAParser.T__11)
 
 
-                self.state = 106
+                self.state = 111
                 self.vars_()
-                self.state = 107
+                self.state = 112
                 self.match(SOGAParser.T__11)
-                self.state = 108
+                self.state = 113
                 self.vars_()
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 110
+                self.state = 115
                 self.vars_()
-                self.state = 111
+                self.state = 116
                 self.match(SOGAParser.T__20)
                 pass
 
@@ -975,9 +1002,8 @@ class SOGAParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def symvars(self):
-            return self.getTypedRuleContext(SOGAParser.SymvarsContext,0)
-
+        def ID(self):
+            return self.getToken(SOGAParser.ID, 0)
 
         def list_(self, i:int=None):
             if i is None:
@@ -1011,29 +1037,29 @@ class SOGAParser ( Parser ):
         localctx = SOGAParser.VarsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 24, self.RULE_vars)
         try:
-            self.state = 124
+            self.state = 129
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [SOGAParser.ID]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 115
-                self.symvars()
+                self.state = 120
+                self.match(SOGAParser.ID)
                 pass
             elif token in [SOGAParser.T__21]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 116
-                self.match(SOGAParser.T__21)
-                self.state = 117
-                self.list_()
-                self.state = 118
-                self.match(SOGAParser.T__22)
-                self.state = 119
-                self.list_()
-                self.state = 120
-                self.match(SOGAParser.T__22)
                 self.state = 121
-                self.list_()
+                self.match(SOGAParser.T__21)
                 self.state = 122
+                self.list_()
+                self.state = 123
+                self.match(SOGAParser.T__22)
+                self.state = 124
+                self.list_()
+                self.state = 125
+                self.match(SOGAParser.T__22)
+                self.state = 126
+                self.list_()
+                self.state = 127
                 self.match(SOGAParser.T__10)
                 pass
             else:
@@ -1084,7 +1110,7 @@ class SOGAParser ( Parser ):
         self.enterRule(localctx, 26, self.RULE_symvars)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 126
+            self.state = 131
             self.match(SOGAParser.ID)
         except RecognitionException as re:
             localctx.exception = re
@@ -1134,24 +1160,24 @@ class SOGAParser ( Parser ):
         self.enterRule(localctx, 28, self.RULE_list)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 128
+            self.state = 133
             self.match(SOGAParser.T__23)
-            self.state = 129
-            self.match(SOGAParser.NUM)
             self.state = 134
+            self.match(SOGAParser.NUM)
+            self.state = 139
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,10,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,11,self._ctx)
             while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1+1:
-                    self.state = 130
+                    self.state = 135
                     self.match(SOGAParser.T__22)
-                    self.state = 131
+                    self.state = 136
                     self.match(SOGAParser.NUM) 
-                self.state = 136
+                self.state = 141
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,10,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,11,self._ctx)
 
-            self.state = 137
+            self.state = 142
             self.match(SOGAParser.T__24)
         except RecognitionException as re:
             localctx.exception = re

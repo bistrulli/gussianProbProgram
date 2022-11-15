@@ -9,7 +9,7 @@
 
 # TO DO:
 # - improve dependencies on libraries (all auxiliary libraries import libSOGAshared, maybe there is a more efficient way to do this?)
-# - libSOGAtruncate: add in the grammar constraint on continuous observations (must be in the form ID == NUM)
+# - libSOGAtruncate: currently raising an error if in continuous conditioning a singular matrix is encountered. It should be possible to deal with these cases without rephrasing the program
 # - libSOGAmerge: add other pruning strategies
 
 from libSOGAtruncate import *

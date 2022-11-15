@@ -99,8 +99,8 @@ def truncate_gaussian(dist, trunc):
         return 1, mu, sigma
     # if after substitution there are still free (continuous) variables and true is defined by an equality calls continuous_condition
     if type(trunc) is Equality:
-        _, mu, sigma = continuous_condition(dist, trunc)
-        return 1, mu, sigma
+        p, mu, sigma = continuous_condition(dist, trunc)
+        return p, mu, sigma
     # in all other case proceeds to truncate
     # STEP 1: extracts the vector (a_1, a_2, ..., a_k) of the truncation and the extremes of the hyper-rectangle
     alpha, c = extract_alpha(trunc, dist.var_list)
@@ -411,6 +411,8 @@ def continuous_condition(dist, trunc):
     # STEP 2: creates reduced vectors
     red_mu = reduce_indices(mu, indices)
     red_sigma = reduce_indices(sigma, indices) 
+    if np.linalg.det(red_sigma) == 0:
+        raise ValueError('Singular matrix in continuous conditioning')
     red_alpha = reduce_indices(alpha, indices)
     red_obs_idx = int(list(np.where(red_alpha!=0))[0][0])
     # STEP 3: computes cond_sigma (select is a mask containing the index of the conditioned variables)

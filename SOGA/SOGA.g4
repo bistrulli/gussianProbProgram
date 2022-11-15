@@ -16,10 +16,10 @@ merge : 'merge';
 observe: 'observe(' bexpr ')';
 
 lexpr : vars | NUM | NUM '*' lexpr | lexpr ('+'|'-') lexpr;
-bexpr : lexpr ('<'|'<='|'=='|'!='|'>='|'>') NUM;
+bexpr : lexpr ('<'|'<='|'>='|'>') NUM | ID ('=='|'!=') NUM;
 expr : lexpr | (NUM '*')? vars '*' vars | vars '^2' ;
 
-vars: symvars | 'gm(' list ',' list ',' list ')';
+vars: ID | 'gm(' list ',' list ',' list ')';
 symvars : ID;
 list: '[' NUM (',' NUM)*? ']';
 
