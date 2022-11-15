@@ -19,7 +19,7 @@ lexpr : vars | NUM | NUM '*' lexpr | lexpr ('+'|'-') lexpr;
 bexpr : lexpr ('<'|'<='|'>='|'>') NUM | ID ('=='|'!=') NUM;
 expr : lexpr | (NUM '*')? vars '*' vars | vars '^2' ;
 
-vars: ID | 'gm(' list ',' list ',' list ')';
+vars: symvars | 'gm(' list ',' list ',' list ')';
 symvars : ID;
 list: '[' NUM (',' NUM)*? ']';
 
