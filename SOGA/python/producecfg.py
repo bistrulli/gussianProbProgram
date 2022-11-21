@@ -26,7 +26,8 @@
 
 # TO DO:
 # - add controls on set_expr and set_cond
-# - instead of storing strings parse assignment instructions, LBC and observe conditions according to suitably defined grammars.
+# - instead of storing strings parse assignment instructions, LBC and observe conditions according to suitably defined grammars
+# - add instruction to convert uniform (and possibly other distributions) to GMs
 
 from antlr4 import *
 from SOGALexer import *

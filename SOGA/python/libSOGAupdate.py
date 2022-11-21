@@ -5,10 +5,7 @@
 #    |- sym_expr
 #    |- update_gaussian
 
-
-
 from libSOGAshared import *
-
 
 def update_rule(dist, expr):
     """ Applies expr to dist by calling update_gaussian on each component """
@@ -25,9 +22,8 @@ def update_rule(dist, expr):
             mu, sigma = update_gaussian(target, rule, comp)     
             new_mu.append(mu[:d])
             new_sigma.append(sigma[:d,:d])
-        return Dist(dist.var_list, GaussianMix(aux_dist.gm.pi, new_mu, new_sigma))        
-        
-    
+        return Dist(dist.var_list, GaussianMix(aux_dist.gm.pi, new_mu, new_sigma))
+
 def sym_expr(expr):
     """ Returns a pair (target, rule), where target variable that is being assigned the symbolic expression rule """
     target, rule = expr.split('=')
@@ -141,6 +137,8 @@ def update_gaussian(target, rule, comp):
             else:
                 new_sigma[i,k] = sigma[j,j]
         return new_mu, new_sigma
+
+
     
     
     
