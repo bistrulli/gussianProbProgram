@@ -38,14 +38,14 @@ def SOGA():
         start = time()
         cfg = produce_cfg(filename)
         end = time()
-        print('CFG produced in: ', end-start)
+        print('CFG produced in: ', np.round(end-start,4), 's')
     
         start = time()
         if not pruning is None:
             print('Pruning to Kmax={} components'.format(Kmax))
         output_dist = start_SOGA(cfg, pruning, Kmax)
         end = time()
-        print('Computation completed in ', end-start)
+        print('Computation completed in ', np.round(end-start,4), 's')
         print('\n')
     
         if var_list == []:
@@ -60,9 +60,15 @@ def SOGA():
     
         if cov is True:
             if var_list == []:
-                print('Covariance:\n', np.around(output_dist.gm.cov(),5))
+                print('Covariance:')
+                for i, var in enumerate(output_dist.var_list):
+                    row_string = ['{:.3f}'.format(output_dist.gm.cov()[i][j]).center(7) for j in range(output_dist.gm.n_dim())]
+                    print(f'{var:>12}', *row_string)
             else:
-                print('Covariance:\n', np.around(output_dist.gm.cov()[var_idx][:,var_idx], 5))
+                print('Covariance:')
+                for i in var_idx:
+                    row_string = ['{:.3f}'.format(output_dist.gm.cov()[i][j]).center(7) for j in var_idx]
+                    print(f'{output_dist.var_list[i]:>12}', *row_string)
             
     else:
         print('Welcome to SOGA!\n')
