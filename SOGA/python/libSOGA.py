@@ -21,11 +21,11 @@ def start_SOGA(cfg, pruning=None, Kmax=None):
     """ Invokes SOGA on the root of the CFG object cfg, initializing current_distribution to a Dirac delta centered in zero.
         If pruning='classic' implements pruning at the merge nodes with maximum number of component Kmax.
         Returns an object Dist (defined in libSOGAshared) with the final computed distribution."""
-    timing.trunc_time.clear()
-    timing.update_time.clear()
-    timing.merge_time.clear()
-    timing.change_time = 0
-    timing.mom_time = 0
+    #timing.trunc_time.clear()
+    #timing.update_time.clear()
+    #timing.merge_time.clear()
+    #timing.change_time = 0
+    #timing.mom_time = 0
     var_list = cfg.ID_list
     gm = GaussianMix([1.], [np.array([0.]*len(var_list))], [np.zeros((len(var_list),len(var_list)))])
     init_dist = Dist(var_list, gm)
@@ -33,11 +33,11 @@ def start_SOGA(cfg, pruning=None, Kmax=None):
     start = time()
     p, current_dist = merge(cfg.node_list['exit'].list_dist, pruning, Kmax)
     end = time()
-    timing.merge_time.append(end-start)
-    print('Truncations:', len(timing.trunc_time), 'total:', sum(timing.trunc_time))
-    print('Updates:', len(timing.update_time), 'total:', sum(timing.update_time))
-    print('Mergings:', len(timing.merge_time), 'total:', sum(timing.merge_time))
-    print('Time for changing coordinates:', timing.change_time, '\tTime for moments computation:', timing.mom_time)
+    #timing.merge_time.append(end-start)
+    #print('Truncations:', len(timing.trunc_time), 'total:', sum(timing.trunc_time))
+    #print('Updates:', len(timing.update_time), 'total:', sum(timing.update_time))
+    #print('Mergings:', len(timing.merge_time), 'total:', sum(timing.merge_time))
+    #print('Time for changing coordinates:', timing.change_time, '\tTime for moments computation:', timing.mom_time)
     cfg.node_list['exit'].list_dist = []
     return current_dist
 

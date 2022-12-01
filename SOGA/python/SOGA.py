@@ -20,7 +20,7 @@ def SOGA():
     var_idx = []
     
     try:
-        opts, args = getopt.getopt(argv, "f:p:c:v:")
+        opts, args = getopt.getopt(argv, "f:p:cv:")
     except:
         print("Error")
   
