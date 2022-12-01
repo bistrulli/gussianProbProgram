@@ -25,9 +25,12 @@
 # The function produce_cfg is invoked on a .txt file containing the valid script of a SOGA program. It uses the libraries SOGALexer and SOGAParser (automatically generated using ANTLR4) to create the parse tree of the program and subsequently explores it recursively using the customized CFG listener. Returns the CFG object generated from the program script.
 
 # TO DO:
-# - add controls on set_expr and set_cond
-# - instead of storing strings parse assignment instructions, LBC and observe conditions according to suitably defined grammars
 # - add instruction to convert uniform (and possibly other distributions) to GMs
+# - automate merge after if
+# - remove unnecessary skip
+# - add a prune(Kmax) instruction
+# - add bounded loops
+# - add vectors
 
 from antlr4 import *
 from SOGALexer import *

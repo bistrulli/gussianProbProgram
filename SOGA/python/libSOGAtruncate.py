@@ -1,27 +1,14 @@
 # Contains the functions for computing the resulting distribution when a truncation occurs in conditional or observe instructions according to the following dependencies.
 
-# SOGA (defined in SOGA.py)
-# |- negate
-# |- truncate
-#     |- sym_trunc
-#     |- truncate_gaussian
-#        |- sym_trunc
-#        |- continuous condition 
-#        |   |- insert_values    
-#        |- extract_alpha        
-#        |- find_basis            
-#        |- select_indices 
-#        |- reduce_indices 
-#        |- compute_moments        
-#        |  |- compute_lower_mom   
-#        |  |  |- partitionfunc   
-#        |  |- _prob             
-#        |  |- _compute_mom1     
-#        |  |- _compute_mom2     
-#        |- extend_indices
-
-
 from libSOGAshared import *
+from TRUNCLexer import *
+from TRUNCParser import *
+from TRUNCListener import *
+import timing
+
+#from rpy2.robjects.packages import importr
+#from rpy2.robjects import r
+#momtrunc = importr('MomTrunc')
 
 def negate(trunc):
     """ Produces a string which is the logic negation of trunc """
@@ -41,7 +28,295 @@ def negate(trunc):
         trunc = trunc.replace('!=', '==')
     return trunc
 
-
+class TruncRule(TRUNCListener):
+    
+    def __init__(self, var_list):
+        self.var_list = var_list
+        self.type = None
+        self.coeff = [0.]*len(var_list)
+        self.const = 0
+        self.func = None
+        
+        self.aux_pis = []
+        self.aux_means = []
+        self.aux_covs = []
+        
+    def enterIneq(self, ctx):
+        self.type = ctx.inop().getText()
+        self.const = float(ctx.NUM().getText())
+    
+    def enterLexpr(self, ctx):
+        self.flag_sign = 1.
+            
+    def exitLexpr(self, ctx):
+                       
+        def ineq_func(comp):
+            mu = comp.gm.mu[0]
+            sigma = comp.gm.sigma[0]
+            final_pi = []
+            final_mu = []
+            final_sigma = []
+            for part in product(*[range(len(mean)) for mean in self.aux_means]):
+                # for a given combination of components of the auxiliary variables, creates a new component extending comp
+                aux_pi = 1
+                aux_mean = list(deepcopy(mu))
+                aux_sigma = []
+                ineq_coeff = deepcopy(self.coeff)
+                ineq_const = self.const
+                for p,q in zip(range(len(self.aux_means)), part):
+                    aux_pi = aux_pi*self.aux_pis[p][q]
+                    aux_mean.append(self.aux_means[p][q])
+                    aux_sigma.append(self.aux_covs[p][q])
+                aux_mean = np.array(aux_mean)
+                aux_sigma = np.diag(aux_sigma)
+                aux_cov = np.block([[sigma, np.zeros((len(sigma), len(aux_sigma)))], [np.zeros((len(aux_sigma), len(sigma))), aux_sigma]])
+                # substitute deltas
+                for i in range(len(aux_mean)):
+                    if aux_cov[i,i] < delta_tol and self.coeff[i] != 0.:
+                        ineq_const = ineq_const - self.coeff[i]*aux_mean[i]
+                        ineq_coeff[i] = 0.
+                # if all variables were deltas return
+                if np.all(np.array(ineq_coeff) == 0):
+                    if (self.type == '>' and ineq_const < 0) or (self.type == '>=' and ineq_const <= 0) or (self.type == '<' and ineq_const > 0) or (self.type == '<=' and ineq_const >= 0):
+                        new_P = 1.
+                    else:
+                        new_P = 0.
+                    new_mu = mu
+                    new_sigma = sigma
+                # else compute truncated distribution
+                else:
+                    # STEP 1: change variables
+                    start = time()
+                    norm = np.linalg.norm(ineq_coeff)
+                    ineq_coeff = np.array(ineq_coeff)/norm
+                    ineq_const = ineq_const/norm
+                    A = find_basis(ineq_coeff)
+                    transl_mu = A.dot(aux_mean)
+                    transl_sigma = A.dot(aux_cov).dot(A.transpose())
+                    # STEP 2: finds the indices of the components that needs to be transformed
+                    transl_alpha = np.zeros(len(transl_mu))
+                    transl_alpha[0] = 1
+                    indices = select_indices(transl_alpha, transl_sigma)
+                    # STEP 3: creates reduced vectors taking into account only the coordinates that need to be transformed
+                    red_transl_alpha = reduce_indices(transl_alpha, indices)
+                    red_transl_mu = reduce_indices(transl_mu, indices)
+                    red_transl_sigma = reduce_indices(transl_sigma, indices) 
+                    # STEP 4: creates the hyper-rectangle to integrate on
+                    a = np.ones(len(red_transl_alpha))*(-1.e10)
+                    b = np.ones(len(red_transl_alpha))*(1.e10)
+                    if self.type=='>' or self.type=='>=':
+                        a[0] = ineq_const
+                    if self.type=='<' or self.type=='<=':
+                        b[0] = ineq_const   
+                    end = time()
+                    timing.change_time = timing.change_time + end - start
+                    # STEP 5: compute moments in the transformed coordinates
+                    start = time()
+                    new_P, new_red_transl_mu, new_red_transl_sigma = compute_moments(red_transl_mu, red_transl_sigma, a, b)
+                    end = time()
+                    timing.mom_time = timing.mom_time + end - start
+                    # STEP 6: recreates extended vectors
+                    start = time()
+                    new_transl_mu = extend_indices(new_red_transl_mu, transl_mu, indices)
+                    new_transl_sigma = extend_indices(new_red_transl_sigma, transl_sigma, indices)
+                    # STEP 7: goes back to older coordinates
+                    d = len(comp.var_list)
+                    A_inv = np.linalg.inv(A)
+                    new_mu = A_inv.dot(new_transl_mu)[:d]
+                    new_sigma = A_inv.dot(new_transl_sigma).dot(A_inv.transpose())[:d,:d]
+                    end = time()
+                    timing.change_time = timing.change_time + end - start
+                # append new values
+                final_pi.append(aux_pi*new_P)
+                final_mu.append(new_mu)
+                final_sigma.append(new_sigma)
+            end_func = time()
+            return GaussianMix(final_pi, final_mu, final_sigma)
+            
+        self.func = ineq_func
+        
+        #def ineq_func(comp):
+        #    mu = comp.gm.mu[0]
+        #    sigma = comp.gm.sigma[0]
+        #    final_pi = []
+        #    final_mu = []
+        #    final_sigma = []
+        #    for part in product(*[range(len(mean)) for mean in self.aux_means]):
+        #        # for a given combination of components of the auxiliary variables, creates a new component extending comp
+        #        aux_pi = 1
+        #        aux_mean = list(deepcopy(mu))
+        #        aux_sigma = []
+        #        ineq_coeff = deepcopy(self.coeff)
+        #        ineq_const = self.const
+        #        for p,q in zip(range(len(self.aux_means)), part):
+        #            aux_pi = aux_pi*self.aux_pis[p][q]
+        #            aux_mean.append(self.aux_means[p][q])
+        #            aux_sigma.append(self.aux_covs[p][q])
+        #        aux_mean = np.array(aux_mean)
+        #        aux_sigma = np.diag(aux_sigma)
+        #        aux_cov = np.block([[sigma, np.zeros((len(sigma), len(aux_sigma)))], [np.zeros((len(aux_sigma), len(sigma))), aux_sigma]])
+        #        # substitute deltas
+        #        for i in range(len(aux_mean)):
+        #            if aux_cov[i,i] < delta_tol and self.coeff[i] != 0.:
+        #                ineq_const = ineq_const - self.coeff[i]*aux_mean[i]
+        #                ineq_coeff[i] = 0.
+        #        # if all variables were deltas return
+        #        if np.all(np.array(ineq_coeff) == 0):
+        #            if (self.type == '>' and ineq_const < 0) or (self.type == '>=' and ineq_const <= 0) or (self.type == '<' and ineq_const > 0) or (self.type == '<=' and ineq_const >= 0):
+        #                new_P = 1.
+        #            else:
+        #                new_P = 0.
+        #            new_mu = mu
+        #            new_sigma = sigma
+        #        # else compute truncated distribution
+        #        else:
+        #            # STEP 1: change variables
+        #            start = time()
+        #            norm = np.linalg.norm(ineq_coeff)
+        #            ineq_coeff = np.array(ineq_coeff)/norm
+        #            ineq_const = ineq_const/norm
+        #            A = find_basis(ineq_coeff)
+        #            transl_mu = A.dot(aux_mean)
+        #            transl_sigma = A.dot(aux_cov).dot(A.transpose())
+        #            # STEP 2: finds the indices of the components that needs to be transformed
+        #            transl_alpha = np.zeros(len(transl_mu))
+        #            transl_alpha[0] = 1
+        #            indices = select_indices(transl_alpha, transl_sigma)
+        #            # STEP 3: creates reduced vectors taking into account only the coordinates that need to be transformed
+        #            red_transl_alpha = reduce_indices(transl_alpha, indices)
+        #            red_transl_mu = reduce_indices(transl_mu, indices)
+        #            red_transl_sigma = reduce_indices(transl_sigma, indices) 
+        #            # STEP 4: creates the hyper-rectangle to integrate on
+        #            a = np.ones(len(red_transl_alpha))*(-1.e10)
+        #            b = np.ones(len(red_transl_alpha))*(1.e10)
+        #            if self.type=='>' or self.type=='>=':
+        #                a[0] = ineq_const
+        #            if self.type=='<' or self.type=='<=':
+        #                b[0] = ineq_const   
+        #            end = time()
+        #            timing.change_time = timing.change_time + end - start
+        #            # STEP 5: compute moments in the transformed coordinates
+        #            start = time()
+        #            a = r.c(*a.tolist())
+        #            b = r.c(*b.tolist())
+        #            rmu = r.c(*red_transl_mu.tolist())
+        #            rsigma = r.c(*red_transl_sigma.ravel().tolist())
+        #            rsigma = r.matrix(rsigma, nrow = len(red_transl_mu))
+        #            new_P = r.pmvnormt(a, b, rmu, rsigma)
+        #            new_P = new_P[0]
+        #            new_pars = r.meanvarTMD(a, b, rmu, rsigma, dist='normal')
+        #            new_red_transl_mu = np.array(new_pars[0])
+        #            new_red_transl_sigma = np.array(new_pars[2])
+        #            end = time()
+        #            timing.mom_time = timing.mom_time + end - start
+        #            # STEP 6: recreates extended vectors
+        #            start = time()
+        #            new_transl_mu = extend_indices(new_red_transl_mu, transl_mu, indices)
+        #            new_transl_sigma = extend_indices(new_red_transl_sigma, transl_sigma, indices)
+        #            # STEP 7: goes back to older coordinates
+        #            d = len(comp.var_list)
+        #            A_inv = np.linalg.inv(A)
+        #            new_mu = A_inv.dot(new_transl_mu)[:d]
+        #            new_sigma = A_inv.dot(new_transl_sigma).dot(A_inv.transpose())[:d,:d]
+        #            end = time()
+        #            timing.change_time = timing.change_time + end - start
+        #        # append new values
+        #        final_pi.append(aux_pi*new_P)
+        #        final_mu.append(new_mu)
+        #        final_sigma.append(new_sigma)
+        #    end_func = time()
+        #    return GaussianMix(final_pi, final_mu, final_sigma)
+        #
+        #self.func = ineq_func
+        
+        
+        
+    def enterMonom(self,ctx):
+        if not ctx.vars_() is None:
+            if not ctx.vars_().ID() is None:
+                ID = ctx.vars_().ID().getText()
+                if not ctx.NUM() is None:
+                    coeff = self.flag_sign*float(ctx.NUM().getText())
+                else:
+                    coeff = self.flag_sign
+                idx = self.var_list.index(ID)
+                self.coeff[idx] = coeff
+            elif not ctx.vars_().gm() is None:
+                self.aux_pis.append(eval(ctx.vars_().gm().list_()[0].getText()))
+                self.aux_means.append(eval(ctx.vars_().gm().list_()[1].getText()))
+                self.aux_covs.append(np.array(eval(ctx.vars_().gm().list_()[2].getText()))**2)
+                if not ctx.NUM() is None:
+                    self.coeff.append(self.flag_sign*float(ctx.NUM().getText()))
+                else: 
+                    self.coeff.append(self.flag_sign)            
+            
+    def enterSub(self, ctx):
+        self.flag_sign = -1.
+        
+    def enterSum(self, ctx):
+        self.flag_sign = 1.
+        
+    def enterEq(self, ctx):
+        self.type = ctx.eqop().getText()
+        idx = self.var_list.index(ctx.symvars().getText())
+        self.coeff[idx] = 1.
+        self.const = float(ctx.NUM().getText())
+        
+        def eq_func(comp):
+            mu = comp.gm.mu[0]
+            sigma = comp.gm.sigma[0]
+            final_pi = []
+            final_mu = []
+            final_sigma = []
+            eq_coeff = deepcopy(self.coeff)
+            eq_const = self.const
+            # check if delta
+            i = np.where(np.array(self.coeff) != 0)[0][0]
+            if sigma[i,i] < delta_tol:
+                eq_const = eq_const - self.coeff[i]*mu[i]
+                eq_coeff[i] = 0.
+            # if delta return
+            if np.all(np.array(eq_coeff) == 0):
+                if (self.type == '==' and eq_const == 0) or (self.type == '!=' and eq_const != 0):
+                    new_P = 1.
+                else:
+                    new_P = 0.
+                new_mu = mu
+                new_sigma = sigma
+            else:
+                # STEP 1: selects indices to condition
+                indices = select_indices(eq_coeff, sigma)
+                if len(indices) == 1:
+                    new_P = 0.
+                    new_mu = mu
+                    new_sigma = sigma
+                else:
+                    # STEP 2: creates reduced vectors
+                    red_mu = reduce_indices(mu, indices)
+                    red_sigma = reduce_indices(sigma, indices) 
+                    red_alpha = reduce_indices(eq_coeff, indices)
+                    red_obs_idx = int(list(np.where(np.array(red_alpha)!=0))[0][0])
+                    # STEP 3: computes cond_sigma (select is a mask containing the index of the conditioned variables)
+                    select = (np.arange(len(red_mu))!=red_obs_idx)
+                    cond_sigma = red_sigma[select,:][:,select]
+                    cond_sigma = cond_sigma - (1/red_sigma[red_obs_idx,red_obs_idx])*(red_sigma[select,red_obs_idx].reshape(len(select)-1,1)).dot(red_sigma[red_obs_idx,select].reshape(1,len(select)-1))
+                    # STEP 4: computes cond_mu
+                    cond_mu = red_mu[select] + (1/red_sigma[red_obs_idx,red_obs_idx])*(eq_const-red_mu[red_obs_idx])*red_sigma[select,red_obs_idx]
+                    # if conditioned matrix is Null, it is equivalent to oberving a single independent component
+                    if np.all(cond_sigma) == 0:   
+                        new_P = 0.
+                    else:
+                        new_P = 1.
+                    # STEP 5: adds value for the observed variable (now a delta)
+                    cond_mu, cond_sigma = insert_value(eq_const, red_obs_idx, cond_mu, cond_sigma)
+                    # STEP 6: returns to the original set of variables
+                    new_sigma = extend_indices(cond_sigma, sigma, indices)
+                    new_mu = extend_indices(cond_mu, mu, indices) 
+            return GaussianMix([new_P], [new_mu], [new_sigma])
+        
+        self.func = eq_func
+    
+    
 def truncate(dist, trunc):
     """ Given a distribution dist computes its truncation to trunc. Returns a pair norm_factor, new_dist where norm_factor is the probability mass of the original distribution dist on trunc and new_dist is a Dist object representing the (approximated) truncated distribution. """
     if trunc == 'true':
@@ -49,108 +324,40 @@ def truncate(dist, trunc):
     elif trunc == 'false':
         return 0., dist
     else:
-        d = len(dist.var_list)
-        # creates an augmented distribution with new variables appearing in aux_trunc (needed when gm(...) is involved)
-        aux_dist, aux_trunc = extract_aux(dist, trunc)
-        # converts aux_trunc to symbolic
-        aux_trunc = sym_trunc(aux_trunc)
-        # iterates on the component and truncates each one of them storing the relative probabilities on trunc
+        trunc_func = trunc_parse(dist.var_list, trunc)
         new_dist = Dist(dist.var_list, GaussianMix([],[],[]))
         new_pi = []
-        for k in range(aux_dist.gm.n_comp()):
-            comp = Dist(aux_dist.var_list, aux_dist.gm.comp(k))
-            p, mu, sigma = truncate_gaussian(comp, aux_trunc) 
-            if p > prob_tol:
-                new_dist.gm.mu.append(mu[:d])
-                new_dist.gm.sigma.append(sigma[:d,:d])
-                new_pi.append(aux_dist.gm.pi[k]*p)
+        for k in range(dist.gm.n_comp()):
+            comp = Dist(dist.var_list, dist.gm.comp(k))
+            new_mix = trunc_func(comp) 
+            for h in range(new_mix.n_comp()):
+                if new_mix.pi[h] > prob_tol:
+                    new_dist.gm.mu.append(new_mix.mu[h])
+                    new_dist.gm.sigma.append(new_mix.sigma[h])
+                    new_pi.append(dist.gm.pi[k]*new_mix.pi[h])
         norm_factor = sum(np.array(new_pi))
         if norm_factor > prob_tol:
             new_dist.gm.pi = list(np.array(new_pi)/norm_factor)
         return norm_factor, new_dist
+    
+    
+def trunc_parse(var_list, trunc):
+    """ Parses trunc using ANTLR4. Returns a function """
+    lexer = TRUNCLexer(InputStream(trunc))
+    stream = CommonTokenStream(lexer)
+    parser = TRUNCParser(stream)
+    tree = parser.trunc()
+    trunc_rule = TruncRule(var_list)
+    walker = ParseTreeWalker()
+    walker.walk(trunc_rule, tree) 
+    return trunc_rule.func
 
-
-def sym_trunc(trunc):
-    """ Returns a symbolic version of trunc """
-    if '==' in trunc:
-        lhs, rhs = trunc.split('==')
-        trunc = Eq(sympify(lhs), sympify(rhs))
-    elif '!=' in trunc:
-        lhs, rhs = trunc.split('!=')
-        trunc = Ne(sympify(lhs), sympify(rhs))
-    else:
-        trunc = sympify(trunc)
-    return trunc
-
-
-def truncate_gaussian(dist, trunc):
-    """ Given a distribution dist whose gm is has a single component computes its truncation to trunc """
-    mu = dist.gm.mu[0]
-    sigma = dist.gm.sigma[0]
-    # substitutes deterministic values of dist in trunc
-    trunc = substitute_deltas(dist, trunc)
-    # if after substitution the truncation is True or False returns
-    if str(trunc) == 'False':
-        return 0, mu, sigma
-    if str(trunc) == 'True':
-        return 1, mu, sigma
-    # if after substitution there are still free (continuous) variables and true is defined by an unequality returns as in True 
-    if type(trunc) is Unequality:
-        return 1, mu, sigma
-    # if after substitution there are still free (continuous) variables and true is defined by an equality calls continuous_condition
-    if type(trunc) is Equality:
-        p, mu, sigma = continuous_condition(dist, trunc)
-        return p, mu, sigma
-    # in all other case proceeds to truncate
-    # STEP 1: extracts the vector (a_1, a_2, ..., a_k) of the truncation and the extremes of the hyper-rectangle
-    alpha, c = extract_alpha(trunc, dist.var_list)
-    # STEP 2: changes coordinates so that the line alpha*x = 0 is one of the axis
-    A = find_basis(alpha)
-    transl_mu = A.dot(mu)
-    transl_sigma = A.dot(sigma).dot(A.transpose())
-    # STEP 3: finds the indices of the components that needs to be transformed
-    transl_alpha = np.zeros(len(transl_mu))
-    transl_alpha[0] = 1
-    indices = select_indices(transl_alpha, transl_sigma)
-    # STEP 4: creates reduced vectors taking into account only the coordinates that need to be transformed
-    red_transl_alpha = reduce_indices(transl_alpha, indices)
-    red_transl_mu = reduce_indices(transl_mu, indices)
-    red_transl_sigma = reduce_indices(transl_sigma, indices) 
-    # STEP 5: creates the hyper-rectangle to integrate on
-    a = np.ones(len(red_transl_alpha))*(-1.e10)
-    b = np.ones(len(red_transl_alpha))*(1.e10)
-    if type(trunc) is StrictGreaterThan or type(trunc) is GreaterThan:
-        a[0] = c
-    if type(trunc) is StrictLessThan or type(trunc) is LessThan:
-        b[0] = c    
-    # STEP 6: compute moments in the transformed coordinates
-    new_P, new_red_transl_mu, new_red_transl_sigma = compute_moments(red_transl_mu, red_transl_sigma, a, b)
-    # STEP 7: recreates extended vectors
-    new_transl_mu = extend_indices(new_red_transl_mu, transl_mu, indices)
-    new_transl_sigma = extend_indices(new_red_transl_sigma, transl_sigma, indices)
-    # STEP 8: goes back to older coordinates
-    A_inv = np.linalg.inv(A)
-    new_mu = A_inv.dot(new_transl_mu)
-    new_sigma = A_inv.dot(new_transl_sigma).dot(A_inv.transpose())
-    return new_P, new_mu, new_sigma
-
-
-def extract_alpha(trunc, var_name):
-    """ From trunc extracts a vector alpha and a number c such that alpha*var_name </<=/>=/> c is the symbolic expression of trunc """
-    # saves the two parts of the inequality in poly_lhs and poly_rhs
-    lhs = trunc.args[0]
-    c = float(trunc.args[1])
-    # computes the coefficients of the variables, changing signs if needed, as if they are on the LHS and saves them (ordered as in var_name) to the vector alpha
-    alpha = np.zeros(len(var_name))
-    for sym in lhs.free_symbols:
-        alpha[var_name.index(str(sym))] = float(Poly(lhs).coeff_monomial(str(sym)))
-    norm = np.linalg.norm(alpha)
-    return alpha/norm, c/norm
 
 def find_basis(alpha):
     """
     Given alpha (vector of the truncation) returns a matrix A giving the change of variable necessary to make alpha one of the axis
     """
+    alpha = np.array(alpha)
     u, s, v = np.linalg.svd([alpha])
     alpha1 = v[:,1:]
     A = np.vstack((alpha.reshape(1,alpha.shape[0]), alpha1.transpose()))
@@ -170,7 +377,7 @@ def select_indices(alpha, sigma):
             total_set = list(set(total_set + i_indices))
         return total_set
     
-    init_set = list(np.where(alpha!=0)[0])
+    init_set = list(np.where(np.array(alpha)!=0)[0])
     new_set = enlarge_set(init_set)
     while set(init_set) != set(new_set):
         init_set = new_set
@@ -394,40 +601,6 @@ def compute_moments(mu, sigma, a, b):
 
 ### conditioning to zero probability events
 
-def continuous_condition(dist, trunc):
-    """ Given dist and trunc in the form of an equality constraints on a non-degenerate gaussian computes the conditional distribution, applying the formulas Bishop, Pattern Recognition and Machine Learning """
-    mu = dist.gm.mu[0]
-    sigma = dist.gm.sigma[0]
-    
-    # Stores index of the observed variables, corresponding indicator vector and observed valus
-    obs_idx = dist.var_list.index(str(trunc.args[0]))
-    alpha = np.zeros(len(mu))
-    alpha[obs_idx] = 1
-    obs_val = float(trunc.args[1])
-    # STEP 1: selects indices to condition (if only 1 returns as in False)
-    indices = select_indices(alpha, sigma)
-    if len(indices) == 1:
-        return 0, mu, sigma
-    # STEP 2: creates reduced vectors
-    red_mu = reduce_indices(mu, indices)
-    red_sigma = reduce_indices(sigma, indices) 
-    if np.linalg.det(red_sigma) == 0:
-        raise ValueError('Singular matrix in continuous conditioning')
-    red_alpha = reduce_indices(alpha, indices)
-    red_obs_idx = int(list(np.where(red_alpha!=0))[0][0])
-    # STEP 3: computes cond_sigma (select is a mask containing the index of the conditioned variables)
-    select = (np.arange(len(red_mu))!=red_obs_idx)
-    cond_sigma = red_sigma[select,:][:,select]
-    cond_sigma = cond_sigma - (1/red_sigma[red_obs_idx,red_obs_idx])*(red_sigma[select,red_obs_idx].reshape(len(select)-1,1)).dot(red_sigma[red_obs_idx,select].reshape(1,len(select)-1))
-    # STEP 4: computes cond_mu
-    cond_mu = red_mu[select] + (1/red_sigma[red_obs_idx,red_obs_idx])*(obs_val-red_mu[red_obs_idx])*red_sigma[select,red_obs_idx]
-    # STEP 5: adds value for the observed variable (now a delta)
-    cond_mu, cond_sigma = insert_value(obs_val, red_obs_idx, cond_mu, cond_sigma)
-    # STEP 6: returns to the original set of variables
-    ext_cond_sigma = extend_indices(cond_sigma, sigma, indices)
-    ext_cond_mu = extend_indices(cond_mu, mu, indices) 
-    return 1, ext_cond_mu, ext_cond_sigma
-
 def insert_value(val, idx, mu, sigma):
     """ Extends mu and sigma by adding val in corresponding to the idx position (for sigma the other row- and column-entries are 0) """
     d = len(mu)
@@ -436,7 +609,6 @@ def insert_value(val, idx, mu, sigma):
           [np.zeros((1,d+1))],
           [sigma[idx:,:idx], np.zeros((d-idx,1)), sigma[idx:,idx:]]])
     return new_mu, new_sigma
-
     
     
     

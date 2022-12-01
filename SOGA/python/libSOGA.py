@@ -9,22 +9,35 @@
 
 # TO DO:
 # - improve dependencies on libraries (all auxiliary libraries import libSOGAshared, maybe there is a more efficient way to do this?)
-# - libSOGAtruncate: currently raising an error if in continuous conditioning a singular matrix is encountered. It should be possible to deal with these cases without rephrasing the program
-# - libSOGAmerge: add other pruning strategies
+# - libSOGAmerge: add other pruning  
+# - parallelize truncations
 
 from libSOGAtruncate import *
 from libSOGAupdate import *
 from libSOGAmerge import *
+import timing
 
 def start_SOGA(cfg, pruning=None, Kmax=None):
     """ Invokes SOGA on the root of the CFG object cfg, initializing current_distribution to a Dirac delta centered in zero.
         If pruning='classic' implements pruning at the merge nodes with maximum number of component Kmax.
         Returns an object Dist (defined in libSOGAshared) with the final computed distribution."""
+    timing.trunc_time.clear()
+    timing.update_time.clear()
+    timing.merge_time.clear()
+    timing.change_time = 0
+    timing.mom_time = 0
     var_list = cfg.ID_list
     gm = GaussianMix([1.], [np.array([0.]*len(var_list))], [np.zeros((len(var_list),len(var_list)))])
     init_dist = Dist(var_list, gm)
     SOGA(cfg.root, 1, init_dist, None, pruning, Kmax)
+    start = time()
     p, current_dist = merge(cfg.node_list['exit'].list_dist, pruning, Kmax)
+    end = time()
+    timing.merge_time.append(end-start)
+    print('Truncations:', len(timing.trunc_time), 'total:', sum(timing.trunc_time))
+    print('Updates:', len(timing.update_time), 'total:', sum(timing.update_time))
+    print('Mergings:', len(timing.merge_time), 'total:', sum(timing.merge_time))
+    print('Time for changing coordinates:', timing.change_time, '\tTime for moments computation:', timing.mom_time)
     cfg.node_list['exit'].list_dist = []
     return current_dist
 
@@ -48,10 +61,16 @@ def SOGA(node, current_p, current_dist, current_trunc, pruning, Kmax):
         if node.cond != None:
             if node.cond == False:
                 current_trunc = negate(current_trunc) 
+            start = time()
             p, current_dist = truncate(current_dist, current_trunc)   ### see libSOGAtruncate
+            end = time()
+            timing.trunc_time.append(end-start)
             current_p = p*current_p
         if current_p > prob_tol:
+            start = time()
             current_dist = update_rule(current_dist, node.expr)         ### see libSOGAupdate
+            end = time()
+            timing.update_time.append(end-start)
         if node.children[0].type == 'merge' or node.children[0].type == 'exit':
             node.children[0].list_dist.append((current_p, current_dist))
         SOGA(node.children[0], deepcopy(current_p), deepcopy(current_dist), deepcopy(current_trunc), pruning, Kmax)
@@ -59,7 +78,10 @@ def SOGA(node, current_p, current_dist, current_trunc, pruning, Kmax):
     # if observe truncates to LBC and calls on children
     if node.type == 'observe':
         current_trunc = node.LBC
+        start = time()
         _, current_dist = truncate(current_dist, current_trunc)
+        end = time()
+        timing.trunc_time.append(end-start)
         for child in node.children:
             SOGA(child, deepcopy(current_p), deepcopy(current_dist), deepcopy(current_trunc), pruning, Kmax)
 
@@ -69,7 +91,10 @@ def SOGA(node, current_p, current_dist, current_trunc, pruning, Kmax):
         if len(node.list_dist) != len(node.parent):
             return
         else:
+            start = time()
             current_p, current_dist = merge(node.list_dist, pruning, Kmax)        ### see libSOGAmerge
+            end = time()
+            timing.merge_time.append(end-start)
             node.list_dist = []
             for child in node.children:
                 SOGA(child, deepcopy(current_p), deepcopy(current_dist), deepcopy(current_trunc), pruning, Kmax)

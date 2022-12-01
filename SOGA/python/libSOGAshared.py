@@ -21,6 +21,8 @@ from scipy.stats import truncnorm
 from scipy.stats import multivariate_normal as mvnorm
 from itertools import product
 
+from time import time
+
 ### DEBUGGING METHOD
 
 import functools

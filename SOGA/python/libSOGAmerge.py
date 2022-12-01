@@ -58,22 +58,34 @@ def prune(current_dist, pruning, Kmax):
 def classic_prune(current_dist, Kmax):
     if current_dist.gm.n_comp() > Kmax:
         n = current_dist.gm.n_comp()
+        matrixcost = np.ones((n,n))*np.inf
+        for i in range(n):
+            for j in range(i):
+                new_mu = (current_dist.gm.pi[i]*current_dist.gm.mu[i] + current_dist.gm.pi[j]*current_dist.gm.mu[j]) / (current_dist.gm.pi[i]+current_dist.gm.pi[j])
+                matrixcost[i,j] = current_dist.gm.pi[i]*dist(current_dist.gm.mu[i],new_mu) + current_dist.gm.pi[j]*dist(current_dist.gm.mu[j],new_mu)
         while n > Kmax:
-            cost = np.inf
-            min_index = None
-            for i in range(n):
-                for j in range(i):
-                    new_mu = (current_dist.gm.pi[i]*current_dist.gm.mu[i] + current_dist.gm.pi[j]*current_dist.gm.mu[j]) / (current_dist.gm.pi[i]+current_dist.gm.pi[j])
-                    new_cost = current_dist.gm.pi[i]*dist(current_dist.gm.mu[i],new_mu) + current_dist.gm.pi[j]*dist(current_dist.gm.mu[j],new_mu)
-                    if new_cost < cost:
-                        cost = new_cost
-                        min_index = (i,j)
-                        min_mu = new_mu
-            i, j = min_index
+            min_idx = np.where(matrixcost == np.min(matrixcost))
+            i, j = min_idx
+            i = i[0]
+            j = j[0]
+            min_mu = (current_dist.gm.pi[i]*current_dist.gm.mu[i] + current_dist.gm.pi[j]*current_dist.gm.mu[j]) / (current_dist.gm.pi[i]+current_dist.gm.pi[j])
             current_dist = merge_comp(current_dist, i, j, min_mu)
             n = current_dist.gm.n_comp()
+            matrixcost = matrix_delete(matrixcost, i, j)
+            if n > Kmax:
+                for j in range(n-1):
+                    new_mu = (current_dist.gm.pi[n-1]*current_dist.gm.mu[n-1] + current_dist.gm.pi[j]*current_dist.gm.mu[j]) / (current_dist.gm.pi[n-1]+current_dist.gm.pi[j])
+                    matrixcost[n-1,j] = current_dist.gm.pi[n-1]*dist(current_dist.gm.mu[n-1],new_mu) + current_dist.gm.pi[j]*dist(current_dist.gm.mu[j],new_mu)
     return current_dist
 
+def matrix_delete(matrix, i, j):
+    matrix = np.delete(matrix, max(i,j), axis=0)
+    matrix = np.delete(matrix, max(i,j), axis=1)
+    matrix = np.delete(matrix, min(i,j), axis=0)
+    matrix = np.delete(matrix, min(i,j), axis=1)
+    matrix = np.vstack([matrix, np.ones((1, len(matrix)))*np.inf])
+    matrix = np.hstack([matrix, np.ones((matrix.shape[0],1))*np.inf])
+    return matrix
 
 def dist(vec1, vec2):
     return sum((np.array(vec1)-np.array(vec2))**2)

@@ -4,7 +4,7 @@ progr : (instr ';')*;
 
 instr : assignment | conditional | merge | observe;
 
-assignment: symvars '=' (lexpr|expr) | 'skip';
+assignment: symvars '=' (lexpr|expr|list) | 'skip';
 
 conditional: ifclause elseclause 'end if';
 ifclause : 'if' bexpr '{' block '}';
