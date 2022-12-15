@@ -11,7 +11,7 @@
 from libSOGAshared import *
 
 
-def merge(list_dist, pruning, Kmax):
+def merge(list_dist):
     """
     Given a list of couples (p,dist), where each dist is a GaussianMix object, computes a couple (current_p, current_dist), in which current_pi is the sum of p and current_dist is a single GaussianMix object.
     """
@@ -44,8 +44,6 @@ def merge(list_dist, pruning, Kmax):
                 del final_mu[index]
                 del final_sigma[index]
     current_dist = Dist(list_dist[0][1].var_list, GaussianMix(final_pi, final_mu, final_sigma))
-    if not pruning is None:
-        current_dist = prune(current_dist, pruning, Kmax) 
     return current_p, current_dist
 
 

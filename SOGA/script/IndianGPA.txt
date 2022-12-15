@@ -1,9 +1,17 @@
-/* TODO: usagpa and indgpa must be assigned so that they approximate the true distributions (mixtures of delta and uniform) */
-
 usa = gm([0.5,0.5],[1,0],[0,0]);
-usagpa = gm([0.01, 0.99] , [4.0, 2.0] , [0., 0.5]);
-indgpa = gm([0.01, 0.99] , [10.0, 5.0] , [0., 2.]);
 
+if uniform([0,1],2) < 0.01 {
+    usagpa = 4;
+} else {
+    usagpa = uniform([0,4], 2);
+} end if;
+
+
+if uniform([0,1],2) < 0.01 {
+    indgpa = 10;
+} else {
+    indgpa = uniform([0,10], 2);
+} end if;
 
 if usa == 1
 {
@@ -14,8 +22,5 @@ else
     gpa = indgpa;
 }
 end if;
-merge;
         
 observe(gpa==4);
-
-skip;

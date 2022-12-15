@@ -1,0 +1,27 @@
+data ans1 = [1, 1, 1];
+data ans2 = [0, 1];
+
+bias1 = gm([1.], [0.5], [1.]);
+bias2 = gm([1.], [0.5], [1.]);
+
+for i < 3 {
+    if gm([1.], [0.5], [1.]) - bias1 < 0 {
+        yb1 = 1;
+    } else {
+        yb1 = 0;
+    } end if;
+
+    observe(yb1 == ans1[i]);
+}end for;
+
+
+for i < 2{ 
+    if gm([1.], [0.5], [1.]) - bias2 < 0 {
+        yb2 = 1;
+    } else {
+        yb2 = 0;
+    } end if;
+
+    observe(yb2 == ans2[i]);
+}end for;
+

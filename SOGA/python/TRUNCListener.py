@@ -71,21 +71,30 @@ class TRUNCListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by TRUNCParser#vars.
-    def enterVars(self, ctx:TRUNCParser.VarsContext):
+    # Enter a parse tree produced by TRUNCParser#const.
+    def enterConst(self, ctx:TRUNCParser.ConstContext):
         pass
 
-    # Exit a parse tree produced by TRUNCParser#vars.
-    def exitVars(self, ctx:TRUNCParser.VarsContext):
+    # Exit a parse tree produced by TRUNCParser#const.
+    def exitConst(self, ctx:TRUNCParser.ConstContext):
         pass
 
 
-    # Enter a parse tree produced by TRUNCParser#symvars.
-    def enterSymvars(self, ctx:TRUNCParser.SymvarsContext):
+    # Enter a parse tree produced by TRUNCParser#var.
+    def enterVar(self, ctx:TRUNCParser.VarContext):
         pass
 
-    # Exit a parse tree produced by TRUNCParser#symvars.
-    def exitSymvars(self, ctx:TRUNCParser.SymvarsContext):
+    # Exit a parse tree produced by TRUNCParser#var.
+    def exitVar(self, ctx:TRUNCParser.VarContext):
+        pass
+
+
+    # Enter a parse tree produced by TRUNCParser#idd.
+    def enterIdd(self, ctx:TRUNCParser.IddContext):
+        pass
+
+    # Exit a parse tree produced by TRUNCParser#idd.
+    def exitIdd(self, ctx:TRUNCParser.IddContext):
         pass
 
 

@@ -2,23 +2,25 @@ grammar TRUNC;
 
 trunc: ineq | eq;
 
-ineq: lexpr inop NUM;
+ineq: lexpr inop const;
 inop: '<=' | '<' | '>' | '>=';
 
-eq: symvars eqop NUM;
+eq: var eqop const;
 eqop: '==' | '!=';
 
 lexpr: monom ((sum|sub) monom)*?;
-monom: (NUM '*')? vars;
-vars: ID | gm;
-symvars : ID;
+monom: (const '*')? var;
+
+const: NUM | idd;
+var: IDV | idd | gm;
+idd : IDV '[' (NUM | IDV) ']';
 gm: 'gm(' list ',' list ',' list ')';
 list: '[' NUM (',' NUM)*? ']';
 
 sum: '+';
 sub: '-';
 
-ID : ALPHA (ALPHA|DIGIT)*;
+IDV : ALPHA (ALPHA|DIGIT)*;
 NUM : '-'? DIGIT+ ('.' DIGIT*)?; 
 
 COMM : '/*' .*? '*/' -> skip;

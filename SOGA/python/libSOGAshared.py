@@ -44,7 +44,7 @@ def debug(func):
 
 delta_tol = 1e-10 # if the 1-norm of a covariance matrix is <= delta_tol the corresponding Gaussian component is treated as a delta
 prob_tol = 1e-10 # probability below prob_tol are treated as zero
-eig_tol = 1e-4
+eig_tol = 1e-3
 
 ### CLASSES FOR DISTRIBUTIONS AND GAUSSIAN MIXTURES
 
@@ -126,20 +126,20 @@ def make_psd(sigma):
     new_sigma = make_sym(sigma)
     eig, M = np.linalg.eigh(new_sigma)
     add = 0
-    delta_eig = 1e-10
+    delta_eig = 1e-8
     while not np.all(eig >= 0):
         add = add + delta_eig
         for i, e in enumerate(eig):
             if e < 0:
-                if abs(e) > eig_tol:
-                    print('Warning: substituting eigenvelue {} can lead to a large error'.format(e))
+                #if abs(e) > eig_tol:
+                    #print('Warning: substituting eigenvelue {} can lead to a large error'.format(e))
                 eig[i] = add
         new_sigma = M.dot(np.diag(eig)).dot(M.transpose())
-        new_sigma = make_sym(new_sigma)
+        #new_sigma = make_sym(new_sigma)
         eig, M = np.linalg.eigh(new_sigma)
-    tot_err = np.sum(abs(new_sigma-sigma))
-    if tot_err > eig_tol:
-        print('Warning: eigenvalue substitution led to an error of: {}'.format(tot_err))
+    rel_err = np.sum(abs(new_sigma-sigma))/np.sum(abs(sigma))
+    if rel_err > eig_tol:
+        print('Warning: eigenvalue substitution led to an error of: {}%'.format(rel_err))
     mvnorm.cdf([0]*len(new_sigma), mean=[0]*len(new_sigma), cov=new_sigma, allow_singular=True)
     return new_sigma
 

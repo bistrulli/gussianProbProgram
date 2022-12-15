@@ -5,8 +5,6 @@ if aliceDunnit == 1 {
 } else {
     withGun = gm([0.8,0.2], [1.,0.], [0.,0.]);
 } end if;
-merge;
 
 observe(withGun == 1);
 
-skip;

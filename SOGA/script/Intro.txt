@@ -1,9 +1,0 @@
-Alice = gm([1.], [100], [10]);
-Bob = gm([1.], [100], [10]);
-
-observe(Alice - Bob > 0);
-
-if Alice > 95 { p = 1; } else { p = 0; } end if;
-merge;
-
-skip;

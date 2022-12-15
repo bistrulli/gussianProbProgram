@@ -8,10 +8,10 @@ for i < 5 {
     } else {
         y = 0;
     } end if;
+    prune(20);
 
     observe(y == toss[i]);
     
 } end for;
-
 
 

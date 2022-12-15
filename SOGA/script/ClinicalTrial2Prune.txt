@@ -10,6 +10,7 @@ if isEff == 1 {
 } else {
     probContr = probTreated;
 } end if;
+prune(20);
 
 for i < 5 {
     if uniform([0,1],2) - probContr < 0 {
@@ -17,6 +18,7 @@ for i < 5 {
     } else {
         ycontr = 0;
     } end if;
+    prune(20);
 
     observe(ycontr == contr[i]);
 } end for;
@@ -27,5 +29,6 @@ for i < 5 {
     } else {
         ytreat = 0;
     } end if;
+    prune(20);
     observe(ytreat == treat[i]);
 } end for;

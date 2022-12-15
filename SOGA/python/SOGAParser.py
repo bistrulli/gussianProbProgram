@@ -3,6 +3,7 @@
 from antlr4 import *
 from io import StringIO
 import sys
+import numpy as np
 if sys.version_info[1] > 5:
 	from typing import TextIO
 else:
@@ -10,54 +11,101 @@ else:
 
 def serializedATN():
     return [
-        4,1,30,146,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,35,276,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
-        2,14,7,14,1,0,1,0,1,0,5,0,34,8,0,10,0,12,0,37,9,0,1,1,1,1,1,1,1,
-        1,3,1,43,8,1,1,2,1,2,1,2,1,2,1,2,3,2,50,8,2,1,2,3,2,53,8,2,1,3,1,
-        3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,
-        6,4,6,73,8,6,11,6,12,6,74,1,7,1,7,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,
-        9,1,9,1,9,3,9,89,8,9,1,9,1,9,1,9,5,9,94,8,9,10,9,12,9,97,9,9,1,10,
-        1,10,1,10,1,10,1,10,1,10,1,10,3,10,106,8,10,1,11,1,11,1,11,3,11,
-        111,8,11,1,11,1,11,1,11,1,11,1,11,1,11,1,11,3,11,120,8,11,1,12,1,
-        12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,3,12,131,8,12,1,13,1,13,1,
-        14,1,14,1,14,1,14,5,14,139,8,14,10,14,12,14,142,9,14,1,14,1,14,1,
-        14,1,140,1,18,15,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,0,3,1,0,
-        13,14,1,0,15,18,1,0,19,20,147,0,35,1,0,0,0,2,42,1,0,0,0,4,52,1,0,
-        0,0,6,54,1,0,0,0,8,58,1,0,0,0,10,64,1,0,0,0,12,72,1,0,0,0,14,76,
-        1,0,0,0,16,78,1,0,0,0,18,88,1,0,0,0,20,105,1,0,0,0,22,119,1,0,0,
-        0,24,130,1,0,0,0,26,132,1,0,0,0,28,134,1,0,0,0,30,31,3,2,1,0,31,
-        32,5,1,0,0,32,34,1,0,0,0,33,30,1,0,0,0,34,37,1,0,0,0,35,33,1,0,0,
-        0,35,36,1,0,0,0,36,1,1,0,0,0,37,35,1,0,0,0,38,43,3,4,2,0,39,43,3,
-        6,3,0,40,43,3,14,7,0,41,43,3,16,8,0,42,38,1,0,0,0,42,39,1,0,0,0,
-        42,40,1,0,0,0,42,41,1,0,0,0,43,3,1,0,0,0,44,45,3,26,13,0,45,49,5,
-        2,0,0,46,50,3,18,9,0,47,50,3,22,11,0,48,50,3,28,14,0,49,46,1,0,0,
-        0,49,47,1,0,0,0,49,48,1,0,0,0,50,53,1,0,0,0,51,53,5,3,0,0,52,44,
-        1,0,0,0,52,51,1,0,0,0,53,5,1,0,0,0,54,55,3,8,4,0,55,56,3,10,5,0,
-        56,57,5,4,0,0,57,7,1,0,0,0,58,59,5,5,0,0,59,60,3,20,10,0,60,61,5,
-        6,0,0,61,62,3,12,6,0,62,63,5,7,0,0,63,9,1,0,0,0,64,65,5,8,0,0,65,
-        66,5,6,0,0,66,67,3,12,6,0,67,68,5,7,0,0,68,11,1,0,0,0,69,70,3,2,
-        1,0,70,71,5,1,0,0,71,73,1,0,0,0,72,69,1,0,0,0,73,74,1,0,0,0,74,72,
-        1,0,0,0,74,75,1,0,0,0,75,13,1,0,0,0,76,77,5,9,0,0,77,15,1,0,0,0,
-        78,79,5,10,0,0,79,80,3,20,10,0,80,81,5,11,0,0,81,17,1,0,0,0,82,83,
-        6,9,-1,0,83,89,3,24,12,0,84,89,5,27,0,0,85,86,5,27,0,0,86,87,5,12,
-        0,0,87,89,3,18,9,2,88,82,1,0,0,0,88,84,1,0,0,0,88,85,1,0,0,0,89,
-        95,1,0,0,0,90,91,10,1,0,0,91,92,7,0,0,0,92,94,3,18,9,2,93,90,1,0,
-        0,0,94,97,1,0,0,0,95,93,1,0,0,0,95,96,1,0,0,0,96,19,1,0,0,0,97,95,
-        1,0,0,0,98,99,3,18,9,0,99,100,7,1,0,0,100,101,5,27,0,0,101,106,1,
-        0,0,0,102,103,5,26,0,0,103,104,7,2,0,0,104,106,5,27,0,0,105,98,1,
-        0,0,0,105,102,1,0,0,0,106,21,1,0,0,0,107,120,3,18,9,0,108,109,5,
-        27,0,0,109,111,5,12,0,0,110,108,1,0,0,0,110,111,1,0,0,0,111,112,
-        1,0,0,0,112,113,3,24,12,0,113,114,5,12,0,0,114,115,3,24,12,0,115,
-        120,1,0,0,0,116,117,3,24,12,0,117,118,5,21,0,0,118,120,1,0,0,0,119,
-        107,1,0,0,0,119,110,1,0,0,0,119,116,1,0,0,0,120,23,1,0,0,0,121,131,
-        3,26,13,0,122,123,5,22,0,0,123,124,3,28,14,0,124,125,5,23,0,0,125,
-        126,3,28,14,0,126,127,5,23,0,0,127,128,3,28,14,0,128,129,5,11,0,
-        0,129,131,1,0,0,0,130,121,1,0,0,0,130,122,1,0,0,0,131,25,1,0,0,0,
-        132,133,5,26,0,0,133,27,1,0,0,0,134,135,5,24,0,0,135,140,5,27,0,
-        0,136,137,5,23,0,0,137,139,5,27,0,0,138,136,1,0,0,0,139,142,1,0,
-        0,0,140,141,1,0,0,0,140,138,1,0,0,0,141,143,1,0,0,0,142,140,1,0,
-        0,0,143,144,5,25,0,0,144,29,1,0,0,0,12,35,42,49,52,74,88,95,105,
-        110,119,130,140
+        2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
+        7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,
+        1,0,1,0,1,0,5,0,58,8,0,10,0,12,0,61,9,0,1,0,1,0,1,0,1,0,1,0,1,0,
+        5,0,69,8,0,10,0,12,0,72,9,0,1,1,1,1,1,1,1,1,1,1,1,2,1,2,1,2,1,2,
+        1,2,1,3,1,3,1,3,1,3,1,3,3,3,89,8,3,1,4,1,4,1,4,1,4,1,4,3,4,96,8,
+        4,1,4,3,4,99,8,4,1,5,1,5,1,5,5,5,104,8,5,10,5,12,5,107,9,5,1,6,1,
+        6,3,6,111,8,6,1,6,1,6,1,6,3,6,116,8,6,3,6,118,8,6,1,7,1,7,1,7,5,
+        7,123,8,7,10,7,12,7,126,9,7,1,8,1,8,3,8,130,8,8,1,8,3,8,133,8,8,
+        1,8,1,8,3,8,137,8,8,1,9,1,9,3,9,141,8,9,1,9,3,9,144,8,9,1,9,1,9,
+        1,9,1,9,1,10,1,10,1,10,1,10,1,11,1,11,1,11,1,11,1,11,1,11,1,12,1,
+        12,1,12,1,12,1,12,1,13,1,13,1,13,4,13,168,8,13,11,13,12,13,169,1,
+        14,1,14,1,14,1,14,3,14,176,8,14,1,14,1,14,1,14,1,14,3,14,182,8,14,
+        3,14,184,8,14,1,15,1,15,1,15,5,15,189,8,15,10,15,12,15,192,9,15,
+        1,16,1,16,3,16,196,8,16,1,16,3,16,199,8,16,1,16,1,16,1,17,1,17,1,
+        17,1,17,1,18,1,18,1,18,1,18,1,19,1,19,1,19,1,19,1,19,3,19,216,8,
+        19,1,19,1,19,1,19,1,19,1,19,1,20,1,20,1,20,3,20,226,8,20,1,20,1,
+        20,1,20,1,20,1,20,1,20,1,20,3,20,235,8,20,1,21,1,21,1,21,3,21,240,
+        8,21,1,22,1,22,1,22,1,22,1,22,1,23,1,23,3,23,249,8,23,1,24,1,24,
+        1,24,1,24,1,24,1,24,1,24,1,24,1,25,1,25,1,25,1,25,1,25,1,25,1,26,
+        1,26,1,26,1,26,5,26,269,8,26,10,26,12,26,272,9,26,1,26,1,26,1,26,
+        5,59,105,124,190,270,0,27,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,
+        30,32,34,36,38,40,42,44,46,48,50,52,0,4,1,0,7,8,1,0,15,18,1,0,19,
+        20,1,0,31,32,283,0,59,1,0,0,0,2,73,1,0,0,0,4,78,1,0,0,0,6,88,1,0,
+        0,0,8,98,1,0,0,0,10,100,1,0,0,0,12,110,1,0,0,0,14,119,1,0,0,0,16,
+        136,1,0,0,0,18,143,1,0,0,0,20,149,1,0,0,0,22,153,1,0,0,0,24,159,
+        1,0,0,0,26,167,1,0,0,0,28,183,1,0,0,0,30,185,1,0,0,0,32,198,1,0,
+        0,0,34,202,1,0,0,0,36,206,1,0,0,0,38,210,1,0,0,0,40,234,1,0,0,0,
+        42,239,1,0,0,0,44,241,1,0,0,0,46,248,1,0,0,0,48,250,1,0,0,0,50,258,
+        1,0,0,0,52,264,1,0,0,0,54,55,3,2,1,0,55,56,5,1,0,0,56,58,1,0,0,0,
+        57,54,1,0,0,0,58,61,1,0,0,0,59,60,1,0,0,0,59,57,1,0,0,0,60,70,1,
+        0,0,0,61,59,1,0,0,0,62,63,3,6,3,0,63,64,5,1,0,0,64,69,1,0,0,0,65,
+        66,3,4,2,0,66,67,5,1,0,0,67,69,1,0,0,0,68,62,1,0,0,0,68,65,1,0,0,
+        0,69,72,1,0,0,0,70,68,1,0,0,0,70,71,1,0,0,0,71,1,1,0,0,0,72,70,1,
+        0,0,0,73,74,5,2,0,0,74,75,3,46,23,0,75,76,5,3,0,0,76,77,3,52,26,
+        0,77,3,1,0,0,0,78,79,5,4,0,0,79,80,5,32,0,0,80,81,5,5,0,0,81,82,
+        5,31,0,0,82,5,1,0,0,0,83,89,3,8,4,0,84,89,3,20,10,0,85,89,3,34,17,
+        0,86,89,3,36,18,0,87,89,3,38,19,0,88,83,1,0,0,0,88,84,1,0,0,0,88,
+        85,1,0,0,0,88,86,1,0,0,0,88,87,1,0,0,0,89,7,1,0,0,0,90,91,3,46,23,
+        0,91,95,5,3,0,0,92,96,3,10,5,0,93,96,3,14,7,0,94,96,3,18,9,0,95,
+        92,1,0,0,0,95,93,1,0,0,0,95,94,1,0,0,0,96,99,1,0,0,0,97,99,5,6,0,
+        0,98,90,1,0,0,0,98,97,1,0,0,0,99,9,1,0,0,0,100,105,3,12,6,0,101,
+        102,7,0,0,0,102,104,3,12,6,0,103,101,1,0,0,0,104,107,1,0,0,0,105,
+        106,1,0,0,0,105,103,1,0,0,0,106,11,1,0,0,0,107,105,1,0,0,0,108,111,
+        5,32,0,0,109,111,3,44,22,0,110,108,1,0,0,0,110,109,1,0,0,0,111,117,
+        1,0,0,0,112,115,5,9,0,0,113,116,5,32,0,0,114,116,3,44,22,0,115,113,
+        1,0,0,0,115,114,1,0,0,0,116,118,1,0,0,0,117,112,1,0,0,0,117,118,
+        1,0,0,0,118,13,1,0,0,0,119,124,3,16,8,0,120,121,7,0,0,0,121,123,
+        3,16,8,0,122,120,1,0,0,0,123,126,1,0,0,0,124,125,1,0,0,0,124,122,
+        1,0,0,0,125,15,1,0,0,0,126,124,1,0,0,0,127,130,5,32,0,0,128,130,
+        3,44,22,0,129,127,1,0,0,0,129,128,1,0,0,0,130,131,1,0,0,0,131,133,
+        5,9,0,0,132,129,1,0,0,0,132,133,1,0,0,0,133,134,1,0,0,0,134,137,
+        3,42,21,0,135,137,3,12,6,0,136,132,1,0,0,0,136,135,1,0,0,0,137,17,
+        1,0,0,0,138,141,5,32,0,0,139,141,3,44,22,0,140,138,1,0,0,0,140,139,
+        1,0,0,0,141,142,1,0,0,0,142,144,5,9,0,0,143,140,1,0,0,0,143,144,
+        1,0,0,0,144,145,1,0,0,0,145,146,3,42,21,0,146,147,5,9,0,0,147,148,
+        3,42,21,0,148,19,1,0,0,0,149,150,3,22,11,0,150,151,3,24,12,0,151,
+        152,5,10,0,0,152,21,1,0,0,0,153,154,5,11,0,0,154,155,3,28,14,0,155,
+        156,5,12,0,0,156,157,3,26,13,0,157,158,5,13,0,0,158,23,1,0,0,0,159,
+        160,5,14,0,0,160,161,5,12,0,0,161,162,3,26,13,0,162,163,5,13,0,0,
+        163,25,1,0,0,0,164,165,3,6,3,0,165,166,5,1,0,0,166,168,1,0,0,0,167,
+        164,1,0,0,0,168,169,1,0,0,0,169,167,1,0,0,0,169,170,1,0,0,0,170,
+        27,1,0,0,0,171,172,3,30,15,0,172,175,7,1,0,0,173,176,5,32,0,0,174,
+        176,3,44,22,0,175,173,1,0,0,0,175,174,1,0,0,0,176,184,1,0,0,0,177,
+        178,3,46,23,0,178,181,7,2,0,0,179,182,5,32,0,0,180,182,3,44,22,0,
+        181,179,1,0,0,0,181,180,1,0,0,0,182,184,1,0,0,0,183,171,1,0,0,0,
+        183,177,1,0,0,0,184,29,1,0,0,0,185,190,3,32,16,0,186,187,7,0,0,0,
+        187,189,3,32,16,0,188,186,1,0,0,0,189,192,1,0,0,0,190,191,1,0,0,
+        0,190,188,1,0,0,0,191,31,1,0,0,0,192,190,1,0,0,0,193,196,5,32,0,
+        0,194,196,3,44,22,0,195,193,1,0,0,0,195,194,1,0,0,0,196,197,1,0,
+        0,0,197,199,5,9,0,0,198,195,1,0,0,0,198,199,1,0,0,0,199,200,1,0,
+        0,0,200,201,3,42,21,0,201,33,1,0,0,0,202,203,5,21,0,0,203,204,5,
+        32,0,0,204,205,5,22,0,0,205,35,1,0,0,0,206,207,5,23,0,0,207,208,
+        3,28,14,0,208,209,5,22,0,0,209,37,1,0,0,0,210,211,5,24,0,0,211,212,
+        5,31,0,0,212,215,5,15,0,0,213,216,5,32,0,0,214,216,3,44,22,0,215,
+        213,1,0,0,0,215,214,1,0,0,0,216,217,1,0,0,0,217,218,5,12,0,0,218,
+        219,3,26,13,0,219,220,5,13,0,0,220,221,5,25,0,0,221,39,1,0,0,0,222,
+        235,3,30,15,0,223,224,5,32,0,0,224,226,5,9,0,0,225,223,1,0,0,0,225,
+        226,1,0,0,0,226,227,1,0,0,0,227,228,3,42,21,0,228,229,5,9,0,0,229,
+        230,3,42,21,0,230,235,1,0,0,0,231,232,3,42,21,0,232,233,5,26,0,0,
+        233,235,1,0,0,0,234,222,1,0,0,0,234,225,1,0,0,0,234,231,1,0,0,0,
+        235,41,1,0,0,0,236,240,3,46,23,0,237,240,3,48,24,0,238,240,3,50,
+        25,0,239,236,1,0,0,0,239,237,1,0,0,0,239,238,1,0,0,0,240,43,1,0,
+        0,0,241,242,5,31,0,0,242,243,5,27,0,0,243,244,7,3,0,0,244,245,5,
+        5,0,0,245,45,1,0,0,0,246,249,5,31,0,0,247,249,3,44,22,0,248,246,
+        1,0,0,0,248,247,1,0,0,0,249,47,1,0,0,0,250,251,5,28,0,0,251,252,
+        3,52,26,0,252,253,5,29,0,0,253,254,3,52,26,0,254,255,5,29,0,0,255,
+        256,3,52,26,0,256,257,5,22,0,0,257,49,1,0,0,0,258,259,5,30,0,0,259,
+        260,3,52,26,0,260,261,5,29,0,0,261,262,5,32,0,0,262,263,5,22,0,0,
+        263,51,1,0,0,0,264,265,5,27,0,0,265,270,5,32,0,0,266,267,5,29,0,
+        0,267,269,5,32,0,0,268,266,1,0,0,0,269,272,1,0,0,0,270,271,1,0,0,
+        0,270,268,1,0,0,0,271,273,1,0,0,0,272,270,1,0,0,0,273,274,5,5,0,
+        0,274,53,1,0,0,0,29,59,68,70,88,95,98,105,110,115,117,124,129,132,
+        136,140,143,169,175,181,183,190,195,198,215,225,234,239,248,270
     ]
 
 class SOGAParser ( Parser ):
@@ -70,10 +118,11 @@ class SOGAParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "';'", "'='", "'skip'", "'end if'", "'if'", 
-                     "'{'", "'}'", "'else'", "'merge'", "'observe('", "')'", 
-                     "'*'", "'+'", "'-'", "'<'", "'<='", "'>='", "'>'", 
-                     "'=='", "'!='", "'^2'", "'gm('", "','", "'['", "']'" ]
+    literalNames = [ "<INVALID>", "';'", "'data'", "'='", "'array['", "']'", 
+                     "'skip'", "'+'", "'-'", "'*'", "'end if'", "'if'", 
+                     "'{'", "'}'", "'else'", "'<'", "'<='", "'>='", "'>'", 
+                     "'=='", "'!='", "'prune('", "')'", "'observe('", "'for'", 
+                     "'end for'", "'^2'", "'['", "'gm('", "','", "'uniform('" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
@@ -81,28 +130,43 @@ class SOGAParser ( Parser ):
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "<INVALID>", "ID", "NUM", "COMM", "WS", 
-                      "DIGIT" ]
+                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                      "<INVALID>", "<INVALID>", "<INVALID>", "IDV", "NUM", 
+                      "COMM", "WS", "DIGIT" ]
 
     RULE_progr = 0
-    RULE_instr = 1
-    RULE_assignment = 2
-    RULE_conditional = 3
-    RULE_ifclause = 4
-    RULE_elseclause = 5
-    RULE_block = 6
-    RULE_merge = 7
-    RULE_observe = 8
-    RULE_lexpr = 9
-    RULE_bexpr = 10
-    RULE_expr = 11
-    RULE_vars = 12
-    RULE_symvars = 13
-    RULE_list = 14
+    RULE_data = 1
+    RULE_array = 2
+    RULE_instr = 3
+    RULE_assignment = 4
+    RULE_const = 5
+    RULE_const_term = 6
+    RULE_add = 7
+    RULE_add_term = 8
+    RULE_mul = 9
+    RULE_conditional = 10
+    RULE_ifclause = 11
+    RULE_elseclause = 12
+    RULE_block = 13
+    RULE_bexpr = 14
+    RULE_lexpr = 15
+    RULE_monom = 16
+    RULE_prune = 17
+    RULE_observe = 18
+    RULE_loop = 19
+    RULE_expr = 20
+    RULE_vars = 21
+    RULE_idd = 22
+    RULE_symvars = 23
+    RULE_gm = 24
+    RULE_uniform = 25
+    RULE_list = 26
 
-    ruleNames =  [ "progr", "instr", "assignment", "conditional", "ifclause", 
-                   "elseclause", "block", "merge", "observe", "lexpr", "bexpr", 
-                   "expr", "vars", "symvars", "list" ]
+    ruleNames =  [ "progr", "data", "array", "instr", "assignment", "const", 
+                   "const_term", "add", "add_term", "mul", "conditional", 
+                   "ifclause", "elseclause", "block", "bexpr", "lexpr", 
+                   "monom", "prune", "observe", "loop", "expr", "vars", 
+                   "idd", "symvars", "gm", "uniform", "list" ]
 
     EOF = Token.EOF
     T__0=1
@@ -130,11 +194,16 @@ class SOGAParser ( Parser ):
     T__22=23
     T__23=24
     T__24=25
-    ID=26
-    NUM=27
-    COMM=28
-    WS=29
-    DIGIT=30
+    T__25=26
+    T__26=27
+    T__27=28
+    T__28=29
+    T__29=30
+    IDV=31
+    NUM=32
+    COMM=33
+    WS=34
+    DIGIT=35
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -152,11 +221,25 @@ class SOGAParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def data(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SOGAParser.DataContext)
+            else:
+                return self.getTypedRuleContext(SOGAParser.DataContext,i)
+
+
         def instr(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(SOGAParser.InstrContext)
             else:
                 return self.getTypedRuleContext(SOGAParser.InstrContext,i)
+
+
+        def array(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SOGAParser.ArrayContext)
+            else:
+                return self.getTypedRuleContext(SOGAParser.ArrayContext,i)
 
 
         def getRuleIndex(self):
@@ -186,18 +269,159 @@ class SOGAParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 35
+            self.state = 59
+            self._errHandler.sync(self)
+            _alt = self._interp.adaptivePredict(self._input,0,self._ctx)
+            while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
+                if _alt==1+1:
+                    self.state = 54
+                    self.data()
+                    self.state = 55
+                    self.match(SOGAParser.T__0) 
+                self.state = 61
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,0,self._ctx)
+
+            self.state = 70
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SOGAParser.T__2) | (1 << SOGAParser.T__4) | (1 << SOGAParser.T__8) | (1 << SOGAParser.T__9) | (1 << SOGAParser.ID))) != 0):
-                self.state = 30
-                self.instr()
-                self.state = 31
-                self.match(SOGAParser.T__0)
-                self.state = 37
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SOGAParser.T__3) | (1 << SOGAParser.T__5) | (1 << SOGAParser.T__10) | (1 << SOGAParser.T__20) | (1 << SOGAParser.T__22) | (1 << SOGAParser.T__23) | (1 << SOGAParser.IDV))) != 0):
+                self.state = 68
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [SOGAParser.T__5, SOGAParser.T__10, SOGAParser.T__20, SOGAParser.T__22, SOGAParser.T__23, SOGAParser.IDV]:
+                    self.state = 62
+                    self.instr()
+                    self.state = 63
+                    self.match(SOGAParser.T__0)
+                    pass
+                elif token in [SOGAParser.T__3]:
+                    self.state = 65
+                    self.array()
+                    self.state = 66
+                    self.match(SOGAParser.T__0)
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
+                self.state = 72
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class DataContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def symvars(self):
+            return self.getTypedRuleContext(SOGAParser.SymvarsContext,0)
+
+
+        def list_(self):
+            return self.getTypedRuleContext(SOGAParser.ListContext,0)
+
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_data
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterData" ):
+                listener.enterData(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitData" ):
+                listener.exitData(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitData" ):
+                return visitor.visitData(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def data(self):
+
+        localctx = SOGAParser.DataContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 2, self.RULE_data)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 73
+            self.match(SOGAParser.T__1)
+            self.state = 74
+            self.symvars()
+            self.state = 75
+            self.match(SOGAParser.T__2)
+            self.state = 76
+            self.list_()
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ArrayContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def NUM(self):
+            return self.getToken(SOGAParser.NUM, 0)
+
+        def IDV(self):
+            return self.getToken(SOGAParser.IDV, 0)
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_array
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterArray" ):
+                listener.enterArray(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitArray" ):
+                listener.exitArray(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArray" ):
+                return visitor.visitArray(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def array(self):
+
+        localctx = SOGAParser.ArrayContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 4, self.RULE_array)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 78
+            self.match(SOGAParser.T__3)
+            self.state = 79
+            self.match(SOGAParser.NUM)
+            self.state = 80
+            self.match(SOGAParser.T__4)
+            self.state = 81
+            self.match(SOGAParser.IDV)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -222,12 +446,16 @@ class SOGAParser ( Parser ):
             return self.getTypedRuleContext(SOGAParser.ConditionalContext,0)
 
 
-        def merge(self):
-            return self.getTypedRuleContext(SOGAParser.MergeContext,0)
+        def prune(self):
+            return self.getTypedRuleContext(SOGAParser.PruneContext,0)
 
 
         def observe(self):
             return self.getTypedRuleContext(SOGAParser.ObserveContext,0)
+
+
+        def loop(self):
+            return self.getTypedRuleContext(SOGAParser.LoopContext,0)
 
 
         def getRuleIndex(self):
@@ -253,30 +481,35 @@ class SOGAParser ( Parser ):
     def instr(self):
 
         localctx = SOGAParser.InstrContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 2, self.RULE_instr)
+        self.enterRule(localctx, 6, self.RULE_instr)
         try:
-            self.state = 42
+            self.state = 88
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [SOGAParser.T__2, SOGAParser.ID]:
+            if token in [SOGAParser.T__5, SOGAParser.IDV]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 38
+                self.state = 83
                 self.assignment()
                 pass
-            elif token in [SOGAParser.T__4]:
+            elif token in [SOGAParser.T__10]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 39
+                self.state = 84
                 self.conditional()
                 pass
-            elif token in [SOGAParser.T__8]:
+            elif token in [SOGAParser.T__20]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 40
-                self.merge()
+                self.state = 85
+                self.prune()
                 pass
-            elif token in [SOGAParser.T__9]:
+            elif token in [SOGAParser.T__22]:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 41
+                self.state = 86
                 self.observe()
+                pass
+            elif token in [SOGAParser.T__23]:
+                self.enterOuterAlt(localctx, 5)
+                self.state = 87
+                self.loop()
                 pass
             else:
                 raise NoViableAltException(self)
@@ -301,16 +534,16 @@ class SOGAParser ( Parser ):
             return self.getTypedRuleContext(SOGAParser.SymvarsContext,0)
 
 
-        def lexpr(self):
-            return self.getTypedRuleContext(SOGAParser.LexprContext,0)
+        def const(self):
+            return self.getTypedRuleContext(SOGAParser.ConstContext,0)
 
 
-        def expr(self):
-            return self.getTypedRuleContext(SOGAParser.ExprContext,0)
+        def add(self):
+            return self.getTypedRuleContext(SOGAParser.AddContext,0)
 
 
-        def list_(self):
-            return self.getTypedRuleContext(SOGAParser.ListContext,0)
+        def mul(self):
+            return self.getTypedRuleContext(SOGAParser.MulContext,0)
 
 
         def getRuleIndex(self):
@@ -336,45 +569,455 @@ class SOGAParser ( Parser ):
     def assignment(self):
 
         localctx = SOGAParser.AssignmentContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_assignment)
+        self.enterRule(localctx, 8, self.RULE_assignment)
         try:
-            self.state = 52
+            self.state = 98
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [SOGAParser.ID]:
+            if token in [SOGAParser.IDV]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 44
+                self.state = 90
                 self.symvars()
-                self.state = 45
-                self.match(SOGAParser.T__1)
-                self.state = 49
+                self.state = 91
+                self.match(SOGAParser.T__2)
+                self.state = 95
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,2,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
                 if la_ == 1:
-                    self.state = 46
-                    self.lexpr(0)
+                    self.state = 92
+                    self.const()
                     pass
 
                 elif la_ == 2:
-                    self.state = 47
-                    self.expr()
+                    self.state = 93
+                    self.add()
                     pass
 
                 elif la_ == 3:
-                    self.state = 48
-                    self.list_()
+                    self.state = 94
+                    self.mul()
                     pass
 
 
                 pass
-            elif token in [SOGAParser.T__2]:
+            elif token in [SOGAParser.T__5]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 51
-                self.match(SOGAParser.T__2)
+                self.state = 97
+                self.match(SOGAParser.T__5)
                 pass
             else:
                 raise NoViableAltException(self)
 
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ConstContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def const_term(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SOGAParser.Const_termContext)
+            else:
+                return self.getTypedRuleContext(SOGAParser.Const_termContext,i)
+
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_const
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterConst" ):
+                listener.enterConst(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitConst" ):
+                listener.exitConst(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConst" ):
+                return visitor.visitConst(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def const(self):
+
+        localctx = SOGAParser.ConstContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 10, self.RULE_const)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 100
+            self.const_term()
+            self.state = 105
+            self._errHandler.sync(self)
+            _alt = self._interp.adaptivePredict(self._input,6,self._ctx)
+            while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
+                if _alt==1+1:
+                    self.state = 101
+                    _la = self._input.LA(1)
+                    if not(_la==SOGAParser.T__6 or _la==SOGAParser.T__7):
+                        self._errHandler.recoverInline(self)
+                    else:
+                        self._errHandler.reportMatch(self)
+                        self.consume()
+                    self.state = 102
+                    self.const_term() 
+                self.state = 107
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,6,self._ctx)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class Const_termContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def NUM(self, i:int=None):
+            if i is None:
+                return self.getTokens(SOGAParser.NUM)
+            else:
+                return self.getToken(SOGAParser.NUM, i)
+
+        def idd(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SOGAParser.IddContext)
+            else:
+                return self.getTypedRuleContext(SOGAParser.IddContext,i)
+
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_const_term
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterConst_term" ):
+                listener.enterConst_term(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitConst_term" ):
+                listener.exitConst_term(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConst_term" ):
+                return visitor.visitConst_term(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def const_term(self):
+
+        localctx = SOGAParser.Const_termContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 12, self.RULE_const_term)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 110
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [SOGAParser.NUM]:
+                self.state = 108
+                self.match(SOGAParser.NUM)
+                pass
+            elif token in [SOGAParser.IDV]:
+                self.state = 109
+                self.idd()
+                pass
+            else:
+                raise NoViableAltException(self)
+
+            self.state = 117
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==SOGAParser.T__8:
+                self.state = 112
+                self.match(SOGAParser.T__8)
+                self.state = 115
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [SOGAParser.NUM]:
+                    self.state = 113
+                    self.match(SOGAParser.NUM)
+                    pass
+                elif token in [SOGAParser.IDV]:
+                    self.state = 114
+                    self.idd()
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class AddContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def add_term(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SOGAParser.Add_termContext)
+            else:
+                return self.getTypedRuleContext(SOGAParser.Add_termContext,i)
+
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_add
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAdd" ):
+                listener.enterAdd(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAdd" ):
+                listener.exitAdd(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAdd" ):
+                return visitor.visitAdd(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def add(self):
+
+        localctx = SOGAParser.AddContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 14, self.RULE_add)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 119
+            self.add_term()
+            self.state = 124
+            self._errHandler.sync(self)
+            _alt = self._interp.adaptivePredict(self._input,10,self._ctx)
+            while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
+                if _alt==1+1:
+                    self.state = 120
+                    _la = self._input.LA(1)
+                    if not(_la==SOGAParser.T__6 or _la==SOGAParser.T__7):
+                        self._errHandler.recoverInline(self)
+                    else:
+                        self._errHandler.reportMatch(self)
+                        self.consume()
+                    self.state = 121
+                    self.add_term() 
+                self.state = 126
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,10,self._ctx)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class Add_termContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def vars_(self):
+            return self.getTypedRuleContext(SOGAParser.VarsContext,0)
+
+
+        def NUM(self):
+            return self.getToken(SOGAParser.NUM, 0)
+
+        def idd(self):
+            return self.getTypedRuleContext(SOGAParser.IddContext,0)
+
+
+        def const_term(self):
+            return self.getTypedRuleContext(SOGAParser.Const_termContext,0)
+
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_add_term
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAdd_term" ):
+                listener.enterAdd_term(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAdd_term" ):
+                listener.exitAdd_term(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAdd_term" ):
+                return visitor.visitAdd_term(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def add_term(self):
+
+        localctx = SOGAParser.Add_termContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 16, self.RULE_add_term)
+        try:
+            self.state = 136
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,13,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 132
+                self._errHandler.sync(self)
+                la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
+                if la_ == 1:
+                    self.state = 129
+                    self._errHandler.sync(self)
+                    token = self._input.LA(1)
+                    if token in [SOGAParser.NUM]:
+                        self.state = 127
+                        self.match(SOGAParser.NUM)
+                        pass
+                    elif token in [SOGAParser.IDV]:
+                        self.state = 128
+                        self.idd()
+                        pass
+                    else:
+                        raise NoViableAltException(self)
+
+                    self.state = 131
+                    self.match(SOGAParser.T__8)
+
+
+                self.state = 134
+                self.vars_()
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 135
+                self.const_term()
+                pass
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class MulContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def vars_(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SOGAParser.VarsContext)
+            else:
+                return self.getTypedRuleContext(SOGAParser.VarsContext,i)
+
+
+        def NUM(self):
+            return self.getToken(SOGAParser.NUM, 0)
+
+        def idd(self):
+            return self.getTypedRuleContext(SOGAParser.IddContext,0)
+
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_mul
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMul" ):
+                listener.enterMul(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMul" ):
+                listener.exitMul(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMul" ):
+                return visitor.visitMul(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def mul(self):
+
+        localctx = SOGAParser.MulContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 18, self.RULE_mul)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 143
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,15,self._ctx)
+            if la_ == 1:
+                self.state = 140
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [SOGAParser.NUM]:
+                    self.state = 138
+                    self.match(SOGAParser.NUM)
+                    pass
+                elif token in [SOGAParser.IDV]:
+                    self.state = 139
+                    self.idd()
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
+                self.state = 142
+                self.match(SOGAParser.T__8)
+
+
+            self.state = 145
+            self.vars_()
+            self.state = 146
+            self.match(SOGAParser.T__8)
+            self.state = 147
+            self.vars_()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -422,15 +1065,15 @@ class SOGAParser ( Parser ):
     def conditional(self):
 
         localctx = SOGAParser.ConditionalContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_conditional)
+        self.enterRule(localctx, 20, self.RULE_conditional)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 54
+            self.state = 149
             self.ifclause()
-            self.state = 55
+            self.state = 150
             self.elseclause()
-            self.state = 56
-            self.match(SOGAParser.T__3)
+            self.state = 151
+            self.match(SOGAParser.T__9)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -478,19 +1121,19 @@ class SOGAParser ( Parser ):
     def ifclause(self):
 
         localctx = SOGAParser.IfclauseContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_ifclause)
+        self.enterRule(localctx, 22, self.RULE_ifclause)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 58
-            self.match(SOGAParser.T__4)
-            self.state = 59
+            self.state = 153
+            self.match(SOGAParser.T__10)
+            self.state = 154
             self.bexpr()
-            self.state = 60
-            self.match(SOGAParser.T__5)
-            self.state = 61
+            self.state = 155
+            self.match(SOGAParser.T__11)
+            self.state = 156
             self.block()
-            self.state = 62
-            self.match(SOGAParser.T__6)
+            self.state = 157
+            self.match(SOGAParser.T__12)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -534,17 +1177,17 @@ class SOGAParser ( Parser ):
     def elseclause(self):
 
         localctx = SOGAParser.ElseclauseContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_elseclause)
+        self.enterRule(localctx, 24, self.RULE_elseclause)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 64
-            self.match(SOGAParser.T__7)
-            self.state = 65
-            self.match(SOGAParser.T__5)
-            self.state = 66
+            self.state = 159
+            self.match(SOGAParser.T__13)
+            self.state = 160
+            self.match(SOGAParser.T__11)
+            self.state = 161
             self.block()
-            self.state = 67
-            self.match(SOGAParser.T__6)
+            self.state = 162
+            self.match(SOGAParser.T__12)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -591,22 +1234,22 @@ class SOGAParser ( Parser ):
     def block(self):
 
         localctx = SOGAParser.BlockContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_block)
+        self.enterRule(localctx, 26, self.RULE_block)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 72 
+            self.state = 167 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 69
+                self.state = 164
                 self.instr()
-                self.state = 70
+                self.state = 165
                 self.match(SOGAParser.T__0)
-                self.state = 74 
+                self.state = 169 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SOGAParser.T__2) | (1 << SOGAParser.T__4) | (1 << SOGAParser.T__8) | (1 << SOGAParser.T__9) | (1 << SOGAParser.ID))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SOGAParser.T__5) | (1 << SOGAParser.T__10) | (1 << SOGAParser.T__20) | (1 << SOGAParser.T__22) | (1 << SOGAParser.T__23) | (1 << SOGAParser.IDV))) != 0)):
                     break
 
         except RecognitionException as re:
@@ -618,42 +1261,310 @@ class SOGAParser ( Parser ):
         return localctx
 
 
-    class MergeContext(ParserRuleContext):
+    class BexprContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def lexpr(self):
+            return self.getTypedRuleContext(SOGAParser.LexprContext,0)
+
+
+        def NUM(self):
+            return self.getToken(SOGAParser.NUM, 0)
+
+        def idd(self):
+            return self.getTypedRuleContext(SOGAParser.IddContext,0)
+
+
+        def symvars(self):
+            return self.getTypedRuleContext(SOGAParser.SymvarsContext,0)
+
 
         def getRuleIndex(self):
-            return SOGAParser.RULE_merge
+            return SOGAParser.RULE_bexpr
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMerge" ):
-                listener.enterMerge(self)
+            if hasattr( listener, "enterBexpr" ):
+                listener.enterBexpr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMerge" ):
-                listener.exitMerge(self)
+            if hasattr( listener, "exitBexpr" ):
+                listener.exitBexpr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMerge" ):
-                return visitor.visitMerge(self)
+            if hasattr( visitor, "visitBexpr" ):
+                return visitor.visitBexpr(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def merge(self):
+    def bexpr(self):
 
-        localctx = SOGAParser.MergeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_merge)
+        localctx = SOGAParser.BexprContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 28, self.RULE_bexpr)
+        self._la = 0 # Token type
+        try:
+            self.state = 183
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,19,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 171
+                self.lexpr()
+                self.state = 172
+                _la = self._input.LA(1)
+                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SOGAParser.T__14) | (1 << SOGAParser.T__15) | (1 << SOGAParser.T__16) | (1 << SOGAParser.T__17))) != 0)):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
+                self.state = 175
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [SOGAParser.NUM]:
+                    self.state = 173
+                    self.match(SOGAParser.NUM)
+                    pass
+                elif token in [SOGAParser.IDV]:
+                    self.state = 174
+                    self.idd()
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 177
+                self.symvars()
+                self.state = 178
+                _la = self._input.LA(1)
+                if not(_la==SOGAParser.T__18 or _la==SOGAParser.T__19):
+                    self._errHandler.recoverInline(self)
+                else:
+                    self._errHandler.reportMatch(self)
+                    self.consume()
+                self.state = 181
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [SOGAParser.NUM]:
+                    self.state = 179
+                    self.match(SOGAParser.NUM)
+                    pass
+                elif token in [SOGAParser.IDV]:
+                    self.state = 180
+                    self.idd()
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
+                pass
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class LexprContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def monom(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SOGAParser.MonomContext)
+            else:
+                return self.getTypedRuleContext(SOGAParser.MonomContext,i)
+
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_lexpr
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterLexpr" ):
+                listener.enterLexpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitLexpr" ):
+                listener.exitLexpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLexpr" ):
+                return visitor.visitLexpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def lexpr(self):
+
+        localctx = SOGAParser.LexprContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 30, self.RULE_lexpr)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 76
-            self.match(SOGAParser.T__8)
+            self.state = 185
+            self.monom()
+            self.state = 190
+            self._errHandler.sync(self)
+            _alt = self._interp.adaptivePredict(self._input,20,self._ctx)
+            while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
+                if _alt==1+1:
+                    self.state = 186
+                    _la = self._input.LA(1)
+                    if not(_la==SOGAParser.T__6 or _la==SOGAParser.T__7):
+                        self._errHandler.recoverInline(self)
+                    else:
+                        self._errHandler.reportMatch(self)
+                        self.consume()
+                    self.state = 187
+                    self.monom() 
+                self.state = 192
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,20,self._ctx)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class MonomContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def vars_(self):
+            return self.getTypedRuleContext(SOGAParser.VarsContext,0)
+
+
+        def NUM(self):
+            return self.getToken(SOGAParser.NUM, 0)
+
+        def idd(self):
+            return self.getTypedRuleContext(SOGAParser.IddContext,0)
+
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_monom
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMonom" ):
+                listener.enterMonom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMonom" ):
+                listener.exitMonom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMonom" ):
+                return visitor.visitMonom(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def monom(self):
+
+        localctx = SOGAParser.MonomContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 32, self.RULE_monom)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 198
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,22,self._ctx)
+            if la_ == 1:
+                self.state = 195
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [SOGAParser.NUM]:
+                    self.state = 193
+                    self.match(SOGAParser.NUM)
+                    pass
+                elif token in [SOGAParser.IDV]:
+                    self.state = 194
+                    self.idd()
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
+                self.state = 197
+                self.match(SOGAParser.T__8)
+
+
+            self.state = 200
+            self.vars_()
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class PruneContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def NUM(self):
+            return self.getToken(SOGAParser.NUM, 0)
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_prune
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPrune" ):
+                listener.enterPrune(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPrune" ):
+                listener.exitPrune(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrune" ):
+                return visitor.visitPrune(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def prune(self):
+
+        localctx = SOGAParser.PruneContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 34, self.RULE_prune)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 202
+            self.match(SOGAParser.T__20)
+            self.state = 203
+            self.match(SOGAParser.NUM)
+            self.state = 204
+            self.match(SOGAParser.T__21)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -697,15 +1608,15 @@ class SOGAParser ( Parser ):
     def observe(self):
 
         localctx = SOGAParser.ObserveContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 16, self.RULE_observe)
+        self.enterRule(localctx, 36, self.RULE_observe)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 78
-            self.match(SOGAParser.T__9)
-            self.state = 79
+            self.state = 206
+            self.match(SOGAParser.T__22)
+            self.state = 207
             self.bexpr()
-            self.state = 80
-            self.match(SOGAParser.T__10)
+            self.state = 208
+            self.match(SOGAParser.T__21)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -715,193 +1626,81 @@ class SOGAParser ( Parser ):
         return localctx
 
 
-    class LexprContext(ParserRuleContext):
+    class LoopContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def vars_(self):
-            return self.getTypedRuleContext(SOGAParser.VarsContext,0)
+        def IDV(self):
+            return self.getToken(SOGAParser.IDV, 0)
+
+        def block(self):
+            return self.getTypedRuleContext(SOGAParser.BlockContext,0)
 
 
         def NUM(self):
             return self.getToken(SOGAParser.NUM, 0)
 
-        def lexpr(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(SOGAParser.LexprContext)
-            else:
-                return self.getTypedRuleContext(SOGAParser.LexprContext,i)
+        def idd(self):
+            return self.getTypedRuleContext(SOGAParser.IddContext,0)
 
 
         def getRuleIndex(self):
-            return SOGAParser.RULE_lexpr
+            return SOGAParser.RULE_loop
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLexpr" ):
-                listener.enterLexpr(self)
+            if hasattr( listener, "enterLoop" ):
+                listener.enterLoop(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLexpr" ):
-                listener.exitLexpr(self)
+            if hasattr( listener, "exitLoop" ):
+                listener.exitLoop(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitLexpr" ):
-                return visitor.visitLexpr(self)
+            if hasattr( visitor, "visitLoop" ):
+                return visitor.visitLoop(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
-    def lexpr(self, _p:int=0):
-        _parentctx = self._ctx
-        _parentState = self.state
-        localctx = SOGAParser.LexprContext(self, self._ctx, _parentState)
-        _prevctx = localctx
-        _startState = 18
-        self.enterRecursionRule(localctx, 18, self.RULE_lexpr, _p)
-        self._la = 0 # Token type
+
+    def loop(self):
+
+        localctx = SOGAParser.LoopContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 38, self.RULE_loop)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 88
+            self.state = 210
+            self.match(SOGAParser.T__23)
+            self.state = 211
+            self.match(SOGAParser.IDV)
+            self.state = 212
+            self.match(SOGAParser.T__14)
+            self.state = 215
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
-            if la_ == 1:
-                self.state = 83
-                self.vars_()
-                pass
-
-            elif la_ == 2:
-                self.state = 84
+            token = self._input.LA(1)
+            if token in [SOGAParser.NUM]:
+                self.state = 213
                 self.match(SOGAParser.NUM)
                 pass
-
-            elif la_ == 3:
-                self.state = 85
-                self.match(SOGAParser.NUM)
-                self.state = 86
-                self.match(SOGAParser.T__11)
-                self.state = 87
-                self.lexpr(2)
+            elif token in [SOGAParser.IDV]:
+                self.state = 214
+                self.idd()
                 pass
-
-
-            self._ctx.stop = self._input.LT(-1)
-            self.state = 95
-            self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,6,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
-                    if self._parseListeners is not None:
-                        self.triggerExitRuleEvent()
-                    _prevctx = localctx
-                    localctx = SOGAParser.LexprContext(self, _parentctx, _parentState)
-                    self.pushNewRecursionContext(localctx, _startState, self.RULE_lexpr)
-                    self.state = 90
-                    if not self.precpred(self._ctx, 1):
-                        from antlr4.error.Errors import FailedPredicateException
-                        raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
-                    self.state = 91
-                    _la = self._input.LA(1)
-                    if not(_la==SOGAParser.T__12 or _la==SOGAParser.T__13):
-                        self._errHandler.recoverInline(self)
-                    else:
-                        self._errHandler.reportMatch(self)
-                        self.consume()
-                    self.state = 92
-                    self.lexpr(2) 
-                self.state = 97
-                self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,6,self._ctx)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.unrollRecursionContexts(_parentctx)
-        return localctx
-
-
-    class BexprContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def lexpr(self):
-            return self.getTypedRuleContext(SOGAParser.LexprContext,0)
-
-
-        def NUM(self):
-            return self.getToken(SOGAParser.NUM, 0)
-
-        def ID(self):
-            return self.getToken(SOGAParser.ID, 0)
-
-        def getRuleIndex(self):
-            return SOGAParser.RULE_bexpr
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBexpr" ):
-                listener.enterBexpr(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBexpr" ):
-                listener.exitBexpr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBexpr" ):
-                return visitor.visitBexpr(self)
             else:
-                return visitor.visitChildren(self)
+                raise NoViableAltException(self)
 
-
-
-
-    def bexpr(self):
-
-        localctx = SOGAParser.BexprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 20, self.RULE_bexpr)
-        self._la = 0 # Token type
-        try:
-            self.state = 105
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
-            if la_ == 1:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 98
-                self.lexpr(0)
-                self.state = 99
-                _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SOGAParser.T__14) | (1 << SOGAParser.T__15) | (1 << SOGAParser.T__16) | (1 << SOGAParser.T__17))) != 0)):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 100
-                self.match(SOGAParser.NUM)
-                pass
-
-            elif la_ == 2:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 102
-                self.match(SOGAParser.ID)
-                self.state = 103
-                _la = self._input.LA(1)
-                if not(_la==SOGAParser.T__18 or _la==SOGAParser.T__19):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 104
-                self.match(SOGAParser.NUM)
-                pass
-
-
+            self.state = 217
+            self.match(SOGAParser.T__11)
+            self.state = 218
+            self.block()
+            self.state = 219
+            self.match(SOGAParser.T__12)
+            self.state = 220
+            self.match(SOGAParser.T__24)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -955,44 +1754,44 @@ class SOGAParser ( Parser ):
     def expr(self):
 
         localctx = SOGAParser.ExprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 22, self.RULE_expr)
+        self.enterRule(localctx, 40, self.RULE_expr)
         self._la = 0 # Token type
         try:
-            self.state = 119
+            self.state = 234
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,25,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 107
-                self.lexpr(0)
+                self.state = 222
+                self.lexpr()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 110
+                self.state = 225
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==SOGAParser.NUM:
-                    self.state = 108
+                    self.state = 223
                     self.match(SOGAParser.NUM)
-                    self.state = 109
-                    self.match(SOGAParser.T__11)
+                    self.state = 224
+                    self.match(SOGAParser.T__8)
 
 
-                self.state = 112
+                self.state = 227
                 self.vars_()
-                self.state = 113
-                self.match(SOGAParser.T__11)
-                self.state = 114
+                self.state = 228
+                self.match(SOGAParser.T__8)
+                self.state = 229
                 self.vars_()
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 116
+                self.state = 231
                 self.vars_()
-                self.state = 117
-                self.match(SOGAParser.T__20)
+                self.state = 232
+                self.match(SOGAParser.T__25)
                 pass
 
 
@@ -1016,11 +1815,12 @@ class SOGAParser ( Parser ):
             return self.getTypedRuleContext(SOGAParser.SymvarsContext,0)
 
 
-        def list_(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(SOGAParser.ListContext)
-            else:
-                return self.getTypedRuleContext(SOGAParser.ListContext,i)
+        def gm(self):
+            return self.getTypedRuleContext(SOGAParser.GmContext,0)
+
+
+        def uniform(self):
+            return self.getTypedRuleContext(SOGAParser.UniformContext,0)
 
 
         def getRuleIndex(self):
@@ -1046,36 +1846,102 @@ class SOGAParser ( Parser ):
     def vars_(self):
 
         localctx = SOGAParser.VarsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 24, self.RULE_vars)
+        self.enterRule(localctx, 42, self.RULE_vars)
         try:
-            self.state = 130
+            self.state = 239
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [SOGAParser.ID]:
+            if token in [SOGAParser.IDV]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 121
+                self.state = 236
                 self.symvars()
                 pass
-            elif token in [SOGAParser.T__21]:
+            elif token in [SOGAParser.T__27]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 122
-                self.match(SOGAParser.T__21)
-                self.state = 123
-                self.list_()
-                self.state = 124
-                self.match(SOGAParser.T__22)
-                self.state = 125
-                self.list_()
-                self.state = 126
-                self.match(SOGAParser.T__22)
-                self.state = 127
-                self.list_()
-                self.state = 128
-                self.match(SOGAParser.T__10)
+                self.state = 237
+                self.gm()
+                pass
+            elif token in [SOGAParser.T__29]:
+                self.enterOuterAlt(localctx, 3)
+                self.state = 238
+                self.uniform()
                 pass
             else:
                 raise NoViableAltException(self)
 
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class IddContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+            
+        #def return_value(self, data):
+        #    data_name = self.IDV(0).getText()
+        #    if not self.NUM() is None:
+        #        data_idx = int(self.NUM().getText())
+        #    elif not self.IDV(1) is None:
+        #        data_idx = data[self.IDV(1).getText()][0]
+        #    return data[data_name][data_idx]
+
+        def IDV(self, i:int=None):
+            if i is None:
+                return self.getTokens(SOGAParser.IDV)
+            else:
+                return self.getToken(SOGAParser.IDV, i)
+
+        def NUM(self):
+            return self.getToken(SOGAParser.NUM, 0)
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_idd
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterIdd" ):
+                listener.enterIdd(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitIdd" ):
+                listener.exitIdd(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIdd" ):
+                return visitor.visitIdd(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def idd(self):
+
+        localctx = SOGAParser.IddContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 44, self.RULE_idd)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 241
+            self.match(SOGAParser.IDV)
+            self.state = 242
+            self.match(SOGAParser.T__26)
+            self.state = 243
+            _la = self._input.LA(1)
+            if not(_la==SOGAParser.IDV or _la==SOGAParser.NUM):
+                self._errHandler.recoverInline(self)
+            else:
+                self._errHandler.reportMatch(self)
+                self.consume()
+            self.state = 244
+            self.match(SOGAParser.T__4)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1092,8 +1958,12 @@ class SOGAParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def ID(self):
-            return self.getToken(SOGAParser.ID, 0)
+        def IDV(self):
+            return self.getToken(SOGAParser.IDV, 0)
+
+        def idd(self):
+            return self.getTypedRuleContext(SOGAParser.IddContext,0)
+
 
         def getRuleIndex(self):
             return SOGAParser.RULE_symvars
@@ -1118,11 +1988,156 @@ class SOGAParser ( Parser ):
     def symvars(self):
 
         localctx = SOGAParser.SymvarsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 26, self.RULE_symvars)
+        self.enterRule(localctx, 46, self.RULE_symvars)
+        try:
+            self.state = 248
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,27,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 246
+                self.match(SOGAParser.IDV)
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 247
+                self.idd()
+                pass
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class GmContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def list_(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SOGAParser.ListContext)
+            else:
+                return self.getTypedRuleContext(SOGAParser.ListContext,i)
+
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_gm
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterGm" ):
+                listener.enterGm(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitGm" ):
+                listener.exitGm(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGm" ):
+                return visitor.visitGm(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def gm(self):
+
+        localctx = SOGAParser.GmContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 48, self.RULE_gm)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 132
-            self.match(SOGAParser.ID)
+            self.state = 250
+            self.match(SOGAParser.T__27)
+            self.state = 251
+            self.list_()
+            self.state = 252
+            self.match(SOGAParser.T__28)
+            self.state = 253
+            self.list_()
+            self.state = 254
+            self.match(SOGAParser.T__28)
+            self.state = 255
+            self.list_()
+            self.state = 256
+            self.match(SOGAParser.T__21)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class UniformContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+            
+        def getText(self):
+            """ converts string "uniform([a,b], K)" in "gm(pi, mu, sigma)" where gm is a Gaussian Mix with K component approximating the uniform"""
+            a = float(self.list_().NUM()[0].getText())
+            b = float(self.list_().NUM()[1].getText())
+            N = int(self.NUM().getText())
+            pi = [round(1.0/N,4)]*N
+            mu = [round(a+i*(b-a)/N+((b-a)/(2*N)),4) for i in range(N)]
+            sigma = list([round((b-a)/(np.sqrt(12)*N),4)]*N)
+            return 'gm('+str(pi)+','+str(mu)+','+str(sigma)+')'
+
+        def list_(self):
+            return self.getTypedRuleContext(SOGAParser.ListContext,0)
+
+
+        def NUM(self):
+            return self.getToken(SOGAParser.NUM, 0)
+
+        def getRuleIndex(self):
+            return SOGAParser.RULE_uniform
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterUniform" ):
+                listener.enterUniform(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitUniform" ):
+                listener.exitUniform(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUniform" ):
+                return visitor.visitUniform(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def uniform(self):
+
+        localctx = SOGAParser.UniformContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 50, self.RULE_uniform)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 258
+            self.match(SOGAParser.T__29)
+            self.state = 259
+            self.list_()
+            self.state = 260
+            self.match(SOGAParser.T__28)
+            self.state = 261
+            self.match(SOGAParser.NUM)
+            self.state = 262
+            self.match(SOGAParser.T__21)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1168,28 +2183,28 @@ class SOGAParser ( Parser ):
     def list_(self):
 
         localctx = SOGAParser.ListContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 28, self.RULE_list)
+        self.enterRule(localctx, 52, self.RULE_list)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 134
-            self.match(SOGAParser.T__23)
-            self.state = 135
+            self.state = 264
+            self.match(SOGAParser.T__26)
+            self.state = 265
             self.match(SOGAParser.NUM)
-            self.state = 140
+            self.state = 270
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,11,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,28,self._ctx)
             while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1+1:
-                    self.state = 136
-                    self.match(SOGAParser.T__22)
-                    self.state = 137
+                    self.state = 266
+                    self.match(SOGAParser.T__28)
+                    self.state = 267
                     self.match(SOGAParser.NUM) 
-                self.state = 142
+                self.state = 272
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,11,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,28,self._ctx)
 
-            self.state = 143
-            self.match(SOGAParser.T__24)
+            self.state = 273
+            self.match(SOGAParser.T__4)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1198,22 +2213,6 @@ class SOGAParser ( Parser ):
             self.exitRule()
         return localctx
 
-
-
-    def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
-        if self._predicates == None:
-            self._predicates = dict()
-        self._predicates[9] = self.lexpr_sempred
-        pred = self._predicates.get(ruleIndex, None)
-        if pred is None:
-            raise Exception("No predicate with index:" + str(ruleIndex))
-        else:
-            return pred(localctx, predIndex)
-
-    def lexpr_sempred(self, localctx:LexprContext, predIndex:int):
-            if predIndex == 0:
-                return self.precpred(self._ctx, 1)
-         
 
 
 

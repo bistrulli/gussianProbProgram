@@ -7,7 +7,6 @@ if cloudy == 1 {
     rain = gm([0.2, 0.8], [1.,0.], [0.,0.]);
     sprinkler = gm([0.5, 0.5], [1.,0.], [0.,0.]);
 } end if;
-merge;
 
 temp1 = gm([0.7, 0.3], [1.,0.], [0.,0.]);
 
@@ -21,13 +20,11 @@ if temp1 == 1 {
 } else {
     wetRoof = 0;
 } end if;
-merge;
 
 temp2 = gm([0.9, 0.1], [1.,0.], [0.,0.]);
 temp3 = gm([0.9, 0.1], [1.,0.], [0.,0.]);
 
 if temp2 == 1 {
-    skip;
     if rain == 1 {
         or1 = 1;
     } else {
@@ -36,10 +33,8 @@ if temp2 == 1 {
 } else {
     or1 = 0;
 } end if;
-merge;
 
 if temp3 == 1 {
-    skip;
     if sprinkler == 1 {
         or2 = 1;
     } else {
@@ -48,7 +43,6 @@ if temp3 == 1 {
 } else {
     or2 = 0;
 } end if;
-merge;
 
 if or1 == 0 {
     skip;
@@ -60,7 +54,5 @@ if or1 == 0 {
 } else {
     wetGrass = 1;
 } end if;
-merge;
 
 observe(wetGrass == 1);
-skip;

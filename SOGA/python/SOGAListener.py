@@ -17,6 +17,24 @@ class SOGAListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SOGAParser#data.
+    def enterData(self, ctx:SOGAParser.DataContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#data.
+    def exitData(self, ctx:SOGAParser.DataContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#array.
+    def enterArray(self, ctx:SOGAParser.ArrayContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#array.
+    def exitArray(self, ctx:SOGAParser.ArrayContext):
+        pass
+
+
     # Enter a parse tree produced by SOGAParser#instr.
     def enterInstr(self, ctx:SOGAParser.InstrContext):
         pass
@@ -32,6 +50,51 @@ class SOGAListener(ParseTreeListener):
 
     # Exit a parse tree produced by SOGAParser#assignment.
     def exitAssignment(self, ctx:SOGAParser.AssignmentContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#const.
+    def enterConst(self, ctx:SOGAParser.ConstContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#const.
+    def exitConst(self, ctx:SOGAParser.ConstContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#const_term.
+    def enterConst_term(self, ctx:SOGAParser.Const_termContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#const_term.
+    def exitConst_term(self, ctx:SOGAParser.Const_termContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#add.
+    def enterAdd(self, ctx:SOGAParser.AddContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#add.
+    def exitAdd(self, ctx:SOGAParser.AddContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#add_term.
+    def enterAdd_term(self, ctx:SOGAParser.Add_termContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#add_term.
+    def exitAdd_term(self, ctx:SOGAParser.Add_termContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#mul.
+    def enterMul(self, ctx:SOGAParser.MulContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#mul.
+    def exitMul(self, ctx:SOGAParser.MulContext):
         pass
 
 
@@ -71,21 +134,12 @@ class SOGAListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SOGAParser#merge.
-    def enterMerge(self, ctx:SOGAParser.MergeContext):
+    # Enter a parse tree produced by SOGAParser#bexpr.
+    def enterBexpr(self, ctx:SOGAParser.BexprContext):
         pass
 
-    # Exit a parse tree produced by SOGAParser#merge.
-    def exitMerge(self, ctx:SOGAParser.MergeContext):
-        pass
-
-
-    # Enter a parse tree produced by SOGAParser#observe.
-    def enterObserve(self, ctx:SOGAParser.ObserveContext):
-        pass
-
-    # Exit a parse tree produced by SOGAParser#observe.
-    def exitObserve(self, ctx:SOGAParser.ObserveContext):
+    # Exit a parse tree produced by SOGAParser#bexpr.
+    def exitBexpr(self, ctx:SOGAParser.BexprContext):
         pass
 
 
@@ -98,12 +152,39 @@ class SOGAListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SOGAParser#bexpr.
-    def enterBexpr(self, ctx:SOGAParser.BexprContext):
+    # Enter a parse tree produced by SOGAParser#monom.
+    def enterMonom(self, ctx:SOGAParser.MonomContext):
         pass
 
-    # Exit a parse tree produced by SOGAParser#bexpr.
-    def exitBexpr(self, ctx:SOGAParser.BexprContext):
+    # Exit a parse tree produced by SOGAParser#monom.
+    def exitMonom(self, ctx:SOGAParser.MonomContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#prune.
+    def enterPrune(self, ctx:SOGAParser.PruneContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#prune.
+    def exitPrune(self, ctx:SOGAParser.PruneContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#observe.
+    def enterObserve(self, ctx:SOGAParser.ObserveContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#observe.
+    def exitObserve(self, ctx:SOGAParser.ObserveContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#loop.
+    def enterLoop(self, ctx:SOGAParser.LoopContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#loop.
+    def exitLoop(self, ctx:SOGAParser.LoopContext):
         pass
 
 
@@ -125,12 +206,39 @@ class SOGAListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SOGAParser#idd.
+    def enterIdd(self, ctx:SOGAParser.IddContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#idd.
+    def exitIdd(self, ctx:SOGAParser.IddContext):
+        pass
+
+
     # Enter a parse tree produced by SOGAParser#symvars.
     def enterSymvars(self, ctx:SOGAParser.SymvarsContext):
         pass
 
     # Exit a parse tree produced by SOGAParser#symvars.
     def exitSymvars(self, ctx:SOGAParser.SymvarsContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#gm.
+    def enterGm(self, ctx:SOGAParser.GmContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#gm.
+    def exitGm(self, ctx:SOGAParser.GmContext):
+        pass
+
+
+    # Enter a parse tree produced by SOGAParser#uniform.
+    def enterUniform(self, ctx:SOGAParser.UniformContext):
+        pass
+
+    # Exit a parse tree produced by SOGAParser#uniform.
+    def exitUniform(self, ctx:SOGAParser.UniformContext):
         pass
 
 

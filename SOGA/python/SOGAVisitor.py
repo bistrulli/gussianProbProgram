@@ -14,6 +14,16 @@ class SOGAVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SOGAParser#data.
+    def visitData(self, ctx:SOGAParser.DataContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#array.
+    def visitArray(self, ctx:SOGAParser.ArrayContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SOGAParser#instr.
     def visitInstr(self, ctx:SOGAParser.InstrContext):
         return self.visitChildren(ctx)
@@ -21,6 +31,31 @@ class SOGAVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by SOGAParser#assignment.
     def visitAssignment(self, ctx:SOGAParser.AssignmentContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#const.
+    def visitConst(self, ctx:SOGAParser.ConstContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#const_term.
+    def visitConst_term(self, ctx:SOGAParser.Const_termContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#add.
+    def visitAdd(self, ctx:SOGAParser.AddContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#add_term.
+    def visitAdd_term(self, ctx:SOGAParser.Add_termContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#mul.
+    def visitMul(self, ctx:SOGAParser.MulContext):
         return self.visitChildren(ctx)
 
 
@@ -44,13 +79,8 @@ class SOGAVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SOGAParser#merge.
-    def visitMerge(self, ctx:SOGAParser.MergeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by SOGAParser#observe.
-    def visitObserve(self, ctx:SOGAParser.ObserveContext):
+    # Visit a parse tree produced by SOGAParser#bexpr.
+    def visitBexpr(self, ctx:SOGAParser.BexprContext):
         return self.visitChildren(ctx)
 
 
@@ -59,8 +89,23 @@ class SOGAVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SOGAParser#bexpr.
-    def visitBexpr(self, ctx:SOGAParser.BexprContext):
+    # Visit a parse tree produced by SOGAParser#monom.
+    def visitMonom(self, ctx:SOGAParser.MonomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#prune.
+    def visitPrune(self, ctx:SOGAParser.PruneContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#observe.
+    def visitObserve(self, ctx:SOGAParser.ObserveContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#loop.
+    def visitLoop(self, ctx:SOGAParser.LoopContext):
         return self.visitChildren(ctx)
 
 
@@ -74,8 +119,23 @@ class SOGAVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SOGAParser#idd.
+    def visitIdd(self, ctx:SOGAParser.IddContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SOGAParser#symvars.
     def visitSymvars(self, ctx:SOGAParser.SymvarsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#gm.
+    def visitGm(self, ctx:SOGAParser.GmContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SOGAParser#uniform.
+    def visitUniform(self, ctx:SOGAParser.UniformContext):
         return self.visitChildren(ctx)
 
 

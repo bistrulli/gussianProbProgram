@@ -25,12 +25,7 @@
 # The function produce_cfg is invoked on a .txt file containing the valid script of a SOGA program. It uses the libraries SOGALexer and SOGAParser (automatically generated using ANTLR4) to create the parse tree of the program and subsequently explores it recursively using the customized CFG listener. Returns the CFG object generated from the program script.
 
 # TO DO:
-# - add instruction to convert uniform (and possibly other distributions) to GMs
-# - automate merge after if
-# - remove unnecessary skip
-# - add a prune(Kmax) instruction
-# - add bounded loops
-# - add vectors
+# - make array accessible also with expression such as i-1, i+1, ecc.
 
 from antlr4 import *
 from SOGALexer import *
@@ -117,6 +112,30 @@ class MergeNode(CFGnode):
     def __repr__(self):
         return str(self)
     
+class PruneNode(CFGnode):
+    def __init__(self, node_name):
+        super().__init__(node_name, 'prune')
+        self.Kmax = None
+        
+    def __str__(self):
+        return 'PruneNode<{}>'.format(self.name)
+    
+    def __repr__(self):
+        return str(self)
+        
+    
+class LoopNode(CFGnode):
+    def __init__(self, node_name):
+        super().__init__(node_name, 'loop')
+        self.idx = None
+        self.const = None
+        
+    def __str__(self):
+        return 'LoopNode<{}>'.format(self.name)
+    
+    def __repr__(self):
+        return str(self)
+
 class ExitNode(CFGnode):
     
     def __init__(self, node_name):
@@ -138,15 +157,30 @@ class CFG(SOGAListener):
         self.n_test = 0
         self.n_merge = 0
         self.n_observe = 0
+        self.n_loop = 0
+        self.n_prune = 0
         # root of the CFG
         self.root = EntryNode('entry')
+        # dictionary for data
+        self.data = {}
         # dictionary keeping track of the nodes in CFG 
-        self.node_list = {}
+        self.node_list = {'entry':self.root}
         self.ID_list = []
         # hidden variables used in the construction of the CFG
         self._current_node = self.root
         self._flag = None
         self._subroot = []
+        
+    def enterData(self, ctx):
+        data_name = ctx.symvars().getText()
+        data_value = eval(ctx.list_().getText())
+        self.data[data_name] = data_value
+        
+    def enterArray(self, ctx):
+        n = int(ctx.NUM().getText())
+        var_name = ctx.IDV().getText()
+        for i in range(n):
+            self.ID_list.append(var_name+'['+str(i)+']')
         
     def enterAssignment(self, ctx):
         """ When an Assignment instruction is entered a new StateNode is added to the CFG, storing a string with the assignment instruction. Dependence from a TestNode, encoded in the variable _flag, is checked to initialize the attribute cond."""
@@ -160,6 +194,7 @@ class CFG(SOGAListener):
         self._current_node.children.append(node)
         self._current_node = node
         self.node_list[node.name] = node
+            
 
     def enterConditional(self, ctx):
         """ When a Conditional statement is entered a new TestNode is added to the CFG and to the stack _subroot."""
@@ -175,6 +210,9 @@ class CFG(SOGAListener):
         """ When the Ifclause of a conditional statement is entered the LBC is stored as a string in the LBC attribute of the corresponding TestNode and _flag is set to True."""
         self._current_node.LBC = ctx.bexpr().getText()
         self._flag = True
+        # first node after if must be a state node with cond=True
+        if ctx.block().instr(0).assignment() is None:
+            self.create_skip()            
         
     def exitIfclause(self, ctx):
         """ When the Ifclause of a conditional statement is exited the current_node is set to the last added subroot (pointing to the last created TestNode)."""
@@ -183,11 +221,21 @@ class CFG(SOGAListener):
     def enterElseclause(self, ctx):
         """ When the Elseclause of a conditional statement is entered _flag is set to False."""
         self._flag = False
+        # first node after if must be a state node with cond=False
+        if ctx.block().instr(0).assignment() is None:
+            self.create_skip()
         
     def exitElseclause(self, ctx):
-        """ When the Elseclause of a conditional statement is exited the last added subroot is deleted from the stack."""
+        """ When the Elseclause of a conditional statement is exited the last added subroot is deleted from the stack and a merge node is added to the cfg"""
         self._current_node = self._subroot.pop()
-        
+        node = MergeNode('merge{}'.format(self.n_merge))
+        self.n_merge += 1
+        node.parent, _ = self.get_leaves(self._current_node, [], [])
+        for parent in node.parent:
+            parent.children.append(node)
+        self._current_node = node
+        self.node_list[node.name] = node
+               
     def enterObserve(self, ctx):
         """ When an Observe statement is entered an ObserveNode is added to the CFG, storing the LBC condition in the attribute LBC."""
         node = ObserveNode('observe{}'.format(self.n_observe))
@@ -196,22 +244,52 @@ class CFG(SOGAListener):
         node.parent.append(self._current_node)
         self._current_node.children.append(node)
         self._current_node = node
-        self.node_list[node.name] = node
+        self.node_list[node.name] = node       
         
-    def enterMerge(self, ctx):
+    def enterPrune(self, ctx):
         """ When a merge statement is entered a new MergeNode is added to the CFG."""
-        node = MergeNode('merge{}'.format(self.n_merge))
-        self.n_merge += 1
-        node.parent = self.get_leaves(self._current_node, [])
+        node = PruneNode('prune{}'.format(self.n_merge))
+        self.n_prune += 1
+        node.parent, _ = self.get_leaves(self._current_node, [], [])
         for parent in node.parent:
             parent.children.append(node)
         self._current_node = node
         self.node_list[node.name] = node
+        self._current_node.Kmax = int(ctx.NUM().getText())
         
+    def enterLoop(self, ctx):
+        node = LoopNode('loop{}'.format(self.n_loop))
+        self.n_loop += 1
+        node.parent.append(self._current_node)
+        self._current_node.children.append(node)
+        self._current_node = node
+        self._subroot.append(self._current_node)
+        self.node_list[node.name] = node
+        idx_name = ctx.IDV().getText()
+        self._current_node.idx = idx_name
+        self.data[idx_name] = [None]
+        if not ctx.NUM() is None:
+            self._current_node.const = ctx.NUM().getText()
+        else:
+            self._current_node.const = ctx.idd().getText()
+        self._flag = True
+        # first node after loop must be a state node with cond=True
+        if ctx.block().instr(0).assignment() is None:
+            self.create_skip()
+
+    def exitLoop(self, ctx):
+        if self._current_node.type != 'state':
+            self.create_skip()
+        self._current_node.children.append(self._subroot[-1])
+        self._subroot[-1].parent.append(self._current_node)
+        self._current_node = self._subroot.pop()
+        self._flag = False
+        self.create_skip()
+    
     def exitProgr(self, ctx):
         """ When the end of the program is reached an ExitNode is added to the CFG and all leaves are linked to it."""
         node = ExitNode('exit')
-        node.parent = self.get_leaves(self._current_node, [])
+        node.parent, _ = self.get_leaves(self._current_node, [], [])
         for parent in node.parent:
             parent.children.append(node)
         self._current_node = node
@@ -219,37 +297,44 @@ class CFG(SOGAListener):
         
     def enterSymvars(self, ctx):
         """ Symbolic variables names encountered during the parsing are stored in the attribute list ID_list."""
-        var = ctx.getText()
-        if 'gm(' not in var and var not in self.ID_list:
+        if not ctx.IDV() is None:
+            var = ctx.IDV().getText()
+            if var not in self.ID_list and var not in self.data.keys():
                 self.ID_list.append(var)
-                             
-    def get_leaves(self, node, leaves):
+                         
+        
+    def get_leaves(self, node, leaves, checked):
         """ Recursively finds all the leaves of the subtree starting in node."""
+        checked.append(node)
         if len(node.children) == 0:
             if node not in leaves:
                 leaves.append(node)
-            return leaves
         else:
             for child in node.children:
-                leaves = self.get_leaves(child, leaves)
-            return leaves     
+                if not child in checked:
+                    leaves, checked = self.get_leaves(child, leaves, checked)
+        return leaves, checked
+    
     
     def plot_edges(self):
-        """ Recursively plots all the edges of the tree."""
-        def _plot_edges(node, edges = []):
-            if len(node.children) == 0:
-                return edges
-            else:
-                for child in node.children:
-                    edge = '(' + node.name + ',' + child.name + ')'
-                    if edge not in edges:
-                        edges.append(edge)
-                for child in node.children:
-                    edges = _plot_edges(child, edges)
-                return edges
-            
-        edges = _plot_edges(self.root)
+        edges = []
+        for node_name in self.node_list:
+            node = self.node_list[node_name]
+            for child in node.children:
+                edge = '(' + node.name + ',' + child.name + ')'
+                edges.append(edge)
         print(edges)
+        
+    def create_skip(self):
+        node = StateNode('state{}'.format(self.n_state))
+        self.n_state += 1
+        node.cond = self._flag
+        self._flag = None
+        node.expr = 'skip'
+        node.parent.append(self._current_node)
+        self._current_node.children.append(node)
+        self._current_node = node
+        self.node_list[node.name] = node
         
         
 def produce_cfg(filename):

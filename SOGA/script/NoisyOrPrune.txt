@@ -52,3 +52,5 @@ if n31 == 0 {
 } else {
     n3 = 1;
 } end if;
+
+prune(10);

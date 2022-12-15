@@ -1,29 +1,46 @@
 grammar SOGA; 
 
-progr : (instr ';')*;
+progr : (data ';')*? (instr ';' | array ';')*;
 
-instr : assignment | conditional | merge | observe;
+data : 'data' symvars '=' list;
 
-assignment: symvars '=' (lexpr|expr|list) | 'skip';
+array: 'array[' NUM ']' IDV;
+
+instr : assignment | conditional | prune | observe | loop;
+
+assignment: symvars '=' (const | add | mul) | 'skip';
+
+const: const_term (('+'|'-') const_term)*?;
+const_term: (NUM | idd) ('*' (NUM | idd))?;
+add: add_term (('+'|'-') add_term)*?;
+add_term: ((NUM | idd) '*')? vars | const_term;
+mul: ((NUM | idd) '*')? vars '*' vars;
 
 conditional: ifclause elseclause 'end if';
+
 ifclause : 'if' bexpr '{' block '}';
 elseclause : 'else' '{' block '}';
 block : (instr ';')+;
+bexpr : lexpr ('<'|'<='|'>='|'>') (NUM | idd) | symvars ('=='|'!=') (NUM | idd);
+lexpr: monom (('+'|'-') monom)*?;
+monom: ((NUM | idd) '*')? vars;
 
-merge : 'merge';
+prune : 'prune(' NUM ')';
 
 observe: 'observe(' bexpr ')';
 
-lexpr : vars | NUM | NUM '*' lexpr | lexpr ('+'|'-') lexpr;
-bexpr : lexpr ('<'|'<='|'>='|'>') NUM | ID ('=='|'!=') NUM;
+loop : 'for' IDV '<' (NUM | idd) '{' block '}' 'end for';
+
 expr : lexpr | (NUM '*')? vars '*' vars | vars '^2' ;
 
-vars: symvars | 'gm(' list ',' list ',' list ')';
-symvars : ID;
+vars: symvars | gm | uniform;
+idd: IDV '[' (NUM | IDV) ']';
+symvars : IDV | idd;
+gm: 'gm(' list ',' list ',' list ')';
+uniform: 'uniform(' list ',' NUM ')';
 list: '[' NUM (',' NUM)*? ']';
 
-ID : ALPHA (ALPHA|DIGIT)*;
+IDV : ALPHA (ALPHA|DIGIT)*;
 NUM : '-'? DIGIT+ ('.' DIGIT*)?;
 
 COMM : '/*' .*? '*/' -> skip;

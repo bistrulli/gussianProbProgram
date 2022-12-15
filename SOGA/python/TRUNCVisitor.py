@@ -44,13 +44,18 @@ class TRUNCVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by TRUNCParser#vars.
-    def visitVars(self, ctx:TRUNCParser.VarsContext):
+    # Visit a parse tree produced by TRUNCParser#const.
+    def visitConst(self, ctx:TRUNCParser.ConstContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by TRUNCParser#symvars.
-    def visitSymvars(self, ctx:TRUNCParser.SymvarsContext):
+    # Visit a parse tree produced by TRUNCParser#var.
+    def visitVar(self, ctx:TRUNCParser.VarContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by TRUNCParser#idd.
+    def visitIdd(self, ctx:TRUNCParser.IddContext):
         return self.visitChildren(ctx)
 
 

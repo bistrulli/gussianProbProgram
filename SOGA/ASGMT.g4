@@ -1,22 +1,20 @@
 grammar ASGMT; 
 
-assignment: symvars '=' (const | add | mul | pow);
+assignment: symvars '=' add;
 
-const: NUM ((sum|sub) NUM)*?;
-add: monom ((sum|sub) monom)*?;
-mul: (NUM '*')? vars '*' vars;
-pow: vars '^2';
+add: add_term ((sum|sub) add_term)*?;
+add_term: (term '*')? term;
 
-monom: (NUM '*')? vars | NUM;
-vars: ID | gm;
-symvars : ID;
+term: NUM | symvars | gm;
+symvars : IDV | idd;
+idd : IDV '[' (NUM | IDV) ']';
 gm: 'gm(' list ',' list ',' list ')';
 list: '[' NUM (',' NUM)*? ']';
 
 sum: '+';
 sub: '-';
 
-ID : ALPHA (ALPHA|DIGIT)*;
+IDV : ALPHA (ALPHA|DIGIT)*;
 NUM : '-'? DIGIT+ ('.' DIGIT*)?;
 
 COMM : '/*' .*? '*/' -> skip;

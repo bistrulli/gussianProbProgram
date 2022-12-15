@@ -14,38 +14,28 @@ class ASGMTVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ASGMTParser#const.
-    def visitConst(self, ctx:ASGMTParser.ConstContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by ASGMTParser#add.
     def visitAdd(self, ctx:ASGMTParser.AddContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ASGMTParser#mul.
-    def visitMul(self, ctx:ASGMTParser.MulContext):
+    # Visit a parse tree produced by ASGMTParser#add_term.
+    def visitAdd_term(self, ctx:ASGMTParser.Add_termContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ASGMTParser#pow.
-    def visitPow(self, ctx:ASGMTParser.PowContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ASGMTParser#monom.
-    def visitMonom(self, ctx:ASGMTParser.MonomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ASGMTParser#vars.
-    def visitVars(self, ctx:ASGMTParser.VarsContext):
+    # Visit a parse tree produced by ASGMTParser#term.
+    def visitTerm(self, ctx:ASGMTParser.TermContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by ASGMTParser#symvars.
     def visitSymvars(self, ctx:ASGMTParser.SymvarsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ASGMTParser#idd.
+    def visitIdd(self, ctx:ASGMTParser.IddContext):
         return self.visitChildren(ctx)
 
 

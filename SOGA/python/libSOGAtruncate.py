@@ -30,8 +30,9 @@ def negate(trunc):
 
 class TruncRule(TRUNCListener):
     
-    def __init__(self, var_list):
+    def __init__(self, var_list, data):
         self.var_list = var_list
+        self.data = data
         self.type = None
         self.coeff = [0.]*len(var_list)
         self.const = 0
@@ -43,7 +44,11 @@ class TruncRule(TRUNCListener):
         
     def enterIneq(self, ctx):
         self.type = ctx.inop().getText()
-        self.const = float(ctx.NUM().getText())
+        if not ctx.const().NUM() is None:
+            self.const = float(ctx.const().NUM().getText())
+        elif not ctx.const().idd() is None:
+            self.const = ctx.const().idd().getValue(self.data)
+                
     
     def enterLexpr(self, ctx):
         self.flag_sign = 1.
@@ -232,23 +237,31 @@ class TruncRule(TRUNCListener):
         
         
     def enterMonom(self,ctx):
-        if not ctx.vars_() is None:
-            if not ctx.vars_().ID() is None:
-                ID = ctx.vars_().ID().getText()
-                if not ctx.NUM() is None:
-                    coeff = self.flag_sign*float(ctx.NUM().getText())
-                else:
-                    coeff = self.flag_sign
-                idx = self.var_list.index(ID)
-                self.coeff[idx] = coeff
-            elif not ctx.vars_().gm() is None:
-                self.aux_pis.append(eval(ctx.vars_().gm().list_()[0].getText()))
-                self.aux_means.append(eval(ctx.vars_().gm().list_()[1].getText()))
-                self.aux_covs.append(np.array(eval(ctx.vars_().gm().list_()[2].getText()))**2)
-                if not ctx.NUM() is None:
-                    self.coeff.append(self.flag_sign*float(ctx.NUM().getText()))
-                else: 
-                    self.coeff.append(self.flag_sign)            
+        if ctx.var().gm() is None:
+            # monom in the form const? '*' (IDV | idd)
+            ID = ctx.var()._getText(self.data)
+            if not ctx.const() is None:
+                if not ctx.const().NUM() is None:
+                    coeff = self.flag_sign*float(ctx.const().NUM().getText())
+                elif not ctx.const().idd() is None:
+                    coeff = self.flag_sign*ctx.const().idd().getValue(self.data)
+            else:
+                coeff = self.flag_sign
+            idx = self.var_list.index(ID)
+            self.coeff[idx] = coeff
+        # monom in the form const? '*' gm
+        else:
+            self.aux_pis.append(eval(ctx.var().gm().list_()[0].getText()))
+            self.aux_means.append(eval(ctx.var().gm().list_()[1].getText()))
+            self.aux_covs.append(np.array(eval(ctx.var().gm().list_()[2].getText()))**2)
+            if not ctx.const() is None:
+                if not ctx.const().NUM() is None:
+                    coeff = self.flag_sign*float(ctx.const().NUM().getText())
+                elif not ctx.const().idd() is None:
+                    coeff = self.flag_sign*ctx.const().idd().getValue(self.data)
+            else:
+                coeff = self.flag_sign 
+            self.coeff.append(self.flag_sign)            
             
     def enterSub(self, ctx):
         self.flag_sign = -1.
@@ -258,10 +271,15 @@ class TruncRule(TRUNCListener):
         
     def enterEq(self, ctx):
         self.type = ctx.eqop().getText()
-        idx = self.var_list.index(ctx.symvars().getText())
+        idx = self.var_list.index(ctx.var()._getText(self.data))
         self.coeff[idx] = 1.
-        self.const = float(ctx.NUM().getText())
-        
+        if not ctx.const() is None:
+            if not ctx.const().NUM() is None:
+                self.const = float(ctx.const().NUM().getText())
+            elif not ctx.const().idd() is None:
+                self.const = ctx.const().idd().getValue(self.data)
+            
+            
         def eq_func(comp):
             mu = comp.gm.mu[0]
             sigma = comp.gm.sigma[0]
@@ -303,7 +321,7 @@ class TruncRule(TRUNCListener):
                     # STEP 4: computes cond_mu
                     cond_mu = red_mu[select] + (1/red_sigma[red_obs_idx,red_obs_idx])*(eq_const-red_mu[red_obs_idx])*red_sigma[select,red_obs_idx]
                     # if conditioned matrix is Null, it is equivalent to oberving a single independent component
-                    if np.all(cond_sigma) == 0:   
+                    if np.all(cond_sigma == 0):  
                         new_P = 0.
                     else:
                         new_P = 1.
@@ -317,19 +335,19 @@ class TruncRule(TRUNCListener):
         self.func = eq_func
     
     
-def truncate(dist, trunc):
+def truncate(dist, trunc, data):
     """ Given a distribution dist computes its truncation to trunc. Returns a pair norm_factor, new_dist where norm_factor is the probability mass of the original distribution dist on trunc and new_dist is a Dist object representing the (approximated) truncated distribution. """
     if trunc == 'true':
         return 1., dist
     elif trunc == 'false':
         return 0., dist
     else:
-        trunc_func = trunc_parse(dist.var_list, trunc)
+        trunc_func = trunc_parse(dist.var_list, trunc, data)
         new_dist = Dist(dist.var_list, GaussianMix([],[],[]))
         new_pi = []
         for k in range(dist.gm.n_comp()):
             comp = Dist(dist.var_list, dist.gm.comp(k))
-            new_mix = trunc_func(comp) 
+            new_mix = trunc_func(comp)
             for h in range(new_mix.n_comp()):
                 if new_mix.pi[h] > prob_tol:
                     new_dist.gm.mu.append(new_mix.mu[h])
@@ -341,13 +359,13 @@ def truncate(dist, trunc):
         return norm_factor, new_dist
     
     
-def trunc_parse(var_list, trunc):
+def trunc_parse(var_list, trunc, data):
     """ Parses trunc using ANTLR4. Returns a function """
     lexer = TRUNCLexer(InputStream(trunc))
     stream = CommonTokenStream(lexer)
     parser = TRUNCParser(stream)
     tree = parser.trunc()
-    trunc_rule = TruncRule(var_list)
+    trunc_rule = TruncRule(var_list, data)
     walker = ParseTreeWalker()
     walker.walk(trunc_rule, tree) 
     return trunc_rule.func
@@ -432,7 +450,6 @@ def partitionfunc(n,k,l=0):
     for i in range(l,n+1):
         for result in partitionfunc(n-i,k-1):
             yield (i,)+result
-
 
             
 def _prob(mu, sigma, a, b):

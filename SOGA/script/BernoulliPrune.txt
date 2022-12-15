@@ -8,5 +8,6 @@ for i < 10 {
     } else { 
         y = 0; 
     } end if;
+    prune(100);
     observe(y == obs[i]);
 } end for;

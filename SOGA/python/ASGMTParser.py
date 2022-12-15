@@ -10,38 +10,30 @@ else:
 
 def serializedATN():
     return [
-        4,1,15,105,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
-        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,1,0,1,0,1,0,1,0,1,
-        0,1,0,3,0,31,8,0,1,1,1,1,1,1,3,1,36,8,1,1,1,1,1,5,1,40,8,1,10,1,
-        12,1,43,9,1,1,2,1,2,1,2,3,2,48,8,2,1,2,1,2,5,2,52,8,2,10,2,12,2,
-        55,9,2,1,3,1,3,3,3,59,8,3,1,3,1,3,1,3,1,3,1,4,1,4,1,4,1,5,1,5,3,
-        5,70,8,5,1,5,1,5,3,5,74,8,5,1,6,1,6,3,6,78,8,6,1,7,1,7,1,8,1,8,1,
-        8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,9,5,9,94,8,9,10,9,12,9,97,9,
-        9,1,9,1,9,1,10,1,10,1,11,1,11,1,11,3,41,53,95,0,12,0,2,4,6,8,10,
-        12,14,16,18,20,22,0,0,104,0,24,1,0,0,0,2,32,1,0,0,0,4,44,1,0,0,0,
-        6,58,1,0,0,0,8,64,1,0,0,0,10,73,1,0,0,0,12,77,1,0,0,0,14,79,1,0,
-        0,0,16,81,1,0,0,0,18,89,1,0,0,0,20,100,1,0,0,0,22,102,1,0,0,0,24,
-        25,3,14,7,0,25,30,5,1,0,0,26,31,3,2,1,0,27,31,3,4,2,0,28,31,3,6,
-        3,0,29,31,3,8,4,0,30,26,1,0,0,0,30,27,1,0,0,0,30,28,1,0,0,0,30,29,
-        1,0,0,0,31,1,1,0,0,0,32,41,5,12,0,0,33,36,3,20,10,0,34,36,3,22,11,
-        0,35,33,1,0,0,0,35,34,1,0,0,0,36,37,1,0,0,0,37,38,5,12,0,0,38,40,
-        1,0,0,0,39,35,1,0,0,0,40,43,1,0,0,0,41,42,1,0,0,0,41,39,1,0,0,0,
-        42,3,1,0,0,0,43,41,1,0,0,0,44,53,3,10,5,0,45,48,3,20,10,0,46,48,
-        3,22,11,0,47,45,1,0,0,0,47,46,1,0,0,0,48,49,1,0,0,0,49,50,3,10,5,
-        0,50,52,1,0,0,0,51,47,1,0,0,0,52,55,1,0,0,0,53,54,1,0,0,0,53,51,
-        1,0,0,0,54,5,1,0,0,0,55,53,1,0,0,0,56,57,5,12,0,0,57,59,5,2,0,0,
-        58,56,1,0,0,0,58,59,1,0,0,0,59,60,1,0,0,0,60,61,3,12,6,0,61,62,5,
-        2,0,0,62,63,3,12,6,0,63,7,1,0,0,0,64,65,3,12,6,0,65,66,5,3,0,0,66,
-        9,1,0,0,0,67,68,5,12,0,0,68,70,5,2,0,0,69,67,1,0,0,0,69,70,1,0,0,
-        0,70,71,1,0,0,0,71,74,3,12,6,0,72,74,5,12,0,0,73,69,1,0,0,0,73,72,
-        1,0,0,0,74,11,1,0,0,0,75,78,5,11,0,0,76,78,3,16,8,0,77,75,1,0,0,
-        0,77,76,1,0,0,0,78,13,1,0,0,0,79,80,5,11,0,0,80,15,1,0,0,0,81,82,
-        5,4,0,0,82,83,3,18,9,0,83,84,5,5,0,0,84,85,3,18,9,0,85,86,5,5,0,
-        0,86,87,3,18,9,0,87,88,5,6,0,0,88,17,1,0,0,0,89,90,5,7,0,0,90,95,
-        5,12,0,0,91,92,5,5,0,0,92,94,5,12,0,0,93,91,1,0,0,0,94,97,1,0,0,
-        0,95,96,1,0,0,0,95,93,1,0,0,0,96,98,1,0,0,0,97,95,1,0,0,0,98,99,
-        5,8,0,0,99,19,1,0,0,0,100,101,5,9,0,0,101,21,1,0,0,0,102,103,5,10,
-        0,0,103,23,1,0,0,0,10,30,35,41,47,53,58,69,73,77,95
+        4,1,14,81,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,2,9,7,9,1,0,1,0,1,0,1,0,1,1,1,1,1,1,3,1,28,8,1,
+        1,1,1,1,5,1,32,8,1,10,1,12,1,35,9,1,1,2,1,2,1,2,3,2,40,8,2,1,2,1,
+        2,1,3,1,3,1,3,3,3,47,8,3,1,4,1,4,3,4,51,8,4,1,5,1,5,1,5,1,5,1,5,
+        1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,5,7,70,8,7,10,7,
+        12,7,73,9,7,1,7,1,7,1,8,1,8,1,9,1,9,1,9,2,33,71,0,10,0,2,4,6,8,10,
+        12,14,16,18,0,1,1,0,10,11,77,0,20,1,0,0,0,2,24,1,0,0,0,4,39,1,0,
+        0,0,6,46,1,0,0,0,8,50,1,0,0,0,10,52,1,0,0,0,12,57,1,0,0,0,14,65,
+        1,0,0,0,16,76,1,0,0,0,18,78,1,0,0,0,20,21,3,8,4,0,21,22,5,1,0,0,
+        22,23,3,2,1,0,23,1,1,0,0,0,24,33,3,4,2,0,25,28,3,16,8,0,26,28,3,
+        18,9,0,27,25,1,0,0,0,27,26,1,0,0,0,28,29,1,0,0,0,29,30,3,4,2,0,30,
+        32,1,0,0,0,31,27,1,0,0,0,32,35,1,0,0,0,33,34,1,0,0,0,33,31,1,0,0,
+        0,34,3,1,0,0,0,35,33,1,0,0,0,36,37,3,6,3,0,37,38,5,2,0,0,38,40,1,
+        0,0,0,39,36,1,0,0,0,39,40,1,0,0,0,40,41,1,0,0,0,41,42,3,6,3,0,42,
+        5,1,0,0,0,43,47,5,11,0,0,44,47,3,8,4,0,45,47,3,12,6,0,46,43,1,0,
+        0,0,46,44,1,0,0,0,46,45,1,0,0,0,47,7,1,0,0,0,48,51,5,10,0,0,49,51,
+        3,10,5,0,50,48,1,0,0,0,50,49,1,0,0,0,51,9,1,0,0,0,52,53,5,10,0,0,
+        53,54,5,3,0,0,54,55,7,0,0,0,55,56,5,4,0,0,56,11,1,0,0,0,57,58,5,
+        5,0,0,58,59,3,14,7,0,59,60,5,6,0,0,60,61,3,14,7,0,61,62,5,6,0,0,
+        62,63,3,14,7,0,63,64,5,7,0,0,64,13,1,0,0,0,65,66,5,3,0,0,66,71,5,
+        11,0,0,67,68,5,6,0,0,68,70,5,11,0,0,69,67,1,0,0,0,70,73,1,0,0,0,
+        71,72,1,0,0,0,71,69,1,0,0,0,72,74,1,0,0,0,73,71,1,0,0,0,74,75,5,
+        4,0,0,75,15,1,0,0,0,76,77,5,8,0,0,77,17,1,0,0,0,78,79,5,9,0,0,79,
+        19,1,0,0,0,6,27,33,39,46,50,71
     ]
 
 class ASGMTParser ( Parser ):
@@ -54,29 +46,27 @@ class ASGMTParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'='", "'*'", "'^2'", "'gm('", "','", 
-                     "')'", "'['", "']'", "'+'", "'-'" ]
+    literalNames = [ "<INVALID>", "'='", "'*'", "'['", "']'", "'gm('", "','", 
+                     "')'", "'+'", "'-'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "<INVALID>", "<INVALID>", "ID", "NUM", 
-                      "COMM", "WS", "DIGIT" ]
+                      "<INVALID>", "<INVALID>", "IDV", "NUM", "COMM", "WS", 
+                      "DIGIT" ]
 
     RULE_assignment = 0
-    RULE_const = 1
-    RULE_add = 2
-    RULE_mul = 3
-    RULE_pow = 4
-    RULE_monom = 5
-    RULE_vars = 6
-    RULE_symvars = 7
-    RULE_gm = 8
-    RULE_list = 9
-    RULE_sum = 10
-    RULE_sub = 11
+    RULE_add = 1
+    RULE_add_term = 2
+    RULE_term = 3
+    RULE_symvars = 4
+    RULE_idd = 5
+    RULE_gm = 6
+    RULE_list = 7
+    RULE_sum = 8
+    RULE_sub = 9
 
-    ruleNames =  [ "assignment", "const", "add", "mul", "pow", "monom", 
-                   "vars", "symvars", "gm", "list", "sum", "sub" ]
+    ruleNames =  [ "assignment", "add", "add_term", "term", "symvars", "idd", 
+                   "gm", "list", "sum", "sub" ]
 
     EOF = Token.EOF
     T__0=1
@@ -88,12 +78,11 @@ class ASGMTParser ( Parser ):
     T__6=7
     T__7=8
     T__8=9
-    T__9=10
-    ID=11
-    NUM=12
-    COMM=13
-    WS=14
-    DIGIT=15
+    IDV=10
+    NUM=11
+    COMM=12
+    WS=13
+    DIGIT=14
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -115,20 +104,8 @@ class ASGMTParser ( Parser ):
             return self.getTypedRuleContext(ASGMTParser.SymvarsContext,0)
 
 
-        def const(self):
-            return self.getTypedRuleContext(ASGMTParser.ConstContext,0)
-
-
         def add(self):
             return self.getTypedRuleContext(ASGMTParser.AddContext,0)
-
-
-        def mul(self):
-            return self.getTypedRuleContext(ASGMTParser.MulContext,0)
-
-
-        def pow_(self):
-            return self.getTypedRuleContext(ASGMTParser.PowContext,0)
 
 
         def getRuleIndex(self):
@@ -157,123 +134,12 @@ class ASGMTParser ( Parser ):
         self.enterRule(localctx, 0, self.RULE_assignment)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 24
+            self.state = 20
             self.symvars()
-            self.state = 25
+            self.state = 21
             self.match(ASGMTParser.T__0)
-            self.state = 30
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,0,self._ctx)
-            if la_ == 1:
-                self.state = 26
-                self.const()
-                pass
-
-            elif la_ == 2:
-                self.state = 27
-                self.add()
-                pass
-
-            elif la_ == 3:
-                self.state = 28
-                self.mul()
-                pass
-
-            elif la_ == 4:
-                self.state = 29
-                self.pow_()
-                pass
-
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class ConstContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def NUM(self, i:int=None):
-            if i is None:
-                return self.getTokens(ASGMTParser.NUM)
-            else:
-                return self.getToken(ASGMTParser.NUM, i)
-
-        def sum_(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(ASGMTParser.SumContext)
-            else:
-                return self.getTypedRuleContext(ASGMTParser.SumContext,i)
-
-
-        def sub(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(ASGMTParser.SubContext)
-            else:
-                return self.getTypedRuleContext(ASGMTParser.SubContext,i)
-
-
-        def getRuleIndex(self):
-            return ASGMTParser.RULE_const
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterConst" ):
-                listener.enterConst(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitConst" ):
-                listener.exitConst(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitConst" ):
-                return visitor.visitConst(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def const(self):
-
-        localctx = ASGMTParser.ConstContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 2, self.RULE_const)
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 32
-            self.match(ASGMTParser.NUM)
-            self.state = 41
-            self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,2,self._ctx)
-            while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1+1:
-                    self.state = 35
-                    self._errHandler.sync(self)
-                    token = self._input.LA(1)
-                    if token in [ASGMTParser.T__8]:
-                        self.state = 33
-                        self.sum_()
-                        pass
-                    elif token in [ASGMTParser.T__9]:
-                        self.state = 34
-                        self.sub()
-                        pass
-                    else:
-                        raise NoViableAltException(self)
-
-                    self.state = 37
-                    self.match(ASGMTParser.NUM) 
-                self.state = 43
-                self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,2,self._ctx)
-
+            self.state = 22
+            self.add()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -290,11 +156,11 @@ class ASGMTParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def monom(self, i:int=None):
+        def add_term(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(ASGMTParser.MonomContext)
+                return self.getTypedRuleContexts(ASGMTParser.Add_termContext)
             else:
-                return self.getTypedRuleContext(ASGMTParser.MonomContext,i)
+                return self.getTypedRuleContext(ASGMTParser.Add_termContext,i)
 
 
         def sum_(self, i:int=None):
@@ -334,35 +200,35 @@ class ASGMTParser ( Parser ):
     def add(self):
 
         localctx = ASGMTParser.AddContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_add)
+        self.enterRule(localctx, 2, self.RULE_add)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 44
-            self.monom()
-            self.state = 53
+            self.state = 24
+            self.add_term()
+            self.state = 33
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,4,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,1,self._ctx)
             while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1+1:
-                    self.state = 47
+                    self.state = 27
                     self._errHandler.sync(self)
                     token = self._input.LA(1)
-                    if token in [ASGMTParser.T__8]:
-                        self.state = 45
+                    if token in [ASGMTParser.T__7]:
+                        self.state = 25
                         self.sum_()
                         pass
-                    elif token in [ASGMTParser.T__9]:
-                        self.state = 46
+                    elif token in [ASGMTParser.T__8]:
+                        self.state = 26
                         self.sub()
                         pass
                     else:
                         raise NoViableAltException(self)
 
-                    self.state = 49
-                    self.monom() 
-                self.state = 55
+                    self.state = 29
+                    self.add_term() 
+                self.state = 35
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,4,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,1,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -373,66 +239,58 @@ class ASGMTParser ( Parser ):
         return localctx
 
 
-    class MulContext(ParserRuleContext):
+    class Add_termContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def vars_(self, i:int=None):
+        def term(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(ASGMTParser.VarsContext)
+                return self.getTypedRuleContexts(ASGMTParser.TermContext)
             else:
-                return self.getTypedRuleContext(ASGMTParser.VarsContext,i)
+                return self.getTypedRuleContext(ASGMTParser.TermContext,i)
 
-
-        def NUM(self):
-            return self.getToken(ASGMTParser.NUM, 0)
 
         def getRuleIndex(self):
-            return ASGMTParser.RULE_mul
+            return ASGMTParser.RULE_add_term
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMul" ):
-                listener.enterMul(self)
+            if hasattr( listener, "enterAdd_term" ):
+                listener.enterAdd_term(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMul" ):
-                listener.exitMul(self)
+            if hasattr( listener, "exitAdd_term" ):
+                listener.exitAdd_term(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMul" ):
-                return visitor.visitMul(self)
+            if hasattr( visitor, "visitAdd_term" ):
+                return visitor.visitAdd_term(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def mul(self):
+    def add_term(self):
 
-        localctx = ASGMTParser.MulContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_mul)
-        self._la = 0 # Token type
+        localctx = ASGMTParser.Add_termContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 4, self.RULE_add_term)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 58
+            self.state = 39
             self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            if _la==ASGMTParser.NUM:
-                self.state = 56
-                self.match(ASGMTParser.NUM)
-                self.state = 57
+            la_ = self._interp.adaptivePredict(self._input,2,self._ctx)
+            if la_ == 1:
+                self.state = 36
+                self.term()
+                self.state = 37
                 self.match(ASGMTParser.T__1)
 
 
-            self.state = 60
-            self.vars_()
-            self.state = 61
-            self.match(ASGMTParser.T__1)
-            self.state = 62
-            self.vars_()
+            self.state = 41
+            self.term()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -442,181 +300,90 @@ class ASGMTParser ( Parser ):
         return localctx
 
 
-    class PowContext(ParserRuleContext):
+    class TermContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
-
-        def vars_(self):
-            return self.getTypedRuleContext(ASGMTParser.VarsContext,0)
-
-
-        def getRuleIndex(self):
-            return ASGMTParser.RULE_pow
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPow" ):
-                listener.enterPow(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPow" ):
-                listener.exitPow(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPow" ):
-                return visitor.visitPow(self)
+            
+        def is_var(self, data):
+            """ Returns 1 if term is a variable, 0 if it's a constant """
+            if not self.NUM() is None:
+                return False
+            elif not self.symvars() is None:
+                if not self.symvars().IDV() is None:
+                    return True
+                elif not self.symvars().idd() is None:
+                    if self.symvars().idd().is_data(data):
+                        return False
+                    else:
+                        return True
+            elif not self.gm() is None:
+                return True
+            
+        def is_const(self, data):
+            return not self.is_var(data)
+       
+        def getValue(self, data):
+            if self.is_const(data):
+                if not self.NUM() is None:
+                    return float(self.NUM().getText())
+                elif not self.symvars() is None:
+                    return self.symvars().idd().getValue(data)
             else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def pow_(self):
-
-        localctx = ASGMTParser.PowContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_pow)
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 64
-            self.vars_()
-            self.state = 65
-            self.match(ASGMTParser.T__2)
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class MonomContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def vars_(self):
-            return self.getTypedRuleContext(ASGMTParser.VarsContext,0)
-
+                raise("Calling getValue for a variable")
 
         def NUM(self):
             return self.getToken(ASGMTParser.NUM, 0)
 
-        def getRuleIndex(self):
-            return ASGMTParser.RULE_monom
+        def symvars(self):
+            return self.getTypedRuleContext(ASGMTParser.SymvarsContext,0)
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMonom" ):
-                listener.enterMonom(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMonom" ):
-                listener.exitMonom(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMonom" ):
-                return visitor.visitMonom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def monom(self):
-
-        localctx = ASGMTParser.MonomContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_monom)
-        self._la = 0 # Token type
-        try:
-            self.state = 73
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
-            if la_ == 1:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 69
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==ASGMTParser.NUM:
-                    self.state = 67
-                    self.match(ASGMTParser.NUM)
-                    self.state = 68
-                    self.match(ASGMTParser.T__1)
-
-
-                self.state = 71
-                self.vars_()
-                pass
-
-            elif la_ == 2:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 72
-                self.match(ASGMTParser.NUM)
-                pass
-
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class VarsContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def ID(self):
-            return self.getToken(ASGMTParser.ID, 0)
 
         def gm(self):
             return self.getTypedRuleContext(ASGMTParser.GmContext,0)
 
 
         def getRuleIndex(self):
-            return ASGMTParser.RULE_vars
+            return ASGMTParser.RULE_term
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVars" ):
-                listener.enterVars(self)
+            if hasattr( listener, "enterTerm" ):
+                listener.enterTerm(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVars" ):
-                listener.exitVars(self)
+            if hasattr( listener, "exitTerm" ):
+                listener.exitTerm(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitVars" ):
-                return visitor.visitVars(self)
+            if hasattr( visitor, "visitTerm" ):
+                return visitor.visitTerm(self)
             else:
                 return visitor.visitChildren(self)
 
 
+    def term(self):
 
-
-    def vars_(self):
-
-        localctx = ASGMTParser.VarsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_vars)
+        localctx = ASGMTParser.TermContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 6, self.RULE_term)
         try:
-            self.state = 77
+            self.state = 46
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [ASGMTParser.ID]:
+            if token in [ASGMTParser.NUM]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 75
-                self.match(ASGMTParser.ID)
+                self.state = 43
+                self.match(ASGMTParser.NUM)
                 pass
-            elif token in [ASGMTParser.T__3]:
+            elif token in [ASGMTParser.IDV]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 76
+                self.state = 44
+                self.symvars()
+                pass
+            elif token in [ASGMTParser.T__4]:
+                self.enterOuterAlt(localctx, 3)
+                self.state = 45
                 self.gm()
                 pass
             else:
@@ -637,9 +404,23 @@ class ASGMTParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
+            
+        def getVar(self, data):
+            if self.idd() is None:
+                return self.getText()
+            else:
+                if self.idd().IDV(1) is None:
+                    return self.getText()
+                else:
+                    data_idx = data[self.idd().IDV(1).getText()][0]
+                return self.idd().IDV(0).getText()+'['+str(data_idx)+']'
 
-        def ID(self):
-            return self.getToken(ASGMTParser.ID, 0)
+        def IDV(self):
+            return self.getToken(ASGMTParser.IDV, 0)
+
+        def idd(self):
+            return self.getTypedRuleContext(ASGMTParser.IddContext,0)
+
 
         def getRuleIndex(self):
             return ASGMTParser.RULE_symvars
@@ -658,17 +439,108 @@ class ASGMTParser ( Parser ):
             else:
                 return visitor.visitChildren(self)
 
-
-
-
     def symvars(self):
 
         localctx = ASGMTParser.SymvarsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_symvars)
+        self.enterRule(localctx, 8, self.RULE_symvars)
+        try:
+            self.state = 50
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 48
+                self.match(ASGMTParser.IDV)
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 49
+                self.idd()
+                pass
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class IddContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+            
+        def is_data(self, data):
+            if self.IDV(0).getText() in data.keys():
+                return True
+            else:
+                return False
+           
+            
+        def getValue(self, data):
+            data_name = self.IDV(0).getText()
+            if not self.NUM() is None:
+                data_idx = int(self.NUM().getText())
+            elif not self.IDV(1) is None:
+                data_idx = data[self.IDV(1).getText()][0]
+            return data[data_name][data_idx]
+            
+
+        def IDV(self, i:int=None):
+            if i is None:
+                return self.getTokens(ASGMTParser.IDV)
+            else:
+                return self.getToken(ASGMTParser.IDV, i)
+
+        def NUM(self):
+            return self.getToken(ASGMTParser.NUM, 0)
+
+        def getRuleIndex(self):
+            return ASGMTParser.RULE_idd
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterIdd" ):
+                listener.enterIdd(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitIdd" ):
+                listener.exitIdd(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIdd" ):
+                return visitor.visitIdd(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def idd(self):
+
+        localctx = ASGMTParser.IddContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 10, self.RULE_idd)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 79
-            self.match(ASGMTParser.ID)
+            self.state = 52
+            self.match(ASGMTParser.IDV)
+            self.state = 53
+            self.match(ASGMTParser.T__2)
+            self.state = 54
+            _la = self._input.LA(1)
+            if not(_la==ASGMTParser.IDV or _la==ASGMTParser.NUM):
+                self._errHandler.recoverInline(self)
+            else:
+                self._errHandler.reportMatch(self)
+                self.consume()
+            self.state = 55
+            self.match(ASGMTParser.T__3)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -715,23 +587,23 @@ class ASGMTParser ( Parser ):
     def gm(self):
 
         localctx = ASGMTParser.GmContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 16, self.RULE_gm)
+        self.enterRule(localctx, 12, self.RULE_gm)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 81
-            self.match(ASGMTParser.T__3)
-            self.state = 82
-            self.list_()
-            self.state = 83
+            self.state = 57
             self.match(ASGMTParser.T__4)
-            self.state = 84
+            self.state = 58
             self.list_()
-            self.state = 85
-            self.match(ASGMTParser.T__4)
-            self.state = 86
-            self.list_()
-            self.state = 87
+            self.state = 59
             self.match(ASGMTParser.T__5)
+            self.state = 60
+            self.list_()
+            self.state = 61
+            self.match(ASGMTParser.T__5)
+            self.state = 62
+            self.list_()
+            self.state = 63
+            self.match(ASGMTParser.T__6)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -777,28 +649,28 @@ class ASGMTParser ( Parser ):
     def list_(self):
 
         localctx = ASGMTParser.ListContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 18, self.RULE_list)
+        self.enterRule(localctx, 14, self.RULE_list)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 89
-            self.match(ASGMTParser.T__6)
-            self.state = 90
+            self.state = 65
+            self.match(ASGMTParser.T__2)
+            self.state = 66
             self.match(ASGMTParser.NUM)
-            self.state = 95
+            self.state = 71
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,9,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,5,self._ctx)
             while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1+1:
-                    self.state = 91
-                    self.match(ASGMTParser.T__4)
-                    self.state = 92
+                    self.state = 67
+                    self.match(ASGMTParser.T__5)
+                    self.state = 68
                     self.match(ASGMTParser.NUM) 
-                self.state = 97
+                self.state = 73
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,9,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,5,self._ctx)
 
-            self.state = 98
-            self.match(ASGMTParser.T__7)
+            self.state = 74
+            self.match(ASGMTParser.T__3)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -839,11 +711,11 @@ class ASGMTParser ( Parser ):
     def sum_(self):
 
         localctx = ASGMTParser.SumContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 20, self.RULE_sum)
+        self.enterRule(localctx, 16, self.RULE_sum)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 100
-            self.match(ASGMTParser.T__8)
+            self.state = 76
+            self.match(ASGMTParser.T__7)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -884,11 +756,11 @@ class ASGMTParser ( Parser ):
     def sub(self):
 
         localctx = ASGMTParser.SubContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 22, self.RULE_sub)
+        self.enterRule(localctx, 18, self.RULE_sub)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 102
-            self.match(ASGMTParser.T__9)
+            self.state = 78
+            self.match(ASGMTParser.T__8)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

@@ -1,8 +1,0 @@
-reflectance = gm([1.],[1.],[0.3162]);
-illumination = gm([1.],[3.],[0.3162]);
-
-luminance = reflectance*illumination;
-
-observe(luminance > 3);
-
-skip;

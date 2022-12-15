@@ -10,6 +10,7 @@ for i < 3 {
     } else {
         ansb1 = 0;
     } end if;
+    prune(10);
     
     observe(ansb1 == ans1[i]);
     
@@ -22,7 +23,11 @@ for i < 2{
     } else {
         ansb2 = 0;
     } end if;
+    prune(10);
 
     observe(ansb2 == ans2[i]);
     
 } end for;
+
+
+

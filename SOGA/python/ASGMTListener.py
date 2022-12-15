@@ -17,15 +17,6 @@ class ASGMTListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ASGMTParser#const.
-    def enterConst(self, ctx:ASGMTParser.ConstContext):
-        pass
-
-    # Exit a parse tree produced by ASGMTParser#const.
-    def exitConst(self, ctx:ASGMTParser.ConstContext):
-        pass
-
-
     # Enter a parse tree produced by ASGMTParser#add.
     def enterAdd(self, ctx:ASGMTParser.AddContext):
         pass
@@ -35,39 +26,21 @@ class ASGMTListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ASGMTParser#mul.
-    def enterMul(self, ctx:ASGMTParser.MulContext):
+    # Enter a parse tree produced by ASGMTParser#add_term.
+    def enterAdd_term(self, ctx:ASGMTParser.Add_termContext):
         pass
 
-    # Exit a parse tree produced by ASGMTParser#mul.
-    def exitMul(self, ctx:ASGMTParser.MulContext):
-        pass
-
-
-    # Enter a parse tree produced by ASGMTParser#pow.
-    def enterPow(self, ctx:ASGMTParser.PowContext):
-        pass
-
-    # Exit a parse tree produced by ASGMTParser#pow.
-    def exitPow(self, ctx:ASGMTParser.PowContext):
+    # Exit a parse tree produced by ASGMTParser#add_term.
+    def exitAdd_term(self, ctx:ASGMTParser.Add_termContext):
         pass
 
 
-    # Enter a parse tree produced by ASGMTParser#monom.
-    def enterMonom(self, ctx:ASGMTParser.MonomContext):
+    # Enter a parse tree produced by ASGMTParser#term.
+    def enterTerm(self, ctx:ASGMTParser.TermContext):
         pass
 
-    # Exit a parse tree produced by ASGMTParser#monom.
-    def exitMonom(self, ctx:ASGMTParser.MonomContext):
-        pass
-
-
-    # Enter a parse tree produced by ASGMTParser#vars.
-    def enterVars(self, ctx:ASGMTParser.VarsContext):
-        pass
-
-    # Exit a parse tree produced by ASGMTParser#vars.
-    def exitVars(self, ctx:ASGMTParser.VarsContext):
+    # Exit a parse tree produced by ASGMTParser#term.
+    def exitTerm(self, ctx:ASGMTParser.TermContext):
         pass
 
 
@@ -77,6 +50,15 @@ class ASGMTListener(ParseTreeListener):
 
     # Exit a parse tree produced by ASGMTParser#symvars.
     def exitSymvars(self, ctx:ASGMTParser.SymvarsContext):
+        pass
+
+
+    # Enter a parse tree produced by ASGMTParser#idd.
+    def enterIdd(self, ctx:ASGMTParser.IddContext):
+        pass
+
+    # Exit a parse tree produced by ASGMTParser#idd.
+    def exitIdd(self, ctx:ASGMTParser.IddContext):
         pass
 
 
