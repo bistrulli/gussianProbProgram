@@ -14,7 +14,7 @@ def SOGA():
     print('/ ___| / _ \ / ___|  / \\\n\___ \| | | | |  _  / _ \\\n ___) | |_| | |_| |/ ___ \\\n|____/ \___/ \____/_/   \_\\\n')
     argv = sys.argv[1:]
     cov = False
-    out_name = None
+    out_file = None
     var_list = []
     var_idx = []
     
@@ -63,7 +63,7 @@ def SOGA():
             else:
                 print('Covariance:\n', np.around(output_dist.gm.cov()[var_idx][:,var_idx], 5))
             
-        if not out_name is None:
+        if not out_file is None:
             with open(out_name, 'w') as f:
                 sys.stdout = f # Change the standard output to the file we created.
                 print('CFG produced in: ', cfg_end-cfg_start)

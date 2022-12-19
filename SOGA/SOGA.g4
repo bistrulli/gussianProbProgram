@@ -29,7 +29,7 @@ prune : 'prune(' NUM ')';
 
 observe: 'observe(' bexpr ')';
 
-loop : 'for' IDV '<' (NUM | idd) '{' block '}' 'end for';
+loop : 'for' IDV 'in range(' (NUM | idd) ')' '{' block '}' 'end for';
 
 expr : lexpr | (NUM '*')? vars '*' vars | vars '^2' ;
 

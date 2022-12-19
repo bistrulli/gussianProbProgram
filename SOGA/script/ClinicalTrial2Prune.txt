@@ -12,7 +12,7 @@ if isEff == 1 {
 } end if;
 prune(20);
 
-for i < 5 {
+for i in range(5) {
     if uniform([0,1],2) - probContr < 0 {
         ycontr = 1;
     } else {
@@ -23,7 +23,7 @@ for i < 5 {
     observe(ycontr == contr[i]);
 } end for;
 
-for i < 5 {
+for i in range(5) {
     if uniform([0,1],2) - probTreated < 0 {
         ytreat = 1;
     } else {

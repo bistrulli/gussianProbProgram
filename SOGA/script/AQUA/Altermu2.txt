@@ -6,10 +6,10 @@ w1 = uniform([-10, 10], 2);
 w2 = uniform([-10, 10], 2);
 
 
-for i < 40 {
+for i in range(40) {
     y[i] = w1 + w2 + gm([1.], [0.], [1.]);
 } end for;
 
-for i < 40 {
+for i in range(40) {
     observe(y[i] == x[i]);
 } end for;

@@ -3,7 +3,7 @@ data click1 = [1, 1, 1, 0, 0];
 
 simAll = gm([1.], [0.5], [1.]);
 
-for i < 5 {
+for i in range(5) {
     if gm([1.], [0.5], [1.]) - simAll < 0 {
         sim = 1;
     } else {

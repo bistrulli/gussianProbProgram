@@ -10,7 +10,7 @@ if isEff == 1 {
     probContr = probTreated;
 } end if;
 
-for i < 5{
+for i in range(5) {
     if gm([1.], [0.5], [1.]) - probContr < 0 {
         ycontr = 1;
     } else {
@@ -19,7 +19,7 @@ for i < 5{
     observe(ycontr == contr[i]);
 } end for;
  
-for i < 5{
+for i in range(5) {
     if gm([1.], [0.5], [1.]) - probTreated < 0 {
         ytreat = 1;
     } else {

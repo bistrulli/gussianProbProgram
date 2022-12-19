@@ -3,7 +3,7 @@ data obs1 = [1, 1, 1, 0, 0];
 
 simAll = uniform([0,1],2);
 
-for i < 5 {
+for i in range(5) {
     if uniform([0,1],2) - simAll < 0 {
         sim = 1;
     } else {

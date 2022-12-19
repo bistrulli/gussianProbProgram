@@ -1,4 +1,4 @@
-## Contains the function start_soga, which is used to invoke SOGA on a CFG object and the recursive function SOGA, which, depending on the type of the visited node, calls the functions needed to update the current distribution. 
+# Contains the function start_soga, which is used to invoke SOGA on a CFG object and the recursive function SOGA, which, depending on the type of the visited node, calls the functions needed to update the current distribution. 
 
 #Such functions are contained in the auxiliary libraries:
 # - libSOGAtruncate, containing functions for computing the resulting distribution when a truncation occurs (in conditional or observe instructions);
@@ -38,7 +38,6 @@ def start_SOGA(cfg, pruning=None, Kmax=None):
     #print('Truncations:', len(timing.trunc_time), 'total:', sum(timing.trunc_time))
     #print('Updates:', len(timing.update_time), 'total:', sum(timing.update_time))
     #print('Mergings:', len(timing.merge_time), 'total:', sum(timing.merge_time))
-    #print('Time for changing coordinates:', timing.change_time, '\tTime for moments computation:', timing.mom_time)
     cfg.node_list['exit'].list_dist = []
     return current_dist
 

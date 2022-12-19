@@ -9,10 +9,10 @@ w3 = gm([1.], [0.], [5.]);
 mean = w1*w2;
 mean = 3*mean - w3;
 
-for i < 40 {
+for i in range(40) {
     y[i] = gm([1.], [0.], [1.]) + mean;
 } end for;
 
-for i < 40 {
+for i in range(40) {
     observe(y[i] == x[i]);
 } end for;

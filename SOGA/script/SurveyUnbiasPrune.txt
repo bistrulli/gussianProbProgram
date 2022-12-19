@@ -4,7 +4,7 @@ data ans2 = [0, 1];
 bias1 = uniform([0,1], 2);
 bias2 = uniform([0,1], 2);
 
-for i < 3 {
+for i in range(3) {
     if uniform([0,1],2) - bias1 < 0 {
         ansb1 = 1;
     } else {
@@ -16,7 +16,7 @@ for i < 3 {
     
 }end for;
 
-for i < 2{ 
+for i in range(2) { 
 
     if uniform([0,1],2) - bias2 < 0 {
         ansb2 = 1;
