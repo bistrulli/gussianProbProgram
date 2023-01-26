@@ -1,0 +1,23 @@
+def main(){
+	nationality := flip(0.5);
+	
+	if nationality == 0 {
+		perfect := flip(0.10);
+		if perfect {
+			gpa := uniform(8,10);
+		} else {
+			gpa := uniform(0,10);
+		}
+	} else {
+		perfect := flip(0.15);
+		if perfect {
+			gpa := uniform(3,4);
+		} else {
+			gpa := uniform(0,4);
+		}
+	}
+
+	observe((nationality > 0.5 && gpa > 3) || (gpa >= 8 && gpa <= 10));
+	return(gpa);
+
+}

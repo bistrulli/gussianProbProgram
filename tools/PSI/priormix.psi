@@ -1,0 +1,23 @@
+def main(){
+	mu1 := gauss(4,0.25);
+	mu2 := gauss(-4,0.25);
+	lambda := flip(0.8);
+
+	data := readCSV("data/priormix/y.csv");
+	n := data.length;
+	y := array(n);
+
+	for i in [0..n){ 
+		if lambda {
+			y[i] = mu1 + 2*studentT(5);
+		} else {
+			y[i] = mu2 + 2*studentT(5);
+		}
+	 
+	}
+	for i in [0..n){
+		observe(y[i] == data[i]);
+	}
+
+	return mu1;
+}

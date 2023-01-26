@@ -1,0 +1,14 @@
+name,Mean,MCSE,StdDev,5%,50%,95%,N_Eff,N_Eff/s,R_hat
+"lp__",0,nan,0,0,0,0,nan,nan,nan
+"log_p__",-30.4484,0.0514046,1.60439,-32.7943,-30.0193,-29.6307,974.133,inf,1.00026
+"log_g__",-0.500703,0.0234144,0.69784,-2.02494,-0.228703,-0.00135241,888.271,inf,0.999401
+"mu[1]",-2.6,0.017,0.55,-3.5,-2.7,-1.6,999,inf,1.0
+# Inference for Stan model: prior_mix_model
+# 1 chains: each with iter=(1001); warmup=(0); thin=(0); 1001 iterations saved.
+# 
+# Warmup took 0.00 seconds
+# Sampling took 0.00 seconds
+# Samples were drawn using meanfield with .
+# For each parameter, N_Eff is a crude measure of effective sample size,
+# and R_hat is the potential scale reduction factor on split chains (at 
+# convergence, R_hat=1).
