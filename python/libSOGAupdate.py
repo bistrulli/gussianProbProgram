@@ -94,7 +94,7 @@ class AsgmtRule(ASGMTListener):
             coeff = 1
             var_idx = None
             for term in ctx.term():
-                if term.is_const(self.data): 
+                if term.is_const(self.data):
                     coeff = coeff*term.getValue(self.data)
                 elif not term.symvars() is None:
                     var_idx = self.var_list.index(term.symvars().getVar(self.data))
@@ -111,7 +111,6 @@ class AsgmtRule(ASGMTListener):
                     self.add_coeff.append(coeff)
             else:
                 self.add_const = self.add_const + coeff
-
                                 
     def exitAdd(self, ctx):
         if not self.is_prod:
@@ -168,11 +167,12 @@ class AsgmtRule(ASGMTListener):
             
                 self.func = const_func
             
-    def enterSub(self, ctx):
+    def enterSum(self, ctx):
         self.flag_sign = -1.
         
-    def enterSum(self, ctx):
+    def enterSub(self,ctx):
         self.flag_sign = 1.
+        
     
 def asgmt_parse(var_list, expr, data):
     """ Parses expr using ANTLR4. Returns a function """

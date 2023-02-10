@@ -15,9 +15,9 @@ if b0 == 1 {
     y = uniform([-1, 0], 2) + uniform([0,1], 2);
     observe(y > 0);
     if gm([0.83333,0.16667],[1,0],[0,0]) > 0 {
-        o0 = x + x0;
+        o0 = x0 + x;
     } else {
-        o0 = y + x0;
+        o0 = x0 + y;
     } end if;
 } else {
     x = uniform([-5, 0], 2) + uniform([0,5], 2);

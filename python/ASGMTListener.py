@@ -80,15 +80,6 @@ class ASGMTListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ASGMTParser#sum.
-    def enterSum(self, ctx:ASGMTParser.SumContext):
-        pass
-
-    # Exit a parse tree produced by ASGMTParser#sum.
-    def exitSum(self, ctx:ASGMTParser.SumContext):
-        pass
-
-
     # Enter a parse tree produced by ASGMTParser#sub.
     def enterSub(self, ctx:ASGMTParser.SubContext):
         pass
