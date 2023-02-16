@@ -22,7 +22,6 @@ class AsgmtRule(ASGMTListener):
         self.aux_means = []        # stores the means of auxiliary variables
         self.aux_covs = []         # stores the cov matrices of auxiliary variables
         
-        self.flag_sign = 1.        # used to keep track of sums and subtractions in arithmetic expressions
         self.is_prod = None        # checks whether a term is a product of two vars
         
     def enterAssignment(self, ctx):
@@ -94,6 +93,10 @@ class AsgmtRule(ASGMTListener):
             coeff = 1
             var_idx = None
             for term in ctx.term():
+                if term.sub() is not None:
+                    coeff = -1*coeff
+                else:
+                    coeff = 1*coeff
                 if term.is_const(self.data):
                     coeff = coeff*term.getValue(self.data)
                 elif not term.symvars() is None:
@@ -103,7 +106,6 @@ class AsgmtRule(ASGMTListener):
                     self.aux_means.append(eval(term.gm().list_()[1].getText()))
                     self.aux_covs.append(np.array(eval(term.gm().list_()[2].getText()))**2)
                     var_idx = len(self.add_coeff) + 1
-            coeff = self.flag_sign*coeff
             if not var_idx is None:
                 if var_idx < len(self.add_coeff):
                     self.add_coeff[var_idx] = coeff
@@ -166,12 +168,6 @@ class AsgmtRule(ASGMTListener):
                     return GaussianMix(comp.gm.pi, [new_mu], [new_sigma])
             
                 self.func = const_func
-            
-    def enterSum(self, ctx):
-        self.flag_sign = -1.
-        
-    def enterSub(self,ctx):
-        self.flag_sign = 1.
         
     
 def asgmt_parse(var_list, expr, data):

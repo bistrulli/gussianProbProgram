@@ -1,8 +1,0 @@
-lap = gm([0.38, 0.62], [0, 0], [2.06, 0.77]);
-mean = gm([1.], [0.], [1.]);
-
-res = lap + mean;
-
-observe(res > 0);
-
-skip;
